@@ -1,0 +1,17 @@
+:root {
+  --primary-color: #2068AC;
+}
+
+html {
+  padding: 0px;
+  margin: 0px;
+}
+
+body {
+  padding: 0px;
+  margin: 0px
+}
+
+* {
+  font-family: 'Courier New', Courier, monospace;
+}
