@@ -1,7 +1,16 @@
-.table_header 
+.table_header
     background-color: var(--primary-color)
-
     .table_row
         border-spacing: 0px
+        padding: 10px
+        align-items: center
         .table_header_cell
-                        
+            .table_header_text        
+                text-align: start
+                color: #fff
+    .table_row::after
+        content: ''
+        position: absolute
+        bottom: 0
+        width: 100%
+        border-bottom: 1px solid #000

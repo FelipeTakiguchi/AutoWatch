@@ -1,3 +1,5 @@
+import "./styles.sass"
+
 interface RowData {
     placa: string;
     modelo: string;
@@ -11,13 +13,13 @@ interface TableBodyProps {
 
 export default function TableBody({ data }: TableBodyProps) {
     return (
-        <tbody>
+        <tbody className="table_body">
             {data.map((row, index) => (
-                <tr key={index}>
-                    <td>{row.placa}</td>
-                    <td>{row.modelo}</td>
-                    <td>{row.dono}</td>
-                    <td>{row.status}</td>
+                <tr className="table_row" key={index}>
+                    <td className="table_element">{row.placa}</td>
+                    <td className="table_element">{row.modelo}</td>
+                    <td className="table_element">{row.dono}</td>
+                    <td className="table_element">{row.status}</td>
                 </tr>
             ))}
         </tbody>

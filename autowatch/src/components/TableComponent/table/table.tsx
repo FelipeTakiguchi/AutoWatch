@@ -1,3 +1,4 @@
+import "./styles.sass"
 import TableBody from "../table_body/table_body";
 import TableHeader from "../table_header/table_header";
 
