@@ -7,7 +7,7 @@ export default function TableHeader() {
                 <th className="table_header_cell"><p className="table_header_text">Placa</p></th>
                 <th className="table_header_cell"><p className="table_header_text">Modelo</p></th>
                 <th className="table_header_cell"><p className="table_header_text">Dono</p></th>
-                <th className="table_header_cell"><p className="table_header_text">Status</p></th>
+                <th className="table_header_cell status"><p className="table_header_text">Status</p></th>
             </tr>
         </thead>
     )

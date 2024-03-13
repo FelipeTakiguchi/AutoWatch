@@ -1,5 +1,8 @@
 :root {
   --primary-color: #2068AC;
+  --danger-color: #A00000;
+  --ok-color: #00A247;
+  --warning-color: #997B00;
 }
 
 html {
@@ -9,9 +12,9 @@ html {
 
 body {
   padding: 0px;
-  margin: 0px
+  margin: 0px;
 }
 
 * {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: Arial, Helvetica, sans-serif;
 }

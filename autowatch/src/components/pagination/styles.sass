@@ -1,0 +1,23 @@
+.navigation_bar
+    display: flex
+    .arrow
+        width: 2rem
+    .paginator
+        display: flex
+        gap: .3rem
+        .nav_button
+            background-color: rgba(0, 0, 0, 0)
+            border: none
+            min-width: 2rem
+            min-height: 2rem
+            border-radius: 10px
+            font-weight: 500
+            font-size: 18px
+            color: var(--primary-color)
+            &:hover
+                background-color: #5E96CC
+                transition: .25s
+        .selected_link
+            color: #fff
+            background-color: var(--primary-color)
+            transition: .25s
