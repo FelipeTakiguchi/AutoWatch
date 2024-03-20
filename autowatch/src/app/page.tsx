@@ -1,6 +1,6 @@
 import HeaderComponent from "@/components/header/header";
 import Pagination from "@/components/pagination/pagination";
-import Table from "@/components/TableComponent/table/table";
+import Table from "@/components/TableComponent/table";
 import "./styles.sass"
 
 export default function Home() {

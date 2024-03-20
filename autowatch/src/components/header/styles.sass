@@ -6,12 +6,41 @@
     .centralize_title
         display: flex
         height: 100%
-        width: 20rem
         justify-content: center
         align-items: center
         margin-left: 3rem
 
+        /* Smaller devides (624px and down) */
+        @media only screen and (max-width: 40em)
+            margin-left: 1rem
+        /* Small devices such as large phones (640px and up) */
+        @media only screen and (min-width: 40em)
+            width: 11rem
+            margin-left: 1.5rem
+            /* Medium devices such as tablets (768px and up) */
+        @media only screen and (min-width: 48em)
+            width: 16rem
+            margin-left: 2rem
+        /* Large devices such as laptops (1024px and up) */
+        @media only screen and (min-width: 64em)
+            width: 20rem
+            margin-left: 3rem
+                    
         .logo_title
             color: #fff
             font-weight: 600
             font-size: 64px
+            
+            /* Smaller devides (624px and down) */
+            @media only screen and (max-width: 40em)
+                font-size: 36px
+            /* Small devices such as large phones (640px and up) */
+            @media only screen and (min-width: 40em)
+                font-size: 36px
+            /* Medium devices such as tablets (768px and up) */
+            @media only screen and (min-width: 48em)
+                font-size: 48px
+            /* Large devices such as laptops (1024px and up) */
+            @media only screen and (min-width: 64em)
+                font-size: 64px
+                
