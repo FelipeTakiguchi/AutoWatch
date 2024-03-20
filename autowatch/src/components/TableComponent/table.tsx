@@ -1,6 +1,10 @@
-import "./styles.sass"
+"use client"
+import React, { useState } from 'react';
+import './styles.sass';
 
 export default function Table() {
+    const [expandedRow, setExpandedRow] = useState(null);
+
     const data = [
         { placa: 'ABC1234', modelo: 'Toyota Corolla', dono: 'John Doe', status: 'Em crise' },
         { placa: 'DEF5678', modelo: 'Honda Civic', dono: 'Jane Smith', status: 'Rodando' },
@@ -8,6 +12,14 @@ export default function Table() {
         { placa: 'JKL3456', modelo: 'Chevrolet Cruze', dono: 'Alice Brown', status: 'Rodando' },
         { placa: 'MNO7890', modelo: 'Tesla Model S', dono: 'Eve Wilson', status: 'Rodando' }
     ];
+
+    const toggleRow = (index) => {
+        if (expandedRow === index) {
+            setExpandedRow(null);
+        } else {
+            setExpandedRow(index);
+        }
+    };
 
     return (
         <table className="table">
@@ -21,31 +33,61 @@ export default function Table() {
             </thead>
             <tbody className="table_body">
                 {data.map((row, index) => (
-                    <tr className="table_row" key={index}>
-                        <td className="table_element first_element">{row.placa}</td>
-                        <td className="table_element">{row.modelo}</td>
-                        <td className="table_element">{row.dono}</td>
-                        <td className="table_element status">
-                            <div className="wrap_container">
-                                <p className="status_text">{row.status}</p>
-                                {
-                                    row.status == "Rodando" && (
-                                        <div className="green_circle" />
-                                    )
-                                }
-                                {
-                                    row.status == "Sem sinal" && (
-                                        <div className="yellow_circle" />
-                                    )
-                                }
-                                {
-                                    row.status == "Em crise" && (
-                                        <div className="red_circle" />
-                                    )
-                                }
-                            </div>
-                        </td>
-                    </tr>
+                    <React.Fragment key={index}>
+                        {expandedRow === index ? (
+                            <tr className="table_row selected_table_row" onClick={() => toggleRow(index)}>
+                                <td className="table_element first_element">{row.placa}</td>
+                                <td className="table_element">{row.modelo}</td>
+                                <td className="table_element">{row.dono}</td>
+                                <td className="table_element status">
+                                    <div className="wrap_container">
+                                        <p className="status_text">{row.status}</p>
+                                        {
+                                            row.status === "Rodando" && (
+                                                <div className="green_circle" />
+                                            )
+                                        }
+                                        {
+                                            row.status === "Sem sinal" && (
+                                                <div className="yellow_circle" />
+                                            )
+                                        }
+                                        {
+                                            row.status === "Em crise" && (
+                                                <div className="red_circle" />
+                                            )
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        ) : (
+                            <tr className="table_row section_group" onClick={() => toggleRow(index)}>
+                                <td className="table_element first_element">{row.placa}</td>
+                                <td className="table_element">{row.modelo}</td>
+                                <td className="table_element">{row.dono}</td>
+                                <td className="table_element status">
+                                    <div className="wrap_container">
+                                        <p className="status_text">{row.status}</p>
+                                        {
+                                            row.status === "Rodando" && (
+                                                <div className="green_circle" />
+                                            )
+                                        }
+                                        {
+                                            row.status === "Sem sinal" && (
+                                                <div className="yellow_circle" />
+                                            )
+                                        }
+                                        {
+                                            row.status === "Em crise" && (
+                                                <div className="red_circle" />
+                                            )
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        )}
+                    </React.Fragment>
                 ))}
             </tbody>
         </table>

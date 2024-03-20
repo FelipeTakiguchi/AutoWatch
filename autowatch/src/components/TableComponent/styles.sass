@@ -9,7 +9,6 @@
     .table_header
         background-color: var(--primary-color)
         max-height: 10px
-
         .table_row
             border-spacing: 0px
             align-items: center
@@ -20,25 +19,43 @@
                 padding-bottom: .4rem
                 .table_header_text
                     text-align: start
-                    font-weight: 600
+                    font-weight: bold
                     margin: 0px
                     color: #fff
-
+                    /* Smaller devides (624px and down) */
+                    @media only screen and (max-width: 40em)
+                        font-size: 14px
+                    /* Small devices such as large phones (640px and up) */
+                    @media only screen and (min-width: 40em)
+                        font-size: 16px
+                    /* Medium devices such as tablets (768px and up) */
+                    @media only screen and (min-width: 48em)
+                        font-size: 18px
+                    /* Large devices such as laptops (1024px and up) */
+                    @media only screen and (min-width: 64em)
+                        font-size: 20px
+                    /* Largest devices such as desktops (1280px and up) */
+                    @media only screen and (min-width: 80em)
+                        font-size: 22px
+                        
     @mixin circle
         width: 1rem
         height: 1rem
         border-radius: 100%
 
     .table_body
+        .selected_table_row
+            background-color: #d4d4d4
+        .section_group
+            border-bottom: 1px solid black
         .table_row
             .first_element
                 padding-left: 2rem
             .table_element
                 padding-top: .4rem
                 padding-bottom: .4rem
-                border-bottom: 1px solid black
                 /* Smaller devides (624px and down) */
-                @media only screen and (max-width: 39em)
+                @media only screen and (max-width: 40em)
                     font-size: 12px
                     font-weight: bold
                 /* Small devices such as large phones (640px and up) */
@@ -47,11 +64,9 @@
                 /* Medium devices such as tablets (768px and up) */
                 @media only screen and (min-width: 48em)
                     font-size: 14px
-                    
                 /* Large devices such as laptops (1024px and up) */
                 @media only screen and (min-width: 64em)
                     font-size: 16px
-                    
                 /* Largest devices such as desktops (1280px and up) */
                 @media only screen and (min-width: 80em)
                     font-size: 18px
@@ -63,7 +78,7 @@
                     padding-right: 1rem
                     .status_text
                         /* Smaller devides (624px and down) */
-                        @media only screen and (max-width: 39em)
+                        @media only screen and (max-width: 40em)
                             display: none
 
                     .green_circle
