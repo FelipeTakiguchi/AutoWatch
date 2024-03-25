@@ -2,20 +2,29 @@
 import React, { useState } from 'react';
 import './styles.sass';
 
-export default function Table() {
+interface RowData {
+    placa: string;
+    modelo: string;
+    dono: string;
+    status: string;
+    infos: {
+        localizacao: string;
+        risco?: string;
+        impacto?: number;
+        suporte?: number;
+    };
+}
+
+interface TableProps {
+    data: RowData[];
+}
+
+export default function Table({ data }: TableProps) {
     const [expandedRow, setExpandedRow] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
     const [modalContent, setModalContent] = useState("");
 
-    const data = [
-        { placa: 'ABC1234', modelo: 'Toyota Corolla', dono: 'John Doe', status: 'Em crise', infos: { localizacao: "Av das torres 1024 - Curitiba-PR Brasil | lat:65.1231, long -31.1213", risco: "alto", impacto: 90, suporte: 76 } },
-        { placa: 'DEF5678', modelo: 'Honda Civic', dono: 'Jane Smith', status: 'Rodando', infos: { localizacao: "Av das torres 1024 - Curitiba-PR Brasil | lat:65.1231, long -31.1213" } },
-        { placa: 'GHI9012', modelo: 'Ford Mustang', dono: 'Bob Johnson', status: 'Sem sinal', infos: { localizacao: "Av das torres 1024 - Curitiba-PR Brasil | lat:65.1231, long -31.1213" } },
-        { placa: 'JKL3456', modelo: 'Chevrolet Cruze', dono: 'Alice Brown', status: 'Rodando', infos: { localizacao: "Av das torres 1024 - Curitiba-PR Brasil | lat:65.1231, long -31.1213" } },
-        { placa: 'MNO7890', modelo: 'Tesla Model S', dono: 'Eve Wilson', status: 'Rodando', infos: { localizacao: "Av das torres 1024 - Curitiba-PR Brasil | lat:65.1231, long -31.1213" } }
-    ];
-
-    const toggleRow = (index) => {
+    const toggleRow = (index: any) => {
         if (expandedRow === index) {
             setExpandedRow(null);
         } else {
@@ -23,18 +32,18 @@ export default function Table() {
         }
     };
 
-    const handleRowClick = (index, event) => {
+    const handleRowClick = (index: any, event: any) => {
         if (!event.target.closest('.contact_button') && !event.target.closest('.analyze_button')) {
             toggleRow(index);
         }
     };
 
-    const openModal = (content) => {
+    const openModal = (content: any) => {
         setModalContent(content);
         setModalOpen(true);
     };
 
-    const closeModal = (event) => {
+    const closeModal = (event: any) => {
         if (!event.target.closest('.modal')) {
             setModalOpen(false);
         }
@@ -75,7 +84,7 @@ export default function Table() {
                                         <p className="info_text">Risco de vida: {row.infos.risco}</p>
                                         <p className="info_text">Chance de precisar de suporte médico: {row.infos.suporte}%</p>
                                     </td>
-                                    <div className="button_box">
+                                    <td className="button_box">
                                         <button className="contact_button" onClick={() => openModal(`Contatando o motorista de ${row.placa}`)}>
                                             <img
                                                 className="icon"
@@ -92,7 +101,7 @@ export default function Table() {
                                             />
                                             <h2 className="button_text">Analisar Evento</h2>
                                         </button>
-                                    </div>
+                                    </td>
                                 </tr>
                             )}
                         </React.Fragment>
