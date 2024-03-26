@@ -13,6 +13,22 @@
     display: flex
     align-items: center
     gap: .4rem
+    /* Small devices such as large phones (640px and up) */
+    @media only screen and (min-width: 40em)
+        padding-top: 0px
+        padding-bottom: 0px
+    /* Medium devices such as tablets (768px and up) */
+    @media only screen and (min-width: 48em)
+        padding-top: 2px
+        padding-bottom: 2px
+    /* Large devices such as laptops (1024px and up) */
+    @media only screen and (min-width: 64em)
+        padding-top: 3px
+        padding-bottom: 3px
+    /* Largest devices such as desktops (1280px and up) */
+    @media only screen and (min-width: 80em)
+        padding-top: 5px
+        padding-bottom: 5px
 
 @mixin dynamic_button
     /* Smaller devides (624px and down) */
@@ -151,12 +167,15 @@
                     background-color: var(--green-300)
                     margin-bottom: 1rem
                     @include button
+                    /* Medium devices such as tablets (768px and up) */
+                    @media only screen and (max-width: 48em)
+                        margin-bottom: .5rem
                     /* Smaller devides (624px and down) */
                     @media only screen and (max-width: 40em)
                         background-color: transparent
                         padding: 0
                         margin-right: 3rem
-                        margin-top: 2rem
+                        margin-top: 1rem
                     /* Smaller devides (528px and down) */
                     @media only screen and (max-width: 33em)
                         margin-right: 2rem

@@ -1,6 +1,8 @@
 "use client"
 import React, { useState } from "react";
 import "./styles.sass"
+import Image from "../../../node_modules/next/image";
+import searchIcon from "@/assets/images/search.svg"
 
 export default function Filter({ setFilter } : {setFilter: any}) {
     const [isFocused, setIsFocused] = useState(false);
@@ -15,7 +17,7 @@ export default function Filter({ setFilter } : {setFilter: any}) {
 
     return (
         <div className={`input_box ${isFocused ? 'focused' : ''}`}>
-            <img src="/assets/images/search.svg" className="search_icon" alt="search icon" />
+            <Image src={searchIcon} className="search_icon" alt="search icon" width={30} />
             <input
                 placeholder="Pesquisar..."
                 onChange={(e) => setFilter(e.target.value)}

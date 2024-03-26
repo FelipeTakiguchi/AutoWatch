@@ -1,0 +1,47 @@
+.container
+    display: flex
+    width: 20rem
+    height: 3rem
+    background-color: #fff
+    position: absolute
+    margin-top: 1rem
+    align-items: center
+    right: 3rem
+
+    .green_bar
+        margin-top: .2rem
+        height: 100%
+        width: .3rem
+        background-color: var(--green-500)
+
+    .timer
+        position: absolute
+        width: 0%
+        top: 0
+        left: 0
+        height: .2rem
+        background-color: var(--ok-color)
+        transition: width 5s, opacity 0.5s
+        animation: timerAnimation 5s forwards
+        
+    @keyframes timerAnimation 
+        from 
+            width: 0% 
+        to 
+            width: 100%
+
+    .text_box
+        display: flex
+        align-items: center
+        gap: .5rem
+        .plate_text
+            margin: 0px
+            margin-left: 1rem
+        .status_text
+
+
+.hidden
+    opacity: 0
+    pointer-events: none
+    transition: opacity 0.5s
+

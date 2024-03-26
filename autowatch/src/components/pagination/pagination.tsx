@@ -2,6 +2,9 @@
 import Link from "next/link";
 import "./styles.sass";
 import { useState } from "react";
+import Image from "../../../node_modules/next/image";
+import backIcon from "@/assets/images/Back.svg"
+import forwardIcon from "@/assets/images/Forward.svg"
 
 export default function Pagination() {
     const sibling_count = 3;
@@ -39,17 +42,17 @@ export default function Pagination() {
 
     return (
         <div className="navigation_bar">
-            <img
+            <Image
                 className="arrow"
-                src="/assets/images/Back.svg"
+                src={backIcon}
                 alt="Back Arrow"
             />
             <div className="paginator">
                 {renderPageNumbers()}
             </div>
-            <img
+            <Image
                 className="arrow"
-                src="/assets/images/Forward.svg"
+                src={forwardIcon}
                 alt="Foward Arrow"
             />
         </div>

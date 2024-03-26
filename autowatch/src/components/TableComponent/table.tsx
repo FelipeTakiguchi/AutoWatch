@@ -1,6 +1,9 @@
 "use client"
 import React, { useState } from 'react';
 import './styles.sass';
+import contactIcon from "@/assets/images/contact.svg"
+import Image from "../../../node_modules/next/image";
+import analysisIcon from "@/assets/images/analysis.svg"
 
 interface RowData {
     placa: string;
@@ -86,17 +89,17 @@ export default function Table({ data }: TableProps) {
                                     </td>
                                     <td className="button_box">
                                         <button className="contact_button" onClick={() => openModal(`Contatando o motorista de ${row.placa}`)}>
-                                            <img
+                                            <Image
                                                 className="icon"
-                                                src="/assets/images/contact.svg"
+                                                src={contactIcon}
                                                 alt="Contact Icon"
                                             />
                                             <h2 className="button_text">Contatar Motorista</h2>
                                         </button>
                                         <button className="analyze_button" onClick={() => openModal(`Analisando evento para ${row.placa}`)}>
-                                            <img
+                                            <Image
                                                 className="icon"
-                                                src="/assets/images/analysis.svg"
+                                                src={analysisIcon}
                                                 alt="Analysis Icon"
                                             />
                                             <h2 className="button_text">Analisar Evento</h2>
