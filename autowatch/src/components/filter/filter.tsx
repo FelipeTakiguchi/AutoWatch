@@ -4,7 +4,7 @@ import "./styles.sass"
 import Image from "../../../node_modules/next/image";
 import searchIcon from "@/assets/images/search.svg"
 
-export default function Filter({ setFilter } : {setFilter: any}) {
+export default function Filter({ setFilter }: { setFilter: any }) {
     const [isFocused, setIsFocused] = useState(false);
 
     function handleFocus() {
@@ -17,7 +17,9 @@ export default function Filter({ setFilter } : {setFilter: any}) {
 
     return (
         <div className={`input_box ${isFocused ? 'focused' : ''}`}>
-            <Image src={searchIcon} className="search_icon" alt="search icon" width={30} />
+            <div className="icon_box">
+                <Image src={searchIcon} className="search_icon" alt="search icon" width={30} />
+            </div>
             <input
                 placeholder="Pesquisar..."
                 onChange={(e) => setFilter(e.target.value)}
