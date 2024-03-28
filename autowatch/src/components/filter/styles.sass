@@ -8,6 +8,7 @@
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.3)
     border-color: transparent
     border-style: solid
+    position: relative
 
     &.focused
         border-color: var(--primary-color)
@@ -15,23 +16,23 @@
 
     /* Smaller devides (624px and down) */
     @media only screen and (max-width: 40em)
-        width: 10rem
+        width: 12rem
         height: 1.3rem
     /* Small devices such as large phones (640px and up) */
     @media only screen and (min-width: 40em)
-        width: 12rem
+        width: 15rem
         height: 1.6rem
     /* Medium devices such as tablets (768px and up) */
     @media only screen and (min-width: 48em)
-        width: 14rem
+        width: 18rem
         height: 1.9rem
     /* Large devices such as laptops (1024px and up) */
     @media only screen and (min-width: 64em)
-        width: 16rem
+        width: 21rem
         height: 2.2rem
     /* Largest devices such as desktops (1280px and up) */
     @media only screen and (min-width: 80em)
-        width: 18rem
+        width: 24rem
         height: 2.5rem
 
     .icon_box
@@ -59,34 +60,104 @@
             @media only screen and (min-width: 80em)
                 width: 1.5rem
                 height: 1.5rem
-    
+        
+        .focused_icon 
+            animation: translate-animation .3s forwards
+
+        @keyframes translate-animation 
+            from 
+                transform: translateX(0rem)    
+        @media only screen and (max-width: 40em) 
+            @keyframes translate-animation
+                to 
+                    transform: translateX(-6.5rem)
+        @media only screen and (min-width: 40em) 
+            @keyframes translate-animation
+                to 
+                    transform: translateX(-8.5rem)
+        @media only screen and (min-width: 48em) 
+            @keyframes translate-animation
+                to 
+                    transform: translateX(-10.5rem)
+        @media only screen and (min-width: 64em) 
+            @keyframes translate-animation
+                to 
+                    transform: translateX(-12.5rem)
+        @media only screen and (min-width: 80em) 
+            @keyframes translate-animation
+                to 
+                    transform: translateX(-14.5rem)
+
+        .unfocused_icon 
+            animation: retranslate-animation .3s forwards
+
+        @media only screen and (max-width: 40em) 
+            @keyframes retranslate-animation
+                from 
+                    transform: translateX(-6.5rem)
+        @media only screen and (min-width: 40em) 
+            @keyframes retranslate-animation
+                from 
+                    transform: translateX(-8.5rem)
+        @media only screen and (min-width: 48em) 
+            @keyframes retranslate-animation
+                from 
+                    transform: translateX(-10.5rem)
+        @media only screen and (min-width: 64em) 
+            @keyframes retranslate-animation
+                from 
+                    transform: translateX(-12.5rem)
+        @media only screen and (min-width: 80em) 
+            @keyframes retranslate-animation
+            to 
+                transform: translateX(0rem)
+
     .input
         background-color: transparent
         color: #5B5B5B
         outline: none
+        position: absolute
         border: none
         /* Smaller devides (624px and down) */
         @media only screen and (max-width: 40em)
-            width: 7rem
+            width: 6.5rem
             font-size: 10px
             height: .8rem
         /* Small devices such as large phones (640px and up) */
         @media only screen and (min-width: 40em)
-            width: 9rem
+            width: 8.3rem
             font-size: 12px
             height: 1.1rem
         /* Medium devices such as tablets (768px and up) */
         @media only screen and (min-width: 48em)
-            width: 11rem
+            width: 10rem
             font-size: 14px
             height: 1.4rem
         /* Large devices such as laptops (1024px and up) */
         @media only screen and (min-width: 64em)
-            width: 13rem
+            width: 12rem
             font-size: 16px
             height: 1.7rem
         /* Largest devices such as desktops (1280px and up) */
         @media only screen and (min-width: 80em)
-            width: 15rem
+            width: 14rem
             height: 2rem
             font-size: 18px
+
+    .focused_input
+        animation: translate-input-animation .3s forwards
+
+    @keyframes translate-input-animation 
+        from 
+            transform: translateX(0rem)    
+        to 
+            transform: translateX(2rem)
+
+    .unfocused_input
+        animation: retranslate-input-animation .3s forwards
+
+    @keyframes retranslate-input-animation 
+        from 
+            transform: translateX(2rem)    
+        to 
+            transform: translateX(0rem)
