@@ -1,9 +1,10 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import './styles.sass';
 import contactIcon from "@/assets/images/contact.svg"
 import Image from "../../../node_modules/next/image";
 import analysisIcon from "@/assets/images/analysis.svg"
+import dynamic from '../../../node_modules/next/dynamic';
 
 interface RowData {
     placa: string;
@@ -24,8 +25,15 @@ interface TableProps {
 
 export default function Table({ data }: TableProps) {
     const [expandedRow, setExpandedRow] = useState(null);
-    const [modalOpen, setModalOpen] = useState(false);
-    const [modalContent, setModalContent] = useState("");
+    const [modalOpen, setModalOpen] = useState("");
+
+    const Map = useMemo(() => dynamic(
+        () => import('@/components/map/map'),
+        {
+            loading: () => <p>A map is loading</p>,
+            ssr: false
+        }
+    ), [])
 
     const toggleRow = (index: any) => {
         if (expandedRow === index) {
@@ -41,14 +49,13 @@ export default function Table({ data }: TableProps) {
         }
     };
 
-    const openModal = (content: any) => {
-        setModalContent(content);
-        setModalOpen(true);
+    const openModal = (modal: string) => {
+        setModalOpen(modal);
     };
 
     const closeModal = (event: any) => {
         if (!event.target.closest('.modal')) {
-            setModalOpen(false);
+            setModalOpen("");
         }
     };
 
@@ -88,7 +95,7 @@ export default function Table({ data }: TableProps) {
                                         <p className="info_text">Chance de precisar de suporte médico: {row.infos.suporte}%</p>
                                     </td>
                                     <td className="button_box">
-                                        <button className="contact_button" onClick={() => openModal(`Contatando o motorista de ${row.placa}`)}>
+                                        <button className="contact_button" onClick={() => openModal("contact")}>
                                             <Image
                                                 className="icon"
                                                 src={contactIcon}
@@ -96,7 +103,7 @@ export default function Table({ data }: TableProps) {
                                             />
                                             <h2 className="button_text">Contatar Motorista</h2>
                                         </button>
-                                        <button className="analyze_button" onClick={() => openModal(`Analisando evento para ${row.placa}`)}>
+                                        <button className="analyze_button" onClick={() => openModal("analyze")}>
                                             <Image
                                                 className="icon"
                                                 src={analysisIcon}
@@ -111,7 +118,7 @@ export default function Table({ data }: TableProps) {
                     ))}
                 </tbody>
             </table>
-            {modalOpen && (
+            {modalOpen == "contact" && (
                 <div className="modal_overlay" onClick={(event) => closeModal(event)}>
                     <div className="modal">
                         <div className="modal_content">
@@ -121,6 +128,20 @@ export default function Table({ data }: TableProps) {
                             <section className="modal_content">
                                 <p><b>Email:</b> felipe_ntakiguchi@hotmail.com</p>
                                 <p><b>Telefone:</b> (41) 99221-3693</p>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {modalOpen == "analyze" && (
+                <div className="modal_overlay" onClick={(event) => closeModal(event)}>
+                    <div className="modal">
+                        <div className="modal_content">
+                            <header className="modal_header">
+                                <h1 className="modal_title">Mapa</h1>
+                            </header>
+                            <section className="modal_content">
+                                <Map />
                             </section>
                         </div>
                     </div>
