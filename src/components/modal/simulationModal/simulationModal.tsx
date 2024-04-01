@@ -1,7 +1,18 @@
 import Map from "@/components/map/map";
 import "./styles.sass";
+import { useMemo } from "react";
+import dynamic from 'next/dynamic';
 
 export default function SimulationModal() {
+    
+    const Map = useMemo(() => dynamic(
+        () => import('@/components/map/map'),
+        {
+            loading: () => <p>A map is loading</p>,
+            ssr: false
+        }
+    ), [])
+
     return (
         <div className="modal">
             <div className="modal_content">

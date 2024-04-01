@@ -1,41 +1,37 @@
 "use client"
-import React, { useMemo, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './styles.sass';
 import contactIcon from "@/assets/images/contact.svg"
 import analysisIcon from "@/assets/images/analysis.svg"
 import Image from "next/image";
-import dynamic from 'next/dynamic';
+import axios from 'axios';
 import ContactModal from '../modal/contactModal/contactModal';
 import SimulationModal from '../modal/simulationModal/simulationModal';
 
-interface RowData {
-    placa: string;
-    modelo: string;
-    dono: string;
-    status: string;
-    infos: {
-        localizacao: string;
-        risco?: string;
-        impacto?: number;
-        suporte?: number;
-    };
-}
-
-interface TableProps {
-    data: RowData[];
-}
-
-export default function Table({ data }: TableProps) {
+export default function Table() {
     const [expandedRow, setExpandedRow] = useState(null);
     const [modalOpen, setModalOpen] = useState("");
+    const [data, setData] = useState([]);
+    const apiUrl = process.env.API_URL;
+    const page = 1;
+    const nElements = 4;
 
-    const Map = useMemo(() => dynamic(
-        () => import('@/components/map/map'),
-        {
-            loading: () => <p>A map is loading</p>,
-            ssr: false
+    // https://domain.loophole.site/api/client/1/4/ricardo
+    // https://domain.loophole.site/api/client/6605bbeef3e8db7f8672aa1f
+    // https://domain.loophole.site/api/event/ABC123 
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = async () => {
+        try {
+            const response = await axios.get(apiUrl + "/api/client/" + page + "/" + nElements);
+            setData(response.data.data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
         }
-    ), [])
+    };
 
     const toggleRow = (index: any) => {
         if (expandedRow === index) {
