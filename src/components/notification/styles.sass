@@ -1,12 +1,35 @@
 .container
     display: flex
-    width: 20rem
-    height: 3rem
     background-color: #fff
     position: absolute
     margin-top: 1rem
     align-items: center
-    right: 3rem
+    
+    /* Smaller devides (624px and down) */
+    @media only screen and (max-width: 40em)
+        width: 8rem
+        height: 2.2rem
+        right: 1rem
+    /* Small devices such as large phones (640px and up) */
+    @media only screen and (min-width: 40em)
+        width: 11rem
+        height: 2.4rem
+        right: 3rem
+    /* Medium devices such as tablets (768px and up) */
+    @media only screen and (min-width: 48em)
+        width: 14rem
+        height: 2.6rem
+        right: 3rem
+    /* Large devices such as laptops (1024px and up) */
+    @media only screen and (min-width: 64em)
+        width: 17rem
+        height: 2.8rem
+        right: 3rem
+    /* Largest devices such as desktops (1280px and up) */
+    @media only screen and (min-width: 80em)
+        width: 20rem
+        height: 3rem
+        right: 3rem
 
     .green_bar
         margin-top: .2rem
@@ -36,9 +59,42 @@
         gap: .5rem
         .plate_text
             margin: 0px
-            margin-left: 1rem
+            /* Smaller devides (624px and down) */
+            @media only screen and (max-width: 40em)
+                font-size: 10px
+                margin-left: .2rem
+            /* Small devices such as large phones (640px and up) */
+            @media only screen and (min-width: 40em)
+                font-size: 12px
+                margin-left: .4rem
+            /* Medium devices such as tablets (768px and up) */
+            @media only screen and (min-width: 48em)
+                font-size: 14px
+                margin-left: .6rem
+            /* Large devices such as laptops (1024px and up) */
+            @media only screen and (min-width: 64em)
+                font-size: 16px
+                margin-left: .8rem
+            /* Largest devices such as desktops (1280px and up) */
+            @media only screen and (min-width: 80em)
+                font-size: 18px
+                margin-left: 1rem
         .status_text
-
+            /* Smaller devides (624px and down) */
+            @media only screen and (max-width: 40em)
+                font-size: 8px
+            /* Small devices such as large phones (640px and up) */
+            @media only screen and (min-width: 40em)
+                font-size: 10px
+            /* Medium devices such as tablets (768px and up) */
+            @media only screen and (min-width: 48em)
+                font-size: 12px
+            /* Large devices such as laptops (1024px and up) */
+            @media only screen and (min-width: 64em)
+                font-size: 14px
+            /* Largest devices such as desktops (1280px and up) */
+            @media only screen and (min-width: 80em)
+                font-size: 16px
 
 .hidden
     opacity: 0
