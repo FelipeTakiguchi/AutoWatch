@@ -5,6 +5,8 @@ import contactIcon from "@/assets/images/contact.svg"
 import analysisIcon from "@/assets/images/analysis.svg"
 import Image from "next/image";
 import dynamic from 'next/dynamic';
+import ContactModal from '../modal/contactModal/contactModal';
+import SimulationModal from '../modal/simulationModal/simulationModal';
 
 interface RowData {
     placa: string;
@@ -120,31 +122,12 @@ export default function Table({ data }: TableProps) {
             </table>
             {modalOpen == "contact" && (
                 <div className="modal_overlay" onClick={(event) => closeModal(event)}>
-                    <div className="modal">
-                        <div className="modal_content">
-                            <header className="modal_header">
-                                <h1 className="modal_title">Contatos</h1>
-                            </header>
-                            <section className="modal_content">
-                                <p><b>Email:</b> felipe_ntakiguchi@hotmail.com</p>
-                                <p><b>Telefone:</b> (41) 99221-3693</p>
-                            </section>
-                        </div>
-                    </div>
+                    <ContactModal/>
                 </div>
             )}
             {modalOpen == "analyze" && (
                 <div className="modal_overlay" onClick={(event) => closeModal(event)}>
-                    <div className="modal">
-                        <div className="modal_content">
-                            <header className="modal_header">
-                                <h1 className="modal_title">Mapa</h1>
-                            </header>
-                            <section className="modal_content">
-                                <Map />
-                            </section>
-                        </div>
-                    </div>
+                    <SimulationModal/>
                 </div>
             )}
         </div>
