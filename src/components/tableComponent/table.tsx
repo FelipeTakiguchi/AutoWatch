@@ -2,9 +2,9 @@
 import React, { useMemo, useState } from 'react';
 import './styles.sass';
 import contactIcon from "@/assets/images/contact.svg"
-import Image from "../../../node_modules/next/image";
 import analysisIcon from "@/assets/images/analysis.svg"
-import dynamic from '../../../node_modules/next/dynamic';
+import Image from "next/image";
+import dynamic from 'next/dynamic';
 
 interface RowData {
     placa: string;
