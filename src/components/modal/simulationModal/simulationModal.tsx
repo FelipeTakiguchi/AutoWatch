@@ -9,7 +9,7 @@ export default function SimulationModal() {
                     <h1 className="modal_title">Mapa</h1>
                 </header>
                 <section className="modal_content">
-                    <Map />
+                    <Map props={{position: "-25.4217968,-49.2740144", zoom: "15z"}}/>
                 </section>
             </div>
         </div>

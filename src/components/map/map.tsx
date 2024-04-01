@@ -13,26 +13,26 @@ export default function Map(props: any) {
 
     const renderMap = () => {
         console.log("map");
-        
+
 
         return (
             <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
         )
     }
 
-    return <MapContainer center={position} zoom={zoom} scrollWheelZoom={false}>
+    return <MapContainer center={[-25.4217968,-49.2740144]} zoom={15} style={{ width: "800px", height: "500px" }} scrollWheelZoom={false}>
         <TileLayer
             className="map_size"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {renderMap()}
-        <Marker position={position}>
+        <Marker position={[-25.4217968,-49.2740144]}>
             <Popup>
-                A pretty CSS3 popup. <br /> Easily customizable.
+                <a target="_blank" href="https://www.google.com/maps/search/google+maps/@-25.4217968,-49.2740144,15z/data=!3m1!4b1?entry=ttu">Google Maps</a>
             </Popup>
         </Marker>
     </MapContainer>
