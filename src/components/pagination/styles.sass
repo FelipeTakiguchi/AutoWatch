@@ -63,11 +63,11 @@
             @media only screen and (min-width: 80em)
                 font-size: 20px
 
-            &:hover
+            &:not(.selected_link):hover
                 background-color: #5E96CC
-                transition: .25s
+
         .selected_link
             color: #fff
             background-color: var(--primary-color)
-            transition: .25s
+            transition: .5s
             box-shadow: 2px 2px 4px rgba(37, 37, 37, 0.6)
