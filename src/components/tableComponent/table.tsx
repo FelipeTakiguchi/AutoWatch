@@ -4,34 +4,25 @@ import './styles.sass';
 import contactIcon from "@/assets/images/contact.svg"
 import analysisIcon from "@/assets/images/analysis.svg"
 import Image from "next/image";
-import axios from 'axios';
 import ContactModal from '../modal/contactModal/contactModal';
 import SimulationModal from '../modal/simulationModal/simulationModal';
 
-export default function Table() {
+interface RowData {
+    email: string;
+    lastLocation: string;
+    name: string;
+    numnber: string;
+    plate: string;
+    vehicle: string;
+}
+
+interface TableProps {
+    data: RowData[];
+}
+
+export default function Table({ data }: TableProps) {
     const [expandedRow, setExpandedRow] = useState(null);
     const [modalOpen, setModalOpen] = useState("");
-    const [data, setData] = useState([]);
-    const apiUrl = process.env.API_URL;
-    const page = 1;
-    const nElements = 4;
-
-    // https://domain.loophole.site/api/client/1/4/ricardo
-    // https://domain.loophole.site/api/client/6605bbeef3e8db7f8672aa1f
-    // https://domain.loophole.site/api/event/ABC123 
-
-    useEffect(() => {
-        fetchData();
-    }, []);
-
-    const fetchData = async () => {
-        try {
-            const response = await axios.get(apiUrl + "/api/client/" + page + "/" + nElements);
-            setData(response.data.data);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    };
 
     const toggleRow = (index: any) => {
         if (expandedRow === index) {
@@ -72,25 +63,25 @@ export default function Table() {
                     {data.map((row, index) => (
                         <React.Fragment key={index}>
                             <tr className={`table_row ${expandedRow === index ? "selected_table_row" : "section_group"}`} onClick={(event) => handleRowClick(index, event)}>
-                                <td className="table_element first_element">{row.placa}</td>
-                                <td className="table_element">{row.modelo}</td>
-                                <td className="table_element">{row.dono}</td>
+                                <td className="table_element first_element">{row.plate}</td>
+                                <td className="table_element">{row.vehicle}</td>
+                                <td className="table_element">{row.name}</td>
                                 <td className="table_element status">
-                                    <div className="wrap_container">
+                                    {/* <div className="wrap_container">
                                         <p className="status_text">{row.status}</p>
                                         {row.status === "Rodando" && (<div className="green_circle" />)}
                                         {row.status === "Sem sinal" && (<div className="yellow_circle" />)}
                                         {row.status === "Em crise" && (<div className="red_circle" />)}
-                                    </div>
+                                    </div> */}
                                 </td>
                             </tr>
                             {expandedRow === index && (
                                 <tr className="table_row additional_info_row selected_table_row" onClick={(event) => handleRowClick(index, event)}>
                                     <td colSpan={4} className="text_box">
-                                        <p className="info_text">Localização: {row.infos.localizacao}</p>
-                                        <p className="info_text">Impacto Calculado: {row.infos.impacto} km/h</p>
+                                        <p className="info_text">Localização: {row.lastLocation}</p>
+                                        {/* <p className="info_text">Impacto Calculado: {row.} km/h</p>
                                         <p className="info_text">Risco de vida: {row.infos.risco}</p>
-                                        <p className="info_text">Chance de precisar de suporte médico: {row.infos.suporte}%</p>
+                                        <p className="info_text">Chance de precisar de suporte médico: {row.infos.suporte}%</p> */}
                                     </td>
                                     <td className="button_box">
                                         <button className="contact_button" onClick={() => openModal("contact")}>
