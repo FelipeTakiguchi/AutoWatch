@@ -84,7 +84,7 @@ export default function Table({ data }: TableProps) {
                                         <p className="info_text">Chance de precisar de suporte médico: {row.infos.suporte}%</p> */}
                                     </td>
                                     <td className="button_box">
-                                        <button className="contact_button" onClick={() => openModal("contact")}>
+                                        {/* <button className="contact_button" onClick={() => openModal("contact")}>
                                             <Image
                                                 className="icon"
                                                 src={contactIcon}
@@ -99,7 +99,7 @@ export default function Table({ data }: TableProps) {
                                                 alt="Analysis Icon"
                                             />
                                             <h2 className="button_text">Analisar Evento</h2>
-                                        </button>
+                                        </button> */}
                                     </td>
                                 </tr>
                             )}
