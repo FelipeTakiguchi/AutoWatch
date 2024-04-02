@@ -11,6 +11,7 @@ export default function Home() {
   const [filter, setFilter] = useState("");
   const [selectedStatus, setSelectedStatus] = useState('');
   const [data, setData] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const page = 1;
   const nElements = 4;
@@ -29,6 +30,7 @@ export default function Home() {
       const response = await axios.get(apiUrl + "/api/client/" + page + "/" + nElements);
 
       setData(response.data.clients);
+      setTotalPages(response.data.totalPages)
       console.log(response.data);
       
     } catch (error) {
@@ -52,7 +54,7 @@ export default function Home() {
         <Table data={data} />
       </main>
       <nav className="centralize_bottom">
-        <Pagination />
+        <Pagination totalPages={totalPages}/>
       </nav>
     </>
   );

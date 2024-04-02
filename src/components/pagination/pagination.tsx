@@ -6,14 +6,14 @@ import Image from "../../../node_modules/next/image";
 import backIcon from "@/assets/images/Back.svg"
 import forwardIcon from "@/assets/images/Forward.svg"
 
-export default function Pagination() {
+export default function Pagination({totalPages}: {totalPages: number}) {
     const sibling_count = 3;
     const [selected, setSeleted] = useState(2);
 
     function renderPageNumbers() {
         const list = [];
         const initial = selected - sibling_count > 0 ? selected - sibling_count : 1;
-        const last = initial + sibling_count * 2;
+        const last = initial + sibling_count * 2 < totalPages ? initial + sibling_count * 2 : totalPages;
 
         for (let i = initial; i <= last; i++) {
             if (i == selected) {
