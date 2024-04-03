@@ -1,22 +1,20 @@
 "use client";
-import Link from "next/link";
 import "./styles.sass";
 import { useState } from "react";
 import Image from "../../../node_modules/next/image";
 import backIcon from "@/assets/images/Back.svg"
 import forwardIcon from "@/assets/images/Forward.svg"
 
-export default function Pagination({totalPages}: {totalPages: number}) {
+export default function Pagination({totalPages, actualPage, setActualPage}: {totalPages: number, actualPage: number, setActualPage: Function}) {
     const sibling_count = 3;
-    const [selected, setSeleted] = useState(2);
 
     function renderPageNumbers() {
         const list = [];
-        const initial = selected - sibling_count > 0 ? selected - sibling_count : 1;
+        const initial = actualPage - sibling_count > 0 ? actualPage - sibling_count : 1;
         const last = initial + sibling_count * 2 < totalPages ? initial + sibling_count * 2 : totalPages;
 
         for (let i = initial; i <= last; i++) {
-            if (i == selected) {
+            if (i == actualPage) {
                 list.push(
                     <button
                         key={i}
@@ -29,7 +27,7 @@ export default function Pagination({totalPages}: {totalPages: number}) {
                 list.push(
                     <button
                         key={i}
-                        onClick={() => setSeleted(i)}
+                        onClick={() => setActualPage(i)}
                         className="nav_button">
                         {i}
                     </button>

@@ -1,3 +1,21 @@
 .map_size
-    width: 20rem
-    height: 15rem
+    /* Smaller devides (624px and down) */
+    @media only screen and (max-width: 40em)
+        width: 20rem
+        height: 15rem
+    /* Small devices such as large phones (640px and up) */
+    @media only screen and (min-width: 40em)
+        width: 27rem
+        height: 18rem
+    /* Medium devices such as tablets (768px and up) */
+    @media only screen and (min-width: 48em)
+        width: 34rem
+        height: 21rem
+    /* Large devices such as laptops (1024px and up) */
+    @media only screen and (min-width: 64em)
+        width: 41rem
+        height: 24rem
+    /* Largest devices such as desktops (1280px and up) */
+    @media only screen and (min-width: 80em)
+        width: 48rem
+        height: 27rem

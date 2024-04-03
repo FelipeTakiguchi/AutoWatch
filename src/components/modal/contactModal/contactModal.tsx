@@ -8,8 +8,8 @@ export default function ContactModal() {
                     <h1 className="modal_title">Contatos</h1>
                 </header>
                 <section className="modal_content">
-                    <p><b>Email:</b> felipe_ntakiguchi@hotmail.com</p>
-                    <p><b>Telefone:</b> (41) 99221-3693</p>
+                    <p className="modal_text"><b>Email:</b> felipe_ntakiguchi@hotmail.com</p>
+                    <p className="modal_text"><b>Telefone:</b> (41) 99221-3693</p>
                 </section>
             </div>
         </div>

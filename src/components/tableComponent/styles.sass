@@ -145,6 +145,13 @@
                 .info_text
                     @include dynamic_text
                     max-width: 80%
+                    word-break: break-all
+                    .low_risk
+                        color: var(--ok-color)
+                    .medium_risk
+                        color: var(--warning-color)
+                    .high_risk
+                        color: var(--danger-color)
             .button_box
                 position: absolute
                 display: inline-grid

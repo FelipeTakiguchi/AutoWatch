@@ -23,7 +23,7 @@ export default function Map(props: any) {
         )
     }
 
-    return <MapContainer center={[-25.4217968,-49.2740144]} zoom={15} style={{ width: "800px", height: "500px" }} scrollWheelZoom={false}>
+    return <MapContainer center={[-25.4217968,-49.2740144]} zoom={15} className="map_size" scrollWheelZoom={false}>
         <TileLayer
             className="map_size"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

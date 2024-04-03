@@ -6,6 +6,7 @@ import analysisIcon from "@/assets/images/analysis.svg"
 import Image from "next/image";
 import ContactModal from '../modal/contactModal/contactModal';
 import SimulationModal from '../modal/simulationModal/simulationModal';
+import axios from 'axios';
 
 interface RowData {
     email: string;
@@ -23,6 +24,29 @@ interface TableProps {
 export default function Table({ data }: TableProps) {
     const [expandedRow, setExpandedRow] = useState(null);
     const [modalOpen, setModalOpen] = useState("");
+    const [event, setEvent] = useState([]);
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+    const fetchEventData = async (plate: string) => {
+        try {
+            const response = await axios.get(apiUrl + "/api/event/" + plate);
+            console.log(response.data);
+
+            setEvent(response.data);
+
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+    const classifyChangeOfSupport = (risk: number) => {
+        if (risk > 80)
+            return "Alto"
+        else if (risk > 50)
+            return "Médio"
+        else
+            return "Baixo"
+    }
 
     const toggleRow = (index: any) => {
         if (expandedRow === index) {
@@ -32,9 +56,11 @@ export default function Table({ data }: TableProps) {
         }
     };
 
-    const handleRowClick = (index: any, event: any) => {
+    const handleRowClick = (index: any, event: any, plate: string) => {
         if (!event.target.closest('.contact_button') && !event.target.closest('.analyze_button')) {
             toggleRow(index);
+            setEvent([]);
+            fetchEventData(plate);
         }
     };
 
@@ -62,7 +88,7 @@ export default function Table({ data }: TableProps) {
                 <tbody className="table_body">
                     {data.map((row, index) => (
                         <React.Fragment key={index}>
-                            <tr className={`table_row ${expandedRow === index ? "selected_table_row" : "section_group"}`} onClick={(event) => handleRowClick(index, event)}>
+                            <tr className={`table_row ${expandedRow === index ? "selected_table_row" : "section_group"}`} onClick={(event) => handleRowClick(index, event, row.plate)}>
                                 <td className="table_element first_element">{row.plate}</td>
                                 <td className="table_element">{row.vehicle}</td>
                                 <td className="table_element">{row.name}</td>
@@ -76,30 +102,45 @@ export default function Table({ data }: TableProps) {
                                 </td>
                             </tr>
                             {expandedRow === index && (
-                                <tr className="table_row additional_info_row selected_table_row" onClick={(event) => handleRowClick(index, event)}>
+                                <tr className="table_row additional_info_row selected_table_row" onClick={(event) => handleRowClick(index, event, row.plate)}>
                                     <td colSpan={4} className="text_box">
                                         <p className="info_text">Localização: {row.lastLocation}</p>
-                                        {/* <p className="info_text">Impacto Calculado: {row.} km/h</p>
-                                        <p className="info_text">Risco de vida: {row.infos.risco}</p>
-                                        <p className="info_text">Chance de precisar de suporte médico: {row.infos.suporte}%</p> */}
+                                        {event.impactSpeed &&
+                                            <p className="info_text">Impacto Calculado: {(event.impactSpeed / 9.8).toFixed(2)} g</p>
+                                        }
+                                        {event.fatalityLikelyhood &&
+                                            <p className="info_text">Chance de Morte: {(event.fatalityLikelyhood).toFixed(0)}%</p>
+                                        }
+                                        {event.fatalityLikelyhood &&
+                                            <>
+                                                <p className="info_text">Risco de vida: <b className={
+                                                    event.fatalityLikelyhood <= 50 ? "low_risk" :
+                                                        event.fatalityLikelyhood > 50 ? "medium_risk" :
+                                                            event.fatalityLikelyhood > 80 ? "high_risk" : ""}>{classifyChangeOfSupport(event.fatalityLikelyhood)}</b></p>
+                                            </>
+                                        }
                                     </td>
                                     <td className="button_box">
-                                        {/* <button className="contact_button" onClick={() => openModal("contact")}>
-                                            <Image
-                                                className="icon"
-                                                src={contactIcon}
-                                                alt="Contact Icon"
-                                            />
-                                            <h2 className="button_text">Contatar Motorista</h2>
-                                        </button>
-                                        <button className="analyze_button" onClick={() => openModal("analyze")}>
-                                            <Image
-                                                className="icon"
-                                                src={analysisIcon}
-                                                alt="Analysis Icon"
-                                            />
-                                            <h2 className="button_text">Analisar Evento</h2>
-                                        </button> */}
+                                        {event.impactSpeed &&
+                                            <>
+                                                <button className="contact_button" onClick={() => openModal("contact")}>
+                                                    <Image
+                                                        className="icon"
+                                                        src={contactIcon}
+                                                        alt="Contact Icon"
+                                                    />
+                                                    <h2 className="button_text">Contatar Motorista</h2>
+                                                </button>
+                                                <button className="analyze_button" onClick={() => openModal("analyze")}>
+                                                    <Image
+                                                        className="icon"
+                                                        src={analysisIcon}
+                                                        alt="Analysis Icon"
+                                                    />
+                                                    <h2 className="button_text">Analisar Evento</h2>
+                                                </button>
+                                            </>
+                                        }
                                     </td>
                                 </tr>
                             )}
@@ -109,12 +150,12 @@ export default function Table({ data }: TableProps) {
             </table>
             {modalOpen == "contact" && (
                 <div className="modal_overlay" onClick={(event) => closeModal(event)}>
-                    <ContactModal/>
+                    <ContactModal />
                 </div>
             )}
             {modalOpen == "analyze" && (
                 <div className="modal_overlay" onClick={(event) => closeModal(event)}>
-                    <SimulationModal/>
+                    <SimulationModal />
                 </div>
             )}
         </div>
