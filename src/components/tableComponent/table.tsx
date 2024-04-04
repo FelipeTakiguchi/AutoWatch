@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './styles.sass';
 import contactIcon from "@/assets/images/contact.svg"
 import analysisIcon from "@/assets/images/analysis.svg"
@@ -17,29 +17,31 @@ interface RowData {
     vehicle: string;
 }
 
+interface EventAttributes {
+    impactSpeed?: number;
+    fatalityLikelyhood?: number;
+}
+
 interface TableProps {
     data: RowData[];
 }
 
 export default function Table({ data }: TableProps) {
-    const [expandedRow, setExpandedRow] = useState(null);
-    const [modalOpen, setModalOpen] = useState("");
-    const [event, setEvent] = useState([]);
+    const [expandedRow, setExpandedRow] = useState<number | null>(null);
+    const [modalOpen, setModalOpen] = useState<string>("");
+    const [event, setEvent] = useState<EventAttributes>({});
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
     const fetchEventData = async (plate: string) => {
         try {
             const response = await axios.get(apiUrl + "/api/event/" + plate);
-            console.log(response.data);
-
             setEvent(response.data);
-
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     };
 
-    const classifyChangeOfSupport = (risk: number) => {
+    const classifyChangeOfSupport = (risk: number): string => {
         if (risk > 80)
             return "Alto"
         else if (risk > 50)
@@ -48,7 +50,7 @@ export default function Table({ data }: TableProps) {
             return "Baixo"
     }
 
-    const toggleRow = (index: any) => {
+    const toggleRow = (index: number) => {
         if (expandedRow === index) {
             setExpandedRow(null);
         } else {
@@ -56,12 +58,10 @@ export default function Table({ data }: TableProps) {
         }
     };
 
-    const handleRowClick = (index: any, event: any, plate: string) => {
-        if (!event.target.closest('.contact_button') && !event.target.closest('.analyze_button')) {
-            toggleRow(index);
-            setEvent([]);
-            fetchEventData(plate);
-        }
+    const handleRowClick = (index: number, plate: string) => {
+        toggleRow(index);
+        setEvent({});
+        fetchEventData(plate);
     };
 
     const openModal = (modal: string) => {
@@ -88,21 +88,14 @@ export default function Table({ data }: TableProps) {
                 <tbody className="table_body">
                     {data.map((row, index) => (
                         <React.Fragment key={index}>
-                            <tr className={`table_row ${expandedRow === index ? "selected_table_row" : "section_group"}`} onClick={(event) => handleRowClick(index, event, row.plate)}>
+                            <tr className={`table_row ${expandedRow === index ? "selected_table_row" : "section_group"}`} onClick={() => handleRowClick(index, row.plate)}>
                                 <td className="table_element first_element">{row.plate}</td>
                                 <td className="table_element">{row.vehicle}</td>
                                 <td className="table_element">{row.name}</td>
-                                <td className="table_element status">
-                                    {/* <div className="wrap_container">
-                                        <p className="status_text">{row.status}</p>
-                                        {row.status === "Rodando" && (<div className="green_circle" />)}
-                                        {row.status === "Sem sinal" && (<div className="yellow_circle" />)}
-                                        {row.status === "Em crise" && (<div className="red_circle" />)}
-                                    </div> */}
-                                </td>
+                                <td className="table_element status"></td>
                             </tr>
                             {expandedRow === index && (
-                                <tr className="table_row additional_info_row selected_table_row" onClick={(event) => handleRowClick(index, event, row.plate)}>
+                                <tr className="table_row additional_info_row selected_table_row">
                                     <td colSpan={4} className="text_box">
                                         <p className="info_text">Localização: {row.lastLocation}</p>
                                         {event.impactSpeed &&
@@ -112,12 +105,10 @@ export default function Table({ data }: TableProps) {
                                             <p className="info_text">Chance de Morte: {(event.fatalityLikelyhood).toFixed(0)}%</p>
                                         }
                                         {event.fatalityLikelyhood &&
-                                            <>
-                                                <p className="info_text">Risco de vida: <b className={
-                                                    event.fatalityLikelyhood <= 50 ? "low_risk" :
-                                                        event.fatalityLikelyhood > 50 ? "medium_risk" :
-                                                            event.fatalityLikelyhood > 80 ? "high_risk" : ""}>{classifyChangeOfSupport(event.fatalityLikelyhood)}</b></p>
-                                            </>
+                                            <p className="info_text">Risco de vida: <b className={
+                                                event.fatalityLikelyhood <= 50 ? "low_risk" :
+                                                    event.fatalityLikelyhood > 50 ? "medium_risk" :
+                                                        event.fatalityLikelyhood > 80 ? "high_risk" : ""}>{classifyChangeOfSupport(event.fatalityLikelyhood)}</b></p>
                                         }
                                     </td>
                                     <td className="button_box">
