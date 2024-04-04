@@ -4,17 +4,19 @@ import { useState } from "react";
 import Image from "../../../node_modules/next/image";
 import backIcon from "@/assets/images/Back.svg"
 import forwardIcon from "@/assets/images/Forward.svg"
+import useClientStore from "../../services/store";
 
-export default function Pagination({totalPages, actualPage, setActualPage}: {totalPages: number, actualPage: number, setActualPage: Function}) {
+export default function Pagination() {
+    const { page, setPage, totalPages } = useClientStore();
     const sibling_count = 3;
 
     function renderPageNumbers() {
         const list = [];
-        const initial = actualPage - sibling_count > 0 ? actualPage - sibling_count : 1;
+        const initial = page - sibling_count > 0 ? page - sibling_count : 1;
         const last = initial + sibling_count * 2 < totalPages ? initial + sibling_count * 2 : totalPages;
 
         for (let i = initial; i <= last; i++) {
-            if (i == actualPage) {
+            if (i == page) {
                 list.push(
                     <button
                         key={i}
@@ -27,7 +29,7 @@ export default function Pagination({totalPages, actualPage, setActualPage}: {tot
                 list.push(
                     <button
                         key={i}
-                        onClick={() => setActualPage(i)}
+                        onClick={() => setPage(i)}
                         className="nav_button">
                         {i}
                     </button>

@@ -6,15 +6,13 @@ import Table from "@/components/tableComponent/table";
 import "./styles.sass";
 import ActionBar from "@/components/actionsBar/actionsBar";
 const axios = require('axios');
+import useClientStore from "../services/store";
 
 export default function Home() {
+  const { page, nElements, setTotalPages, clients, setClients } = useClientStore();
   const [filter, setFilter] = useState("");
   const [selectedStatus, setSelectedStatus] = useState('');
-  const [data, setData] = useState([]);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  const nElements = 4;
 
   // https://domain.loophole.site/api/client/1/4/ricardo
   // https://domain.loophole.site/api/client/6605bbeef3e8db7f8672aa1f
@@ -30,7 +28,7 @@ export default function Home() {
     try {
       const response = await axios.get(apiUrl + "/api/client/" + page + "/" + nElements);
 
-      setData(response.data.clients);
+      setClients(response.data.clients);
       setTotalPages(response.data.totalPages)
       console.log(response.data);
       
@@ -52,10 +50,10 @@ export default function Home() {
       <HeaderComponent />
       <ActionBar setFilter={setFilter} selectedStatus={selectedStatus} handleStatusChange={handleStatusChange} />
       <main>
-        <Table data={data} />
+        <Table data={clients} />
       </main>
       <nav className="centralize_bottom">
-        <Pagination totalPages={totalPages} actualPage={page} setActualPage={setPage}/>
+        <Pagination/>
       </nav>
     </>
   );
