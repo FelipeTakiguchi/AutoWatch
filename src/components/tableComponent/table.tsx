@@ -18,6 +18,7 @@ interface RowData {
 }
 
 interface EventAttributes {
+    plate?: string;
     impactSpeed?: number;
     fatalityLikelyhood?: number;
 }
@@ -35,6 +36,8 @@ export default function Table({ data }: TableProps) {
     const fetchEventData = async (plate: string) => {
         try {
             const response = await axios.get(apiUrl + "/api/event/" + plate);
+            console.log(response);
+
             setEvent(response.data);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -86,25 +89,45 @@ export default function Table({ data }: TableProps) {
                     </tr>
                 </thead>
                 <tbody className="table_body">
+                    {data.length <= 0 &&
+                        <tr className="centralize_message">
+                            <td colSpan={4}>
+                                <p className="message_error">
+                                    No data to show
+                                </p>
+                            </td>
+                        </tr>
+                    }
                     {data.map((row, index) => (
                         <React.Fragment key={index}>
                             <tr className={`table_row ${expandedRow === index ? "selected_table_row" : "section_group"}`} onClick={() => handleRowClick(index, row.plate)}>
-                                <td className="table_element first_element">{row.plate}</td>
+                                <td className="table_element first_element">{row.plate.toUpperCase()}</td>
                                 <td className="table_element">{row.vehicle}</td>
                                 <td className="table_element">{row.name}</td>
                                 <td className="table_element status"></td>
                             </tr>
+                            {!row.lastLocation && expandedRow === index &&
+                                <tr className="centralize_message">
+                                    <td colSpan={4}>
+                                        <p className="message_error">
+                                            No data to show
+                                        </p>
+                                    </td>
+                                </tr>
+                            }
                             {expandedRow === index && (
                                 <tr className="table_row additional_info_row selected_table_row">
                                     <td colSpan={4} className="text_box">
-                                        <p className="info_text">Localização: {row.lastLocation}</p>
-                                        {event.impactSpeed &&
-                                            <p className="info_text">Impacto Calculado: {(event.impactSpeed / 9.8).toFixed(2)} g</p>
+                                        {row.lastLocation && row.lastLocation &&
+                                            <p className="info_text">Localização: {row.lastLocation}</p>
                                         }
-                                        {event.fatalityLikelyhood &&
+                                        {row.plate == event.plate && event.impactSpeed &&
+                                            <p className="info_text">Impacto Calculado: {(event.impactSpeed / 9.8).toFixed(2)} g(s)</p>
+                                        }
+                                        {row.plate == event.plate && event.fatalityLikelyhood &&
                                             <p className="info_text">Chance de Morte: {(event.fatalityLikelyhood).toFixed(0)}%</p>
                                         }
-                                        {event.fatalityLikelyhood &&
+                                        {row.plate == event.plate && event.fatalityLikelyhood &&
                                             <p className="info_text">Risco de vida: <b className={
                                                 event.fatalityLikelyhood <= 50 ? "low_risk" :
                                                     event.fatalityLikelyhood > 50 ? "medium_risk" :

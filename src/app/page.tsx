@@ -7,16 +7,13 @@ import "./styles.sass";
 import ActionBar from "@/components/actionsBar/actionsBar";
 const axios = require('axios');
 import useClientStore from "../services/store";
+import WebSocketComponent from "@/services/webSocket";
 
 export default function Home() {
   const { page, nElements, setTotalPages, clients, setClients } = useClientStore();
   const [filter, setFilter] = useState("");
   const [selectedStatus, setSelectedStatus] = useState('');
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
-  // https://domain.loophole.site/api/client/1/4/ricardo
-  // https://domain.loophole.site/api/client/6605bbeef3e8db7f8672aa1f
-  // https://domain.loophole.site/api/event/ABC123
 
   useEffect(() => {
     fetchData();
@@ -55,6 +52,7 @@ export default function Home() {
       <nav className="centralize_bottom">
         <Pagination/>
       </nav>
+      <WebSocketComponent/>
     </>
   );
 }

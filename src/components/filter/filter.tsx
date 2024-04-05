@@ -8,7 +8,7 @@ import useClientStore from "../../services/store";
 
 
 export default function Filter({ setFilter }: { setFilter: any }) {
-    const { setClients, page, nElements } = useClientStore();
+    const { setClients, page, nElements, setTotalPages } = useClientStore();
     const [isFocused, setIsFocused] = useState(false);
     const [inputValue, setInputValue] = useState("");
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -33,6 +33,7 @@ export default function Filter({ setFilter }: { setFilter: any }) {
             axios.get(`${apiUrl}/api/client/${page}/${nElements}/${e.target.value}`).then((response) => {
                 setClients(response.data.clients);
                 console.log(response.data);
+                setTotalPages(response.data.totalPages);
             }).catch((error) => {
                 console.error("Error:", error);
             });

@@ -68,6 +68,30 @@
     @media only screen and (min-width: 80em)
         font-size: 18px
 
+.centralize_message
+    width: 100%
+    background-color: #d4d4d4
+    text-align: center
+    margin: 0px
+    .message_error
+        margin: 0px
+        /* Smaller devides (624px and down) */
+        @media only screen and (max-width: 40em)
+            font-size: 14px
+            font-weight: bold
+        /* Small devices such as large phones (640px and up) */
+        @media only screen and (min-width: 40em)
+            font-size: 18px
+        /* Medium devices such as tablets (768px and up) */
+        @media only screen and (min-width: 48em)
+            font-size: 22px
+        /* Large devices such as laptops (1024px and up) */
+        @media only screen and (min-width: 64em)
+            font-size: 26px
+        /* Largest devices such as desktops (1280px and up) */
+        @media only screen and (min-width: 80em)
+            font-size: 30px
+
 .table
     width: 95%
     margin-top: 2%
@@ -152,6 +176,7 @@
                         color: var(--warning-color)
                     .high_risk
                         color: var(--danger-color)
+                    
             .button_box
                 position: absolute
                 display: inline-grid
