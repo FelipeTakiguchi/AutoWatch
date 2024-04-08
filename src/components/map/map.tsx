@@ -5,7 +5,6 @@ import { Popup } from "../../../node_modules/react-leaflet/lib/Popup"
 import { TileLayer } from "../../../node_modules/react-leaflet/lib/TileLayer"
 import { MapContainer } from "../../../node_modules/react-leaflet/lib/MapContainer"
 import { Marker } from "../../../node_modules/react-leaflet/lib/Marker"
-import 'leaflet/dist/leaflet.css'
 import "./styles.sass"
 
 export default function Map(props: any) {

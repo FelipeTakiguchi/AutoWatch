@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 export default function WebSocketComponent() {
   useEffect(() => {
-    const socket = new WebSocket('wss://d13387d45efebb8c9c1ac35159e835c8.loophole.site/ws');
+    const socket = new WebSocket('wss://esp32-mpu9250-autobox-backend.onrender.com/ws');
 
     socket.onopen = () => {
       console.log('WebSocket connection established.');
