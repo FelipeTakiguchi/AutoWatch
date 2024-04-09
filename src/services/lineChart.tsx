@@ -2,13 +2,17 @@
 import { ApexOptions } from 'apexcharts';
 import React from 'react';
 import dynamic from "next/dynamic";
+import useClientStore from './store';
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 const ChartPage = () => {
+  const { impactData } = useClientStore();
   const series = [{
-    name: 'Sales',
-    data: [30, 40, 35, 50, 49, 60, 70, 91, 125,30]
+    name: 'Acceleration',
+    data: impactData.data.map(item => item.acceleration),
   }];
+
+  console.log(impactData);
 
   const options: ApexOptions = {
     chart: {
@@ -27,10 +31,11 @@ const ChartPage = () => {
     fill: {
       type: 'gradient',
       gradient: {
+        type: 'vertical',
         shadeIntensity: 1,
-        inverseColors: true, // Invertendo o gradiente
-        opacityFrom: 0, // Início da opacidade
-        opacityTo: 1, // Fim da opacidade
+        inverseColors: true,
+        opacityFrom: 1,
+        opacityTo: 1,
         stops: [0, 90, 100]
       },
     },
@@ -38,27 +43,34 @@ const ChartPage = () => {
       enabled: false
     },
     title: {
-      text: 'Product Sales',
+      text: 'Aceleração x Tempo',
       align: 'left'
     },
     yaxis: {
       labels: {
-        formatter: function (val) {
-          return (val).toFixed(0);
+        formatter: function (val: number) {
+          return val.toFixed(1);
         },
       },
       title: {
-        text: 'Price'
+        text: 'Aceleração em G (s)'
       },
     },
     xaxis: {
-      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']
+      tickAmount: 10,
+      categories: impactData.data.map(item => {
+        const date = new Date(new Date(impactData.arising).getTime() - (impactData.data[impactData.data.length - 1].time - item.time));
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+        const seconds = date.getSeconds();
+        return `${hours}:${minutes}:${seconds}`;
+      }),
     },
     tooltip: {
       shared: false,
       y: {
-        formatter: function (val) {
-          return (val).toFixed(0)
+        formatter: function (val: number) {
+          return val.toFixed(3)
         }
       }
     }
@@ -66,8 +78,7 @@ const ChartPage = () => {
 
   return (
     <div>
-      <h1>Chart Example</h1>
-      <Chart options={options} series={series} type="line" height={350} width={760}/>
+      <Chart options={options} series={series} type="line" height={350} width={760} />
     </div>
   );
 };

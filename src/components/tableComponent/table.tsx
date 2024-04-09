@@ -7,6 +7,7 @@ import Image from "next/image";
 import ContactModal from '../modal/contactModal/contactModal';
 import SimulationModal from '../modal/simulationModal/simulationModal';
 import axios from 'axios';
+import useClientStore from '@/services/store';
 
 interface RowData {
     email: string;
@@ -28,6 +29,7 @@ interface TableProps {
 }
 
 export default function Table({ data }: TableProps) {
+    const { setImpactData } = useClientStore();
     const [expandedRow, setExpandedRow] = useState<number | null>(null);
     const [modalOpen, setModalOpen] = useState<string>("");
     const [event, setEvent] = useState<EventAttributes>({});
@@ -36,9 +38,16 @@ export default function Table({ data }: TableProps) {
     const fetchEventData = async (plate: string) => {
         try {
             const response = await axios.get(apiUrl + "/api/event/" + plate);
-            console.log(response);
-
             setEvent(response.data);
+
+            setImpactData({
+                arising: response.data.arised,
+                data: response.data.readings.map((reading: { maxAcceleration: number; timestamp: number; }) => ({
+                    acceleration: reading.maxAcceleration,
+                    time: reading.timestamp
+                }))
+            });
+
         } catch (error) {
             console.error('Error fetching data:', error);
         }
