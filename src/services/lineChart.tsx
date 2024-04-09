@@ -1,16 +1,10 @@
+"use client";
 import { ApexOptions } from 'apexcharts';
 import React from 'react';
-import Chart from 'react-apexcharts';
-
-export interface ChartProps {
-  options: ApexOptions;
-  series: ApexAxisChartSeries | ApexNonAxisChartSeries;
-  type: 'line' | 'area';
-  height: number | string;
-}
+import dynamic from "next/dynamic";
+const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 const ChartPage = () => {
-  // Sample data for the chart
   const series = [{
     name: 'Sales',
     data: [30, 40, 35, 50, 49, 60, 70, 91, 125,30]
@@ -34,9 +28,9 @@ const ChartPage = () => {
       type: 'gradient',
       gradient: {
         shadeIntensity: 1,
-        inverseColors: false,
-        opacityFrom: 0.5,
-        opacityTo: 1,
+        inverseColors: true, // Invertendo o gradiente
+        opacityFrom: 0, // Início da opacidade
+        opacityTo: 1, // Fim da opacidade
         stops: [0, 90, 100]
       },
     },
@@ -50,7 +44,7 @@ const ChartPage = () => {
     yaxis: {
       labels: {
         formatter: function (val) {
-          return (val / 1000000).toFixed(0);
+          return (val).toFixed(0);
         },
       },
       title: {
@@ -64,7 +58,7 @@ const ChartPage = () => {
       shared: false,
       y: {
         formatter: function (val) {
-          return (val / 1000000).toFixed(0)
+          return (val).toFixed(0)
         }
       }
     }
@@ -73,7 +67,7 @@ const ChartPage = () => {
   return (
     <div>
       <h1>Chart Example</h1>
-      <Chart options={options} series={series} type="line" height={350} />
+      <Chart options={options} series={series} type="line" height={350} width={760}/>
     </div>
   );
 };

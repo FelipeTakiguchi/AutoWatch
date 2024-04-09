@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 
 export default function WebSocketComponent() {
   useEffect(() => {
-    const socket = new WebSocket('wss://esp32-mpu9250-autobox-backend.onrender.com/ws');
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL!.replace("https", "wss") + "/ws";
+    const socket = new WebSocket(apiUrl);
 
     socket.onopen = () => {
       console.log('WebSocket connection established.');

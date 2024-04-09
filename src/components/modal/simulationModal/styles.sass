@@ -15,12 +15,19 @@
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.3)
         .modal_content 
             .modal_header
-                background-color: #f0f0f0
+                display: flex
+                padding: 0
+                justify-content: space-evenly
                 border-radius: 8px 8px 0 0
-                padding: 1rem
-                .modal_title
-                    padding: 0px
-                    margin: 0px
-                    text-align: center
+                .modal_button
+                    flex: 1
+                    border-radius: 8px 8px 0 0
+                    background-color: #f0f0f0
+                    border: none
+                    .modal_title
+                        padding: 0px
+                        margin: 0px
+                        text-align: center
+                .modal_button_selected
+                    background-color: #d6d6d6
             .modal_content
-                padding: 1rem
