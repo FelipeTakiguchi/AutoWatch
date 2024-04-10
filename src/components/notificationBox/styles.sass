@@ -1,22 +1,29 @@
 .notification_icon_button
-    background-color: #fff
+    background-color: var(--primary-color)
     padding: .2rem
+    border-style: solid
+    border-color: #fff
     border-radius: 12px
     position: absolute
     top: 2rem
     right: 1rem
     cursor: pointer
     &:hover
-        background-color: #dadada
+        background-color: var(--primary-color-100)
+    .notify_icon
+        width: 2.4rem
+        height: 2.4rem
+        &:hover
+            filter: invert(99%) sepia(5%) saturate(219%) hue-rotate(86deg) brightness(117%) contrast(81%)
 
 .blink
     animation: blink-animation 0.5s infinite alternate
 
 @keyframes blink-animation 
     0% 
-        background-color: transparent
-    100% 
         background-color: #fff
+    100% 
+        background-color: var(--primary-color)
 
 
 .notification_list 

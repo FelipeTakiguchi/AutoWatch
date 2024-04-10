@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 export default function WebSocketComponent() {
   useEffect(() => {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL!.replace("https", "wss") + "/ws";
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL!.replace("http", "wss") + "/ws";
     const socket = new WebSocket(apiUrl);
 
     socket.onopen = () => {

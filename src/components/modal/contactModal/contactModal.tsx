@@ -3,7 +3,7 @@ import "./styles.sass";
 export default function ContactModal() {
     const mobileNumber = "+41 99221-3693";
     const message = "message test";
-    
+
     const onSubmit = () => {
         // Regex expression to remove all characters which are NOT alphanumeric 
         let number = mobileNumber.replace(/[^\w\s]/gi, "").replace(/ /g, "");
@@ -24,7 +24,9 @@ export default function ContactModal() {
                 <section className="modal_content">
                     <p className="modal_text"><b>Email:</b> felipe_ntakiguchi@hotmail.com</p>
                     <p className="modal_text"><b>Telefone:</b> (41) 99221-3693</p>
-                    <button onClick={() => onSubmit()}>Enviar Mensagem</button>
+                    <div className="centralize">
+                        <button className="modal_contact_button" onClick={() => onSubmit()}>Enviar Mensagem</button>
+                    </div>
                 </section>
             </div>
         </div>

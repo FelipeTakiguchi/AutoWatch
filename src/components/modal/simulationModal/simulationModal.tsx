@@ -2,7 +2,7 @@
 import "./styles.sass";
 import { useMemo, useState } from "react";
 import dynamic from 'next/dynamic';
-import ChartPage from "@/services/lineChart";
+import ChartPage from "@/components/lineChart/lineChart";
 
 export default function SimulationModal() {
     const [option, setOption] = useState("Map");

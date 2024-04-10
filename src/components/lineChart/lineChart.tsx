@@ -1,8 +1,9 @@
 "use client";
 import { ApexOptions } from 'apexcharts';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import dynamic from "next/dynamic";
-import useClientStore from './store';
+import useClientStore from '../../services/store';
+import "./styles.sass";
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 const ChartPage = () => {
@@ -12,7 +13,19 @@ const ChartPage = () => {
     data: impactData.data.map(item => item.acceleration),
   }];
 
-  console.log(impactData);
+  const [chartHeight, setChartHeight] = useState(window.innerHeight * 0.5); // Initial height
+  const [chartWidth, setChartWidth] = useState(window.innerWidth * 0.6); // Initial width
+
+  // Update chart dimensions on window resize
+  useEffect(() => {
+    function handleResize() {
+      setChartHeight(window.innerHeight * 0.6); // Set height as 60% of window height
+      setChartWidth(window.innerWidth * 0.8); // Set width as 80% of window width
+    }
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
 
   const options: ApexOptions = {
     chart: {
@@ -77,8 +90,8 @@ const ChartPage = () => {
   };
 
   return (
-    <div>
-      <Chart options={options} series={series} type="line" height={350} width={760} />
+    <div className="chart">
+      <Chart options={options} series={series} type="line" height={chartHeight} width={chartWidth} />
     </div>
   );
 };
