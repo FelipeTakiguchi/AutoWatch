@@ -1,5 +1,5 @@
 "use client";
-import "./styles.sass";
+import "../styles.sass";
 import { useMemo, useState } from "react";
 import dynamic from 'next/dynamic';
 import ChartPage from "@/components/lineChart/lineChart";
@@ -30,7 +30,7 @@ export default function SimulationModal() {
 
     return (
         <div className="modal">
-            <div className="modal_content">
+            <div>
                 <header className="modal_header">
                     <button onClick={() => setOption("Map")} className={`modal_button ${option=="Map" ? "modal_button_selected": ""}`}>
                         <h1 className="modal_title first_button">Mapa</h1>

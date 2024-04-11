@@ -1,14 +1,20 @@
 /* globals.css */
 
 :root {
-  --primary-color: #2068AC;
-  --primary-color-100: #3a87ce;
+  --white: #F0F0F0;
+  --black: #090909;
+  --gray: #DDDEE5;
+  --gray-500: #C3C3C3;
+  --primary-color: #2B3D5B;
+  --primary-color-700: #0E1D35;
+  --primary-color-500: #15263F;
+  --primary-color-100: #7C8594;
   --danger-color: #A00000;
   --ok-color: #00A247;
   --warning-color: #997B00;
   --green-300: #4C956C;
   --green-500: #00662d;
-  --font-family: "Merriweather Sans", sans-serif;
+  --font-family: "Roboto", sans-serif;
 }
 
 html {
@@ -24,5 +30,83 @@ body {
 }
 
 * {
+  box-sizing: border-box;
+  color: #090909;
   font-family: var(--font-family), Arial, Helvetica, sans-serif;
+}
+
+.leaflet-control-attribution {
+  display: none;
+}
+
+.roboto-thin {
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.roboto-light {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.roboto-regular {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.roboto-medium {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.roboto-bold {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.roboto-black {
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.roboto-thin-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.roboto-light-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.roboto-regular-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.roboto-medium-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.roboto-bold-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.roboto-black-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-style: italic;
 }

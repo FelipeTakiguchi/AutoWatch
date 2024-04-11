@@ -102,7 +102,7 @@ export default function Table({ data }: TableProps) {
                         <tr className="centralize_message">
                             <td colSpan={4}>
                                 <p className="message_error">
-                                    No data to show
+                                    Dados Indisponíveis
                                 </p>
                             </td>
                         </tr>
@@ -113,13 +113,20 @@ export default function Table({ data }: TableProps) {
                                 <td className="table_element first_element">{row.plate.toUpperCase()}</td>
                                 <td className="table_element">{row.vehicle}</td>
                                 <td className="table_element">{row.name}</td>
-                                <td className="table_element status"></td>
+                                <td className="table_element status">                               
+                                    {/* <div className="wrap_container">
+                                        <p className="status_text">{row.status}</p>
+                                        {row.status === "Rodando" && (<div className="green_circle" />)}
+                                        {row.status === "Sem sinal" && (<div className="yellow_circle" />)}
+                                        {row.status === "Em crise" && (<div className="red_circle" />)}
+                                    </div> */}
+                                </td>
                             </tr>
                             {!row.lastLocation && expandedRow === index &&
                                 <tr className="centralize_message">
                                     <td colSpan={4}>
                                         <p className="message_error">
-                                            No data to show
+                                            Dados Indisponíveis
                                         </p>
                                     </td>
                                 </tr>
@@ -144,9 +151,9 @@ export default function Table({ data }: TableProps) {
                                         }
                                     </td>
                                     <td className="button_box">
-                                        {event.impactSpeed &&
+                                        {row.plate == event.plate &&
                                             <>
-                                                <button className="contact_button" onClick={() => openModal("contact")}>
+                                                <button className="button" onClick={() => openModal("contact")}>
                                                     <Image
                                                         className="icon"
                                                         src={contactIcon}
@@ -154,7 +161,7 @@ export default function Table({ data }: TableProps) {
                                                     />
                                                     <h2 className="button_text">Contatar Motorista</h2>
                                                 </button>
-                                                <button className="analyze_button" onClick={() => openModal("analyze")}>
+                                                <button className="button" onClick={() => openModal("analyze")}>
                                                     <Image
                                                         className="icon"
                                                         src={analysisIcon}

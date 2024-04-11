@@ -70,11 +70,17 @@
 
 .centralize_message
     width: 100%
-    background-color: #d4d4d4
+    background-color: var(--gray-500)
     text-align: center
     margin: 0px
+    td
+        padding: 0px
     .message_error
-        margin: 0px
+        background-color: var(--gray-500)
+        color: var(--primary-color-700)
+        font-weight: bold
+        font-style: italic
+        margin: 0px !important
         /* Smaller devides (624px and down) */
         @media only screen and (max-width: 40em)
             font-size: 14px
@@ -99,7 +105,7 @@
     border-collapse: collapse
     padding-left: 10rem
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2)
-
+    background-color: var(--white)
     .table_header
         background-color: var(--primary-color)
         max-height: 10px
@@ -115,12 +121,12 @@
                     text-align: start
                     font-weight: bold
                     margin: 0px
-                    color: #fff
+                    color: var(--white)
                     @include dynamic_text
                         
     .table_body
         .selected_table_row
-            background-color: #d4d4d4
+            background-color: var(--gray-500)
         .section_group
             border-bottom: 1px solid black
         .table_row
@@ -178,6 +184,7 @@
                         color: var(--danger-color)
                     
             .button_box
+                gap: 1rem
                 position: absolute
                 display: inline-grid
                 /* Smaller devides (624px and down) */
@@ -195,41 +202,7 @@
                 /* Largest devices such as desktops (1280px and up) */
                 @media only screen and (min-width: 80em)
                     right: 4rem
-                .contact_button
-                    background-color: var(--green-300)
-                    margin-bottom: 1rem
-                    @include button
-                    /* Medium devices such as tablets (768px and up) */
-                    @media only screen and (max-width: 48em)
-                        margin-bottom: .5rem
-                    /* Smaller devides (624px and down) */
-                    @media only screen and (max-width: 40em)
-                        background-color: transparent
-                        padding: 0
-                        margin-right: 3rem
-                        margin-top: 1rem
-                    /* Smaller devides (528px and down) */
-                    @media only screen and (max-width: 33em)
-                        margin-right: 2rem
-                    /* Smaller devides (400px and down) */
-                    @media only screen and (max-width: 25em)
-                        margin-right: 1rem
-                    .button_text
-                        /* Smaller devides (624px and down) */
-                        @media only screen and (max-width: 40em)
-                            display: none
-                        font-weight: bold   
-                        color: #fff       
-                        @include dynamic_text
-                    .icon
-                        width: 1.5rem
-                        /* Smaller devides (624px and down) */
-                        @media only screen and (max-width: 40em)
-                            filter: invert(51%) sepia(26%) saturate(652%) hue-rotate(94deg) brightness(95%) contrast(91%)
-                        /* Small devices such as large phones (640px and up) */
-                        @media only screen and (min-width: 40em)
-                            filter: invert(100%) sepia(0%) saturate(1%) hue-rotate(92deg) brightness(104%) contrast(101%)
-                .analyze_button
+                .button
                     background-color: var(--primary-color)
                     @include button
                     /* Smaller devides (624px and down) */
@@ -248,7 +221,7 @@
                         @media only screen and (max-width: 40em)
                             display: none
                         font-weight: bold   
-                        color: #fff
+                        color: var(--white)
                         @include dynamic_text
                     .icon
                         width: 1.5rem
@@ -258,3 +231,8 @@
                         /* Small devices such as large phones (640px and up) */
                         @media only screen and (min-width: 40em)
                             filter: invert(100%) sepia(0%) saturate(1%) hue-rotate(92deg) brightness(104%) contrast(101%)
+                    &:hover
+                        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px
+                        opacity: 0.90
+                        transition: .2s
+                        transform: scale(1.01)
