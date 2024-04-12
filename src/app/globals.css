@@ -48,6 +48,13 @@ body {
   font-family: var(--font-family);
 }
 
+.main {
+  display: flex;
+  flex-direction: column;
+  margin-left: 2.5%;
+  margin-top: 2rem;
+}
+
 * {
   box-sizing: border-box;
   color: #090909;

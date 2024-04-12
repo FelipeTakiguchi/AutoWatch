@@ -8,16 +8,17 @@ import ActionBar from "@/components/actionsBar/actionsBar";
 const axios = require('axios');
 import useClientStore from "../services/store";
 import WebSocketComponent from "@/services/webSocket";
+import Delimiter from "@/components/delimiter/delimiter";
 
 export default function Home() {
-  const { page, nElements, setTotalPages, clients, setClients } = useClientStore();
+  const { page, nElements, setElementsReturned, setTotalElements, setTotalPages, clients, setClients } = useClientStore();
   const [filter, setFilter] = useState("");
   const [selectedStatus, setSelectedStatus] = useState('');
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
     fetchData();
-  }, [page]);
+  }, [page, nElements]);
   
   console.log(apiUrl);
 
@@ -27,6 +28,8 @@ export default function Home() {
 
       setClients(response.data.clients);
       setTotalPages(response.data.totalPages)
+      setTotalElements(response.data.totalElements)
+      setElementsReturned(response.data.clients.length)
       console.log(response.data);
       
     } catch (error) {
@@ -46,8 +49,9 @@ export default function Home() {
     <>
       <HeaderComponent />
       <ActionBar setFilter={setFilter} selectedStatus={selectedStatus} handleStatusChange={handleStatusChange} />
-      <main>
+      <main className="main">
         <Table data={clients} />
+        <Delimiter/>
       </main>
       <nav className="centralize_bottom">
         <Pagination/>
