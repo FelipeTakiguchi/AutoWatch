@@ -29,8 +29,7 @@ interface TableProps {
 }
 
 export default function Table({ data }: TableProps) {
-    const { setImpactData } = useClientStore();
-    const [expandedRow, setExpandedRow] = useState<number | null>(null);
+    const { setImpactData, expandedRow, setExpandedRow, nElements } = useClientStore();
     const [modalOpen, setModalOpen] = useState<string>("");
     const [event, setEvent] = useState<EventAttributes>({});
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -70,10 +69,12 @@ export default function Table({ data }: TableProps) {
         }
     };
 
-    const handleRowClick = (index: number, plate: string) => {
-        toggleRow(index);
-        setEvent({});
-        fetchEventData(plate);
+    const handleRowClick = (event: any, index: number, plate: string) => {
+        if (!event.target.closest('.button')) {
+            toggleRow(index);
+            setEvent({});
+            fetchEventData(plate);
+        }
     };
 
     const openModal = (modal: string) => {
@@ -94,7 +95,7 @@ export default function Table({ data }: TableProps) {
                         <th className="table_header_cell first_header_cell"><p className="table_header_text">Placa</p></th>
                         <th className="table_header_cell"><p className="table_header_text">Modelo</p></th>
                         <th className="table_header_cell"><p className="table_header_text">Dono</p></th>
-                        <th className="table_header_cell status"><p className="table_header_text">Status</p></th>
+                        <th className="table_header_cell status last_header_cell"><p className="table_header_text">Status</p></th>
                     </tr>
                 </thead>
                 <tbody className="table_body">
@@ -109,11 +110,11 @@ export default function Table({ data }: TableProps) {
                     }
                     {data.map((row, index) => (
                         <React.Fragment key={index}>
-                            <tr className={`table_row ${expandedRow === index ? "selected_table_row" : "section_group"}`} onClick={() => handleRowClick(index, row.plate)}>
+                            <tr className={`table_row ${expandedRow === index ? "selected_table_row" : index + 1 != nElements ? "section_group" : ""}`} onClick={(e) => handleRowClick(e, index, row.plate)}>
                                 <td className="table_element first_element">{row.plate.toUpperCase()}</td>
                                 <td className="table_element">{row.vehicle}</td>
                                 <td className="table_element">{row.name}</td>
-                                <td className="table_element status">                               
+                                <td className="table_element status">
                                     {/* <div className="wrap_container">
                                         <p className="status_text">{row.status}</p>
                                         {row.status === "Rodando" && (<div className="green_circle" />)}
@@ -123,7 +124,7 @@ export default function Table({ data }: TableProps) {
                                 </td>
                             </tr>
                             {!row.lastLocation && expandedRow === index &&
-                                <tr className="centralize_message">
+                                <tr className="centralize_message" onClick={(e) => handleRowClick(e, index, row.plate)}>
                                     <td colSpan={4}>
                                         <p className="message_error">
                                             Dados Indisponíveis
@@ -132,7 +133,7 @@ export default function Table({ data }: TableProps) {
                                 </tr>
                             }
                             {expandedRow === index && (
-                                <tr className="table_row additional_info_row selected_table_row">
+                                <tr className="table_row additional_info_row selected_table_row" onClick={(e) => handleRowClick(e, index, row.plate)}>
                                     <td colSpan={4} className="text_box">
                                         {row.lastLocation && row.lastLocation &&
                                             <p className="info_text">Localização: {row.lastLocation}</p>

@@ -14,7 +14,6 @@
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.3)
         .modal_header
             display: flex
-            padding: 0
             background-color: var(--primary-color)
             justify-content: space-evenly
             border-radius: 8px 8px 0 0
@@ -23,26 +22,31 @@
                 border-radius: 8px 8px 0 0
                 background-color: var(--primary-color)
                 border: none
+                &:not(.modal_button_selected):hover
+                    opacity: 0.9
+                    transform: translateY(-1rem)
+                    transition: .3s
             .modal_title
                 padding: 0px
                 color: var(--white)
                 margin: 0px
+                line-height: 3rem
                 text-align: center
                 /* Smaller devides (624px and down) */
                 @media only screen and (max-width: 40em)
-                    font-size: 24px
+                    font-size: 20px
                 /* Small devices such as large phones (640px and up) */
                 @media only screen and (min-width: 40em)
-                    font-size: 28px
+                    font-size: 22px
                 /* Medium devices such as tablets (768px and up) */
                 @media only screen and (min-width: 48em)
-                    font-size: 32px
+                    font-size: 24px
                 /* Large devices such as laptops (1024px and up) */
                 @media only screen and (min-width: 64em)
-                    font-size: 36px
+                    font-size: 26px
                 /* Largest devices such as desktops (1280px and up) */
                 @media only screen and (min-width: 80em)
-                    font-size: 40px
+                    font-size: 28px
             .modal_button_selected
                 background-color: var(--white)
                 .modal_title
@@ -79,6 +83,10 @@
                     background-color: var(--primary-color)
                     border: none
                     border-radius: 12px
+                    &:hover
+                        opacity: 0.9
+                        transform: scale(1.02)
+                        transition: .3s
                     .text_button
                         margin: .2rem
                         color: var(--white)

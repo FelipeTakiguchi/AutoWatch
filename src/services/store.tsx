@@ -9,7 +9,7 @@ interface RowData {
   vehicle: string;
 }
 
-interface AccelerationPerTime{
+interface AccelerationPerTime {
   acceleration: number,
   time: number,
 }
@@ -25,24 +25,28 @@ interface ClientStore {
   page: number;
   totalPages: number;
   nElements: number;
+  expandedRow: number | null;
   setClients: (clients: RowData[]) => void;
   setImpactData: (impactData: ImpactData) => void;
   setPage: (page: number) => void;
   setTotalPages: (totalPages: number) => void;
   setNElements: (nElements: number) => void;
+  setExpandedRow: (expandedRow: number | null) => void
 }
 
 const useClientStore = create<ClientStore>(set => ({
   clients: [],
-  impactData: {arising: new Date(), data: []},
+  impactData: { arising: new Date(), data: [] },
   page: 1,
   totalPages: 10,
   nElements: 10,
+  expandedRow: null,
   setClients: clients => set({ clients }),
   setImpactData: impactData => set({ impactData }),
   setPage: page => set({ page }),
   setTotalPages: totalPages => set({ totalPages }),
   setNElements: nElements => set({ nElements }),
+  setExpandedRow: expandedRow => set({ expandedRow }),
 }));
 
 export default useClientStore;

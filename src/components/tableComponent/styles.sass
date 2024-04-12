@@ -72,10 +72,13 @@
     width: 100%
     background-color: var(--gray-500)
     text-align: center
+    transition: .5s
     margin: 0px
     td
+        transition: .5s
         padding: 0px
     .message_error
+        transition: .5s
         background-color: var(--gray-500)
         color: var(--primary-color-700)
         font-weight: bold
@@ -100,6 +103,8 @@
 
 .table
     width: 95%
+    border-radius: .5rem
+    transition: .5s
     margin-top: 2%
     margin-left: 2.5%
     border-collapse: collapse
@@ -107,36 +112,54 @@
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2)
     background-color: var(--white)
     .table_header
-        background-color: var(--primary-color)
+        background-color: var(--primary-color-500)
+        transition: .5s
         max-height: 10px
         .table_row
             border-spacing: 0px
+            transition: .5s
             align-items: center
             .first_header_cell
-                    padding-left: 2rem
+                transition: .5s
+                border-radius: .5rem 0 0 0
+                padding-left: 2rem
+            .last_header_cell
+                transition: .5s
+                border-radius: 0 .5rem 0 0
             .table_header_cell
                 padding-top: .4rem
+                transition: .5s
                 padding-bottom: .4rem
                 .table_header_text
                     text-align: start
+                    transition: .5s
                     font-weight: bold
                     margin: 0px
                     color: var(--white)
                     @include dynamic_text
                         
     .table_body
+        transition: .5s
         .selected_table_row
+            transition: .5s
             background-color: var(--gray-500)
+        .round_last_row
+            transition: .5s
+            border-radius: .5rem
         .section_group
+            transition: .5s
             border-bottom: 1px solid black
         .table_row
             .first_element
+                transition: .5s
                 padding-left: 2rem
             .table_element
+                transition: .5s
                 padding-top: .4rem
                 padding-bottom: .4rem
                 @include dynamic_text
                 .wrap_container
+                    transition: .5s
                     display: flex
                     align-items: center
                     justify-content: space-between
@@ -156,7 +179,9 @@
                         @include circle
                         background-color: var(--danger-color)
         .additional_info_row
+            transition: .5s
             .text_box
+                transition: .5s
                 /* Smaller devides (624px and down) */
                 @media only screen and (max-width: 40em)
                     padding-left: 1rem

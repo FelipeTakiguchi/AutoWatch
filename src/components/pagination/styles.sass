@@ -1,23 +1,33 @@
 .navigation_bar
     display: flex
     transition: 1s
-    .arrow
-        transition: 1s
-        /* Smaller devides (624px and down) */
-        @media only screen and (max-width: 40em)
-            width: 1rem
-        /* Small devices such as large phones (640px and up) */
-        @media only screen and (min-width: 40em)
-            width: 1.2rem
-        /* Medium devices such as tablets (768px and up) */
-        @media only screen and (min-width: 48em)
-            width: 1.4rem
-        /* Large devices such as laptops (1024px and up) */
-        @media only screen and (min-width: 64em)
-            width: 1.6rem
-        /* Largest devices such as desktops (1280px and up) */
-        @media only screen and (min-width: 80em)
-            width: 1.8rem
+    gap: .3rem
+    .arrow_button
+        background-color: var(--transparent)
+        border-radius: 12px
+        border: none
+        padding: 0px
+        transition: .3s
+        &:hover
+            transition: .3s
+            background-color: var(--white)
+        .arrow
+            transition: 1s
+            /* Smaller devides (624px and down) */
+            @media only screen and (max-width: 40em)
+                width: 1rem
+            /* Small devices such as large phones (640px and up) */
+            @media only screen and (min-width: 40em)
+                width: 1.2rem
+            /* Medium devices such as tablets (768px and up) */
+            @media only screen and (min-width: 48em)
+                width: 1.4rem
+            /* Large devices such as laptops (1024px and up) */
+            @media only screen and (min-width: 64em)
+                width: 1.6rem
+            /* Largest devices such as desktops (1280px and up) */
+            @media only screen and (min-width: 80em)
+                width: 1.8rem
     .paginator
         transition: 1s
         display: flex
@@ -36,38 +46,38 @@
         /* Largest devices such as desktops (1280px and up) */
         @media only screen and (min-width: 80em)
             gap: .3rem
-
-        .nav_button
-            background-color: rgba(0, 0, 0, 0)
-            border: none
-            border-radius: 10px
-            padding: .4rem
-            min-width: 2rem
-            min-height: 2rem
-            font-size: 18px
-            color: var(--primary-color)
-            /* Smaller devides (624px and down) */
-            @media only screen and (max-width: 40em)
-                font-size: 12px
-                font-weight: bold
-            /* Small devices such as large phones (640px and up) */
-            @media only screen and (min-width: 40em)
-                font-size: 14px
-            /* Medium devices such as tablets (768px and up) */
-            @media only screen and (min-width: 48em)
-                font-size: 16px
-            /* Large devices such as laptops (1024px and up) */
-            @media only screen and (min-width: 64em)
-                font-size: 18px
-            /* Largest devices such as desktops (1280px and up) */
-            @media only screen and (min-width: 80em)
-                font-size: 20px
-
-            &:not(.selected_link):hover
-                background-color: var(--primary-color-100)
-
         .selected_link
             color: var(--white)
             background-color: var(--primary-color)
             transition: .5s
             box-shadow: 2px 2px 4px rgba(37, 37, 37, 0.6)
+
+.nav_button
+    background-color: rgba(0, 0, 0, 0)
+    border: none
+    border-radius: 10px
+    padding: .4rem
+    transition: .3s
+    min-width: 2rem
+    min-height: 2rem
+    font-size: 18px
+    color: var(--primary-color)
+    /* Smaller devides (624px and down) */
+    @media only screen and (max-width: 40em)
+        font-size: 12px
+        font-weight: bold
+    /* Small devices such as large phones (640px and up) */
+    @media only screen and (min-width: 40em)
+        font-size: 14px
+    /* Medium devices such as tablets (768px and up) */
+    @media only screen and (min-width: 48em)
+        font-size: 16px
+    /* Large devices such as laptops (1024px and up) */
+    @media only screen and (min-width: 64em)
+        font-size: 18px
+    /* Largest devices such as desktops (1280px and up) */
+    @media only screen and (min-width: 80em)
+        font-size: 20px
+
+    &:not(.selected_link):hover
+        background-color: var(--primary-color-100)

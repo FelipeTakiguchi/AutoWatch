@@ -1,16 +1,19 @@
 .notification_icon_button
-    background-color: var(--primary-color)
+    background-color: var(--primary-color-500)
     padding: .2rem
     border-style: solid
-    border-color: var(--white)
+    border-color: var(--primary-color-500)
     border-radius: 12px
     position: absolute
     top: 2rem
     right: 1rem
     cursor: pointer
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)
+    transition: .3s
     &:hover
-        background-color: var(--primary-color-500)
-        border-color: var(--primary-color-500)
+        background-color: var(--primary-color)
+        transform: scale(1.08)
+        border-color: var(--primary-color)
         .notify_icon
             filter: invert(20%) sepia(12%) saturate(2472%) hue-rotate(179deg) brightness(94%) contrast(86%)
     .notify_icon
