@@ -29,7 +29,7 @@ interface TableProps {
 }
 
 export default function Table({ data }: TableProps) {
-    const { setImpactData, expandedRow, setExpandedRow, nElements } = useClientStore();
+    const { setImpactData, expandedRow, setExpandedRow, elementsReturned } = useClientStore();
     const [modalOpen, setModalOpen] = useState<string>("");
     const [event, setEvent] = useState<EventAttributes>({});
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -110,7 +110,7 @@ export default function Table({ data }: TableProps) {
                     }
                     {data.map((row, index) => (
                         <React.Fragment key={index}>
-                            <tr className={`table_row ${expandedRow === index ? "selected_table_row" : index + 1 != nElements ? "section_group" : ""}`} onClick={(e) => handleRowClick(e, index, row.plate)}>
+                            <tr className={`table_row ${expandedRow === index ? "selected_table_row" : index + 1 != elementsReturned ? "section_group" : ""}`} onClick={(e) => handleRowClick(e, index, row.plate)}>
                                 <td className="table_element first_element">{row.plate.toUpperCase()}</td>
                                 <td className="table_element">{row.vehicle}</td>
                                 <td className="table_element">{row.name}</td>
