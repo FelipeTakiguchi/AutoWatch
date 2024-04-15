@@ -28,6 +28,7 @@ interface ClientStore {
   totalElements: number;
   expandedRow: number | null;
   elementsReturned: number;
+  statusFilter: string;
   setClients: (clients: RowData[]) => void;
   setImpactData: (impactData: ImpactData) => void;
   setPage: (page: number) => void;
@@ -35,7 +36,8 @@ interface ClientStore {
   setNElements: (nElements: number) => void;
   setTotalElements: (totalElements: number) => void;
   setElementsReturned: (elementsReturned: number) => void;
-  setExpandedRow: (expandedRow: number | null) => void
+  setExpandedRow: (expandedRow: number | null) => void;
+  setStatusFilter: (statusFilter: string) => void;
 }
 
 const useClientStore = create<ClientStore>(set => ({
@@ -47,6 +49,7 @@ const useClientStore = create<ClientStore>(set => ({
   totalElements: 10,
   elementsReturned: 10,
   expandedRow: null,
+  statusFilter: "",
   setClients: clients => set({ clients }),
   setImpactData: impactData => set({ impactData }),
   setPage: page => set({ page }),
@@ -55,6 +58,7 @@ const useClientStore = create<ClientStore>(set => ({
   setTotalElements: totalElements => set({ totalElements }),
   setElementsReturned: elementsReturned => set({ elementsReturned }),
   setExpandedRow: expandedRow => set({ expandedRow }),
+  setStatusFilter: statusFilter => set({ statusFilter }),
 }));
 
 export default useClientStore;
