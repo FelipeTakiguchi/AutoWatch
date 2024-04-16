@@ -8,7 +8,23 @@
         height: 100%
         justify-content: center
         align-items: center
-        margin-left: 3rem
+        gap: 1rem
+        .logo
+            width: 65px
+            height: 65px
+            filter: invert(94%) sepia(0%) saturate(7495%) hue-rotate(210deg) brightness(108%) contrast(100%)
+            /* Smaller devides (624px and down) */
+            @media only screen and (max-width: 40em)
+                margin-left: 0
+            /* Small devices such as large phones (640px and up) */
+            @media only screen and (min-width: 40em)
+                margin-left: 7rem
+                /* Medium devices such as tablets (768px and up) */
+            @media only screen and (min-width: 48em)
+                margin-left: 3rem
+            /* Large devices such as laptops (1024px and up) */
+            @media only screen and (min-width: 64em)
+                margin-left: 0rem
 
         /* Smaller devides (624px and down) */
         @media only screen and (max-width: 40em)
@@ -33,14 +49,15 @@
             
             /* Smaller devides (624px and down) */
             @media only screen and (max-width: 40em)
-                font-size: 36px
+                font-size: 30px
+                display: none
             /* Small devices such as large phones (640px and up) */
             @media only screen and (min-width: 40em)
                 font-size: 36px
             /* Medium devices such as tablets (768px and up) */
             @media only screen and (min-width: 48em)
-                font-size: 48px
+                font-size: 42px
             /* Large devices such as laptops (1024px and up) */
             @media only screen and (min-width: 64em)
-                font-size: 64px
+                font-size: 48px
                 

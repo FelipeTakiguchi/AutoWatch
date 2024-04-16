@@ -1,3 +1,5 @@
+import Image from "next/image";
+import logo from "@/assets/images/logo.svg";
 import Notification from "../notification/notification";
 import NotificationBox from "../notificationBox/notificationBox";
 import "./styles.sass"
@@ -6,10 +8,11 @@ export default function HeaderComponent() {
     return (
         <header className='header_container'>
             <div className="centralize_title">
+                <Image className="logo" src={logo} alt="Logo Icon" />
                 <h1 className="logo_title">AutoWatch</h1>
             </div>
-            <NotificationBox/>
-            <Notification/>
+            <NotificationBox />
+            <Notification />
         </header>
     );
 };

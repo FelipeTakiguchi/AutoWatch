@@ -2,6 +2,7 @@
     display: flex
     transition: 1s
     gap: .3rem
+    align-items: center
     .arrow_button
         background-color: var(--transparent)
         border-radius: 12px
@@ -56,28 +57,35 @@
     background-color: rgba(0, 0, 0, 0)
     border: none
     border-radius: 10px
-    padding: .4rem
+    padding: .1rem
     transition: .3s
-    min-width: 2rem
-    min-height: 2rem
-    font-size: 18px
     color: var(--primary-color)
     /* Smaller devides (624px and down) */
     @media only screen and (max-width: 40em)
-        font-size: 12px
+        font-size: 9px
         font-weight: bold
+        height: 1.9rem
+        min-width: 1.9rem
     /* Small devices such as large phones (640px and up) */
     @media only screen and (min-width: 40em)
-        font-size: 14px
+        font-size: 11px
+        height: 2rem
+        min-width: 2rem
     /* Medium devices such as tablets (768px and up) */
     @media only screen and (min-width: 48em)
-        font-size: 16px
+        font-size: 13px
+        height: 2.1rem
+        min-width: 2.1rem
     /* Large devices such as laptops (1024px and up) */
     @media only screen and (min-width: 64em)
-        font-size: 18px
+        font-size: 15px
+        height: 2.2rem
+        min-width: 2.2rem
     /* Largest devices such as desktops (1280px and up) */
     @media only screen and (min-width: 80em)
-        font-size: 20px
+        font-size: 17px
+        height: 2.3rem
+        min-width: 2.3rem
 
     &:not(.selected_link):hover
         background-color: var(--primary-color-100)
