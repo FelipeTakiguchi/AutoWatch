@@ -43,7 +43,7 @@ export default function Pagination() {
     return (
         <div className="navigation_bar">
             <button
-                onClick={() => { setPage(page - 1 > 1 ? page - 1 : 1); setExpandedRow(null) }}
+                onClick={() => { if (page - 1 > 0) { setPage(page - 1); setExpandedRow(null); } }}
                 className="arrow_button">
                 <Image
                     className="arrow"
@@ -75,7 +75,7 @@ export default function Pagination() {
                 </>
             }
             <button
-                onClick={() => { setPage(page + 1 < totalPages ? page - 1 : totalPages); setExpandedRow(null) }}
+                onClick={() => { if (page + 1 <= totalPages) { setPage(page + 1); setExpandedRow(null); } }}
                 className="arrow_button">
                 <Image
                     className="arrow"
