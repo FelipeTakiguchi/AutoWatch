@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@types/websocket": "^1.0.10",
+    "@vercel/analytics": "^1.2.2",
+    "@vercel/speed-insights": "^1.0.10",
     "apexcharts": "^3.48.0",
     "axios": "^1.6.8",
     "chart.js": "^4.4.2",
