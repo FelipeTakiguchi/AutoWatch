@@ -3,7 +3,8 @@
     width: 70%
     flex-direction: column
     gap: .5rem
-    
+    position: relative
+
     .select
         border-radius: 12px
         background-color: var(--white)
@@ -18,7 +19,7 @@
         @media only screen and (max-width: 40em)
             padding: .1rem
             font-size: 10px
-            width: 6rem
+            width: 7rem
             height: 1.3rem
         /* Small devices such as large phones (640px and up) */
         @media only screen and (min-width: 40em)
@@ -81,7 +82,26 @@
         background: var(--white)
         width: 70%
         display: none
+        position: absolute
+        bottom: -6rem
         border-radius: 12px
+        
+        /* Smaller devides (624px and down) */
+        @media only screen and (max-width: 40em)
+            bottom: -3rem
+        /* Small devices such as large phones (640px and up) */
+        @media only screen and (min-width: 40em)
+            bottom: -3.8rem
+        /* Medium devices such as tablets (768px and up) */
+        @media only screen and (min-width: 48em)
+            bottom: -4.6rem
+        /* Large devices such as laptops (1024px and up) */
+        @media only screen and (min-width: 64em)
+            bottom: -5.2rem
+        /* Largest devices such as desktops (1280px and up) */
+        @media only screen and (min-width: 80em)
+            bottom: -6rem
+
         &.expand_opt
             display: flex
             text-indent: .5rem
