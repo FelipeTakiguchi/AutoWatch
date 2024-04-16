@@ -8,7 +8,7 @@ import fav from "../assets/images/favicon.ico";
 const lora = Lora({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Auto Watch",
+  title: "AutoWatch",
   description: "Watching for vehicle accidents",
 };
 
