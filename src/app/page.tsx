@@ -6,23 +6,19 @@ import Table from "@/components/tableComponent/table";
 import "./styles.sass";
 import ActionBar from "@/components/actionsBar/actionsBar";
 const axios = require('axios');
+import useClientStore from "../services/store";
+import WebSocketComponent from "@/services/webSocket";
+import Delimiter from "@/components/delimiter/delimiter";
 
 export default function Home() {
+  const { page, nElements, setElementsReturned, setTotalElements, setTotalPages, clients, setClients } = useClientStore();
   const [filter, setFilter] = useState("");
   const [selectedStatus, setSelectedStatus] = useState('');
-  const [data, setData] = useState([]);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  const nElements = 4;
-
-  // https://domain.loophole.site/api/client/1/4/ricardo
-  // https://domain.loophole.site/api/client/6605bbeef3e8db7f8672aa1f
-  // https://domain.loophole.site/api/event/ABC123
 
   useEffect(() => {
     fetchData();
-  }, [page]);
+  }, [page, nElements]);
   
   console.log(apiUrl);
 
@@ -30,8 +26,10 @@ export default function Home() {
     try {
       const response = await axios.get(apiUrl + "/api/client/" + page + "/" + nElements);
 
-      setData(response.data.clients);
+      setClients(response.data.clients);
       setTotalPages(response.data.totalPages)
+      setTotalElements(response.data.totalElements)
+      setElementsReturned(response.data.clients.length)
       console.log(response.data);
       
     } catch (error) {
@@ -51,12 +49,14 @@ export default function Home() {
     <>
       <HeaderComponent />
       <ActionBar setFilter={setFilter} selectedStatus={selectedStatus} handleStatusChange={handleStatusChange} />
-      <main>
-        <Table data={data} />
+      <main className="main">
+        <Table data={clients} />
+        <Delimiter/>
       </main>
       <nav className="centralize_bottom">
-        <Pagination totalPages={totalPages} actualPage={page} setActualPage={setPage}/>
+        <Pagination/>
       </nav>
+      <WebSocketComponent/>
     </>
   );
 }

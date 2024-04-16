@@ -5,7 +5,6 @@ import { Popup } from "../../../node_modules/react-leaflet/lib/Popup"
 import { TileLayer } from "../../../node_modules/react-leaflet/lib/TileLayer"
 import { MapContainer } from "../../../node_modules/react-leaflet/lib/MapContainer"
 import { Marker } from "../../../node_modules/react-leaflet/lib/Marker"
-import 'leaflet/dist/leaflet.css'
 import "./styles.sass"
 
 export default function Map(props: any) {
@@ -23,14 +22,14 @@ export default function Map(props: any) {
         )
     }
 
-    return <MapContainer center={[-25.4217968,-49.2740144]} zoom={15} className="map_size" scrollWheelZoom={false}>
+    return <MapContainer center={[-25.4249075, -49.2723264]} zoom={15} className="map_size" scrollWheelZoom={false}>
         <TileLayer
             className="map_size"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {renderMap()}
-        <Marker position={[-25.4217968,-49.2740144]}>
+        <Marker position={[-25.4249075, -49.2723264]}>
             <Popup>
                 <a target="_blank" href="https://www.google.com/maps/search/google+maps/@-25.4217968,-49.2740144,15z/data=!3m1!4b1?entry=ttu">Google Maps</a>
             </Popup>

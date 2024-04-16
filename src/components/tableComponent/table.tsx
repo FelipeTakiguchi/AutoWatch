@@ -7,6 +7,7 @@ import Image from "next/image";
 import ContactModal from '../modal/contactModal/contactModal';
 import SimulationModal from '../modal/simulationModal/simulationModal';
 import axios from 'axios';
+import useClientStore from '@/services/store';
 
 interface RowData {
     email: string;
@@ -18,6 +19,7 @@ interface RowData {
 }
 
 interface EventAttributes {
+    plate?: string;
     impactSpeed?: number;
     fatalityLikelyhood?: number;
 }
@@ -27,7 +29,7 @@ interface TableProps {
 }
 
 export default function Table({ data }: TableProps) {
-    const [expandedRow, setExpandedRow] = useState<number | null>(null);
+    const { setImpactData, expandedRow, setExpandedRow, elementsReturned } = useClientStore();
     const [modalOpen, setModalOpen] = useState<string>("");
     const [event, setEvent] = useState<EventAttributes>({});
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -36,6 +38,15 @@ export default function Table({ data }: TableProps) {
         try {
             const response = await axios.get(apiUrl + "/api/event/" + plate);
             setEvent(response.data);
+
+            setImpactData({
+                arising: response.data.arised,
+                data: response.data.readings.map((reading: { maxAcceleration: number; timestamp: number; }) => ({
+                    acceleration: reading.maxAcceleration,
+                    time: reading.timestamp
+                }))
+            });
+
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -58,10 +69,12 @@ export default function Table({ data }: TableProps) {
         }
     };
 
-    const handleRowClick = (index: number, plate: string) => {
-        toggleRow(index);
-        setEvent({});
-        fetchEventData(plate);
+    const handleRowClick = (event: any, index: number, plate: string) => {
+        if (!event.target.closest('.button')) {
+            toggleRow(index);
+            setEvent({});
+            fetchEventData(plate);
+        }
     };
 
     const openModal = (modal: string) => {
@@ -82,29 +95,56 @@ export default function Table({ data }: TableProps) {
                         <th className="table_header_cell first_header_cell"><p className="table_header_text">Placa</p></th>
                         <th className="table_header_cell"><p className="table_header_text">Modelo</p></th>
                         <th className="table_header_cell"><p className="table_header_text">Dono</p></th>
-                        <th className="table_header_cell status"><p className="table_header_text">Status</p></th>
+                        <th className="table_header_cell status last_header_cell"><p className="table_header_text">Status</p></th>
                     </tr>
                 </thead>
                 <tbody className="table_body">
+                    {data.length <= 0 &&
+                        <tr className="centralize_message">
+                            <td colSpan={4}>
+                                <p className="message_error">
+                                    Dados Indisponíveis
+                                </p>
+                            </td>
+                        </tr>
+                    }
                     {data.map((row, index) => (
                         <React.Fragment key={index}>
-                            <tr className={`table_row ${expandedRow === index ? "selected_table_row" : "section_group"}`} onClick={() => handleRowClick(index, row.plate)}>
-                                <td className="table_element first_element">{row.plate}</td>
+                            <tr className={`table_row ${expandedRow === index ? "selected_table_row" : index + 1 != elementsReturned ? "section_group" : ""}`} onClick={(e) => handleRowClick(e, index, row.plate)}>
+                                <td className="table_element first_element">{row.plate.toUpperCase()}</td>
                                 <td className="table_element">{row.vehicle}</td>
                                 <td className="table_element">{row.name}</td>
-                                <td className="table_element status"></td>
+                                <td className="table_element status">
+                                    {/* <div className="wrap_container">
+                                        <p className="status_text">{row.status}</p>
+                                        {row.status === "Rodando" && (<div className="green_circle" />)}
+                                        {row.status === "Sem sinal" && (<div className="yellow_circle" />)}
+                                        {row.status === "Em crise" && (<div className="red_circle" />)}
+                                    </div> */}
+                                </td>
                             </tr>
+                            {!row.lastLocation && expandedRow === index &&
+                                <tr className="centralize_message" onClick={(e) => handleRowClick(e, index, row.plate)}>
+                                    <td colSpan={4}>
+                                        <p className="message_error">
+                                            Dados Indisponíveis
+                                        </p>
+                                    </td>
+                                </tr>
+                            }
                             {expandedRow === index && (
-                                <tr className="table_row additional_info_row selected_table_row">
+                                <tr className="table_row additional_info_row selected_table_row" onClick={(e) => handleRowClick(e, index, row.plate)}>
                                     <td colSpan={4} className="text_box">
-                                        <p className="info_text">Localização: {row.lastLocation}</p>
-                                        {event.impactSpeed &&
-                                            <p className="info_text">Impacto Calculado: {(event.impactSpeed / 9.8).toFixed(2)} g</p>
+                                        {row.lastLocation && row.lastLocation &&
+                                            <p className="info_text">Localização: {row.lastLocation}</p>
                                         }
-                                        {event.fatalityLikelyhood &&
+                                        {row.plate == event.plate && event.impactSpeed &&
+                                            <p className="info_text">Impacto Calculado: {(event.impactSpeed / 9.8).toFixed(2)} g(s)</p>
+                                        }
+                                        {row.plate == event.plate && event.fatalityLikelyhood &&
                                             <p className="info_text">Chance de Morte: {(event.fatalityLikelyhood).toFixed(0)}%</p>
                                         }
-                                        {event.fatalityLikelyhood &&
+                                        {row.plate == event.plate && event.fatalityLikelyhood &&
                                             <p className="info_text">Risco de vida: <b className={
                                                 event.fatalityLikelyhood <= 50 ? "low_risk" :
                                                     event.fatalityLikelyhood > 50 ? "medium_risk" :
@@ -112,9 +152,9 @@ export default function Table({ data }: TableProps) {
                                         }
                                     </td>
                                     <td className="button_box">
-                                        {event.impactSpeed &&
+                                        {row.plate == event.plate &&
                                             <>
-                                                <button className="contact_button" onClick={() => openModal("contact")}>
+                                                <button className="button" onClick={() => openModal("contact")}>
                                                     <Image
                                                         className="icon"
                                                         src={contactIcon}
@@ -122,7 +162,7 @@ export default function Table({ data }: TableProps) {
                                                     />
                                                     <h2 className="button_text">Contatar Motorista</h2>
                                                 </button>
-                                                <button className="analyze_button" onClick={() => openModal("analyze")}>
+                                                <button className="button" onClick={() => openModal("analyze")}>
                                                     <Image
                                                         className="icon"
                                                         src={analysisIcon}

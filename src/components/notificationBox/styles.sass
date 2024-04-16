@@ -1,22 +1,33 @@
 .notification_icon_button
-    background-color: #fff
+    background-color: var(--primary-color-500)
     padding: .2rem
+    border-style: solid
+    border-color: var(--primary-color-500)
     border-radius: 12px
     position: absolute
     top: 2rem
     right: 1rem
     cursor: pointer
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)
+    transition: .3s
     &:hover
-        background-color: #dadada
+        background-color: var(--primary-color)
+        transform: scale(1.08)
+        border-color: var(--primary-color)
+        .notify_icon
+            filter: invert(20%) sepia(12%) saturate(2472%) hue-rotate(179deg) brightness(94%) contrast(86%)
+    .notify_icon
+        width: 2.4rem
+        height: 2.4rem
 
 .blink
     animation: blink-animation 0.5s infinite alternate
 
 @keyframes blink-animation 
     0% 
-        background-color: transparent
+        background-color: var(--white)
     100% 
-        background-color: #fff
+        background-color: var(--primary-color)
 
 
 .notification_list 
@@ -24,7 +35,7 @@
     position: absolute
     right: 1rem
     top: 2rem
-    background-color: #ffffff
+    background-color: var(--white)
     border-radius: 12px
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5)
     transform: translateY(0) scale(0)
@@ -32,7 +43,7 @@
     z-index: 2
     
     &.expanded
-        animation: expandNotificationList 0.7s forwards
+        animation: expandNotificationList 0.3s forwards
 
     &.minimized
         animation: minimizeNotificationList 0.3s forwards
@@ -50,25 +61,25 @@
             transform: translateY(-5rem) translateX(7rem) scale(0)
             
     .notification_header
-        background-color: #184D81
+        background-color: var(--primary-color)
         width: 100%
         border-radius: 12px 12px 0 0
         padding: 1rem
         box-sizing: border-box
         border-width: 1px
         border-top-style: solid
-        border-color: #fff
+        border-color: var(--white)
 
         .notification_title
             font-size: 18px
             font-weight: bold
-            color: #fff
+            color: var(--white)
             margin: 0
             padding: 0
             text-align: center
 
     .notification_footer
-        background-color: #fff
+        background-color: var(--white)
         width: 100%
         border-radius: 0 0 12px 12px
         height: .5rem

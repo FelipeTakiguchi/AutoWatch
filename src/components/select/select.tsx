@@ -1,18 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Image from "../../../node_modules/next/image";
 import "./styles.sass";
+import arrownDownIcon from "@/assets/images/arrow_down.svg";
+import useClientStore from '@/services/store';
 
-interface SelectProps {
-    value: any;
-    onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-}
+export default function Select() {
+    const { statusFilter, setStatusFilter } = useClientStore();
+    const [expanded, setExpanded] = useState(false);
 
-export default function Select({ value, onChange }: SelectProps) {
     return (
-        <select className="select" value={value} onChange={onChange}>
-            <option value="" disabled hidden>Selecione o status</option>
-            <option value="Rodando">Rodando</option>
-            <option value="Sem sinal">Sem sinal</option>
-            <option value="Em crise">Em crise</option>
-        </select>
+        <div className="select_container">
+            <div className="select" onClick={() => setExpanded(!expanded)}>
+                <p className="select_label">{ statusFilter == "" ? "Escolha um status" : statusFilter }</p>
+                <Image src={arrownDownIcon} className={`arrow_down_icon ${expanded ? 'expanded_anim' : 'back_anim'}`} alt="arrow down icon" width={30} />
+            </div>
+            <div className={`opt_group ${expanded ? "expand_opt" : "hide_opt"}`}>
+                <option onClick={() => { setStatusFilter("Rodando"); setExpanded(!expanded) }} value="Rodando">Rodando</option>
+                <option onClick={() => { setStatusFilter("Sem sinal"); setExpanded(!expanded) }} value="Sem sinal">Sem sinal</option>
+                <option onClick={() => { setStatusFilter("Em crise"); setExpanded(!expanded) }} value="Em crise">Em crise</option>
+            </div>
+        </div>
     );
 }
