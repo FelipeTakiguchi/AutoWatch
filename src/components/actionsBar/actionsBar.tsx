@@ -6,7 +6,7 @@ export default function ActionBar({ setFilter, selectedStatus, handleStatusChang
     return (
         <section className="actions_bar">
             <Filter setFilter={setFilter} />
-            <Select value={selectedStatus} onChange={handleStatusChange} />
+            <Select />
         </section>
     );
 }
