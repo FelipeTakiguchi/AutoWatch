@@ -2,7 +2,7 @@
 import { ApexOptions } from 'apexcharts';
 import React, { useEffect, useState } from 'react';
 import dynamic from "next/dynamic";
-import useClientStore from '../../services/store';
+import useClientStore from '../../services/clientStore';
 import "./styles.sass";
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 

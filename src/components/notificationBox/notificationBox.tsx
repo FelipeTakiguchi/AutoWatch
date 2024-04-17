@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import Image from "../../../node_modules/next/image";
 import notifyIcon from "@/assets/images/notify.svg";
 import "./styles.sass";
+import useNotificationStore from "@/services/notificationStore";
 
 export default function NotificationBox() {
+    const { notifications } = useNotificationStore();
     const [showNotifications, setShowNotifications] = useState(0);
     const [isBlinking, setIsBlinking] = useState(false);
-  
+    console.log(notifications);
+    
     const expandNotifications = () => {
         setIsBlinking(true);
         setTimeout(() => setIsBlinking(false), 500)
@@ -29,9 +32,13 @@ export default function NotificationBox() {
             </div>
             <div className={`notification_list ${showNotifications == 1 ? "expanded" : showNotifications == 2 ? "minimized" : ""}`}>
                 <div className="notification_header"><p className="notification_title">Notificações</p></div>
-                <div className="notification_item">Notification 1</div>
-                <div className="notification_item">Notification 2</div>
-                <div className="notification_item">Notification 3</div>
+                {
+                    notifications.map((notification, index) => (
+                        <div className="notification_item" key={index}>
+                            {notification.plate}: {notification.status}
+                        </div>
+                    ))
+                }
                 <div className="notification_footer"></div>
             </div>
             {showNotifications == 1 && (

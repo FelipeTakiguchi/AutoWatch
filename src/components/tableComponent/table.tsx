@@ -7,7 +7,7 @@ import Image from "next/image";
 import ContactModal from '../modal/contactModal/contactModal';
 import SimulationModal from '../modal/simulationModal/simulationModal';
 import axios from 'axios';
-import useClientStore from '@/services/store';
+import useClientStore from '@/services/clientStore';
 
 interface RowData {
     email: string;

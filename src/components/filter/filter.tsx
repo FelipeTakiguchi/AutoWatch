@@ -4,7 +4,7 @@ import "./styles.sass";
 import Image from "../../../node_modules/next/image";
 import searchIcon from "@/assets/images/search.svg";
 import axios from "axios";
-import useClientStore from "../../services/store";
+import useClientStore from "../../services/clientStore";
 
 
 export default function Filter({ setFilter }: { setFilter: any }) {

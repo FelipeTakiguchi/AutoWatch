@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Image from "../../../node_modules/next/image";
 import "./styles.sass";
 import arrownDownIcon from "@/assets/images/arrow_down.svg";
-import useClientStore from '@/services/store';
+import useClientStore from '@/services/clientStore';
 
 export default function Select() {
     const { statusFilter, setStatusFilter } = useClientStore();

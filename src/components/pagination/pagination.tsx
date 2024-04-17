@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "../../../node_modules/next/image";
 import backIcon from "@/assets/images/Back.svg"
 import forwardIcon from "@/assets/images/Forward.svg"
-import useClientStore from "../../services/store";
+import useClientStore from "../../services/clientStore";
 
 export default function Pagination() {
     const { page, setPage, totalPages, setExpandedRow } = useClientStore();

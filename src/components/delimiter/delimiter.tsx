@@ -1,4 +1,4 @@
-import useClientStore from "@/services/store";
+import useClientStore from "@/services/clientStore";
 import "./styles.sass";
 
 export default function Delimiter() {
