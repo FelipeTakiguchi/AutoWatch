@@ -12,7 +12,7 @@ import WebSocketComponent from "@/services/webSocket";
 import Delimiter from "@/components/delimiter/delimiter";
 
 export default function Home() {
-  const { page, nElements, setElementsReturned, setTotalElements, setTotalPages, clients, setClients } = useClientStore();
+  const { page, nElements, setElementsReturned, setTotalElements, setTotalPages, setClients } = useClientStore();
   const { setNotifications } = useNotificationStore();
   const [filter, setFilter] = useState("");
   const [selectedStatus, setSelectedStatus] = useState('');
@@ -65,7 +65,7 @@ export default function Home() {
       <HeaderComponent />
       <ActionBar setFilter={setFilter} selectedStatus={selectedStatus} handleStatusChange={handleStatusChange} />
       <main className="main">
-        <Table data={clients} />
+        <Table/>
         <Delimiter />
       </main>
       <nav className="centralize_bottom">

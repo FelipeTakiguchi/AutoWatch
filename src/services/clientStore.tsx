@@ -3,10 +3,12 @@ import { create } from "zustand";
 interface RowData {
   email: string;
   lastLocation: string;
+  lastUpdated: Date;
   name: string;
-  numnber: string;
+  number: string;
   plate: string;
   vehicle: string;
+  status: string;
 }
 
 interface AccelerationPerTime {

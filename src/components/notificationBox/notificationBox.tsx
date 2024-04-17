@@ -8,7 +8,6 @@ export default function NotificationBox() {
     const { notifications } = useNotificationStore();
     const [showNotifications, setShowNotifications] = useState(0);
     const [isBlinking, setIsBlinking] = useState(false);
-    console.log(notifications);
     
     const expandNotifications = () => {
         setIsBlinking(true);

@@ -9,31 +9,18 @@ import SimulationModal from '../modal/simulationModal/simulationModal';
 import axios from 'axios';
 import useClientStore from '@/services/clientStore';
 
-interface RowData {
-    email: string;
-    lastLocation: string;
-    name: string;
-    numnber: string;
-    plate: string;
-    vehicle: string;
-}
-
 interface EventAttributes {
     plate?: string;
     impactSpeed?: number;
     fatalityLikelyhood?: number;
 }
 
-interface TableProps {
-    data: RowData[];
-}
-
-export default function Table({ data }: TableProps) {
-    const { setImpactData, expandedRow, setExpandedRow, elementsReturned } = useClientStore();
+export default function Table() {
+    const { clients, setImpactData, expandedRow, setExpandedRow, elementsReturned } = useClientStore();
     const [modalOpen, setModalOpen] = useState<string>("");
     const [event, setEvent] = useState<EventAttributes>({});
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
+    
     const fetchEventData = async (plate: string) => {
         try {
             const response = await axios.get(apiUrl + "/api/event/" + plate);
@@ -99,7 +86,7 @@ export default function Table({ data }: TableProps) {
                     </tr>
                 </thead>
                 <tbody className="table_body">
-                    {data.length <= 0 &&
+                    {clients.length <= 0 &&
                         <tr className="centralize_message">
                             <td colSpan={4}>
                                 <p className="message_error">
@@ -108,19 +95,19 @@ export default function Table({ data }: TableProps) {
                             </td>
                         </tr>
                     }
-                    {data.map((row, index) => (
+                    {clients.map((row, index) => (
                         <React.Fragment key={index}>
                             <tr className={`table_row ${expandedRow === index ? "selected_table_row" : index + 1 != elementsReturned ? "section_group" : ""}`} onClick={(e) => handleRowClick(e, index, row.plate)}>
                                 <td className="table_element first_element">{row.plate.toUpperCase()}</td>
                                 <td className="table_element">{row.vehicle}</td>
                                 <td className="table_element">{row.name}</td>
                                 <td className="table_element status">
-                                    {/* <div className="wrap_container">
+                                    <div className="wrap_container">
                                         <p className="status_text">{row.status}</p>
                                         {row.status === "Rodando" && (<div className="green_circle" />)}
-                                        {row.status === "Sem sinal" && (<div className="yellow_circle" />)}
-                                        {row.status === "Em crise" && (<div className="red_circle" />)}
-                                    </div> */}
+                                        {row.status === "Sem Sinal" && (<div className="yellow_circle" />)}
+                                        {row.status === "Em Crise" && (<div className="red_circle" />)}
+                                    </div>
                                 </td>
                             </tr>
                             {!row.lastLocation && expandedRow === index &&
