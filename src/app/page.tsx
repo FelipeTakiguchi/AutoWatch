@@ -1,11 +1,11 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 import HeaderComponent from "@/components/header/header";
 import Pagination from "@/components/pagination/pagination";
 import Table from "@/components/tableComponent/table";
 import "./styles.sass";
 import ActionBar from "@/components/actionsBar/actionsBar";
-const axios = require('axios');
+import axios from 'axios'; // Import axios directly
 import useClientStore from "../services/clientStore";
 import useNotificationStore from "../services/notificationStore";
 import WebSocketComponent from "@/services/webSocket";
@@ -28,13 +28,13 @@ export default function Home() {
       const response = await axios.get(apiUrl + "/api/client/" + page + "/" + nElements);
       response.data.clients.map((c: any) => {
         c.lastUpdated = new Date(c.lastUpdated).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
-      })
+        return c; // Don't forget to return the mapped object
+      });
       setClients(response.data.clients);
-      setTotalPages(response.data.totalPages)
-      setTotalElements(response.data.totalElements)
-      setElementsReturned(response.data.clients.length)
+      setTotalPages(response.data.totalPages);
+      setTotalElements(response.data.totalElements);
+      setElementsReturned(response.data.clients.length);
       console.log(response.data);
-
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -57,8 +57,11 @@ export default function Home() {
   };
 
   useEffect(() => {
-    console.log(filter)
+    console.log(filter);
   }, [filter]);
+
+  // Call WebSocketComponent to manage WebSocket connection
+  WebSocketComponent();
 
   return (
     <>
@@ -71,7 +74,6 @@ export default function Home() {
       <nav className="centralize_bottom">
         <Pagination />
       </nav>
-      <WebSocketComponent />
     </>
   );
 }

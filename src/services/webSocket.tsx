@@ -3,69 +3,58 @@ import useClientStore from './clientStore';
 
 export default function WebSocketComponent() {
   const { clients, setClients } = useClientStore();
-  const timeoutMap: Record<string, NodeJS.Timeout> = {}; // Define the type of timeoutMap
-
-  // Establish WebSocket connection when the component mounts
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL!.replace("https", "wss") + "/ws";
-  const socket = new WebSocket(apiUrl);
-
-  socket.onopen = () => {
-    console.log('WebSocket connection established.');
-    socket.send('Client has established a connection!');
-  };
 
   useEffect(() => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL!.replace("http", "ws");
+    const socket = new WebSocket(apiUrl);
+
+    socket.onopen = () => {
+      console.log('WebSocket connection established.');
+      // You can send data after connection is established if needed
+      // socket.send('Hello from client!');
+    };
     socket.onmessage = (event) => {
-      console.log('Received message:', event.data);
+      if (event.data.startsWith('Welcome')) {
+        console.log('Welcome message received:', event.data);
+        return; // Exit early, no need to parse
+      }
 
+      // Handle received message
       try {
-        const jsonData = JSON.parse(event.data);
-        if (jsonData && jsonData.data && jsonData.data.plate) {
-          const plate = jsonData.data.plate;
-          const location = jsonData.data.location;
+        const message = JSON.parse(event.data);
+        // Extract type and data properties
+        const { type, data } = message;
+        const { plate, location } = data;
 
-          console.log('Plate:', plate);
-          console.log('Location:', location);
-          console.log(clients);
-
-          const updatedClients = clients.map(client => {
-            if (client.plate === plate) {
-              client.lastLocation = location;
-              client.status = "Rodando";
-
-              // Clear existing timeout for this plate
-              if (timeoutMap[plate]) {
-                clearTimeout(timeoutMap[plate]);
-                console.log("Resetou a placa " + plate);
-                console.log(timeoutMap[plate]);
+        // Update clients based on the type of message
+        if (type === "eventUpdate" || type === "lostSignal") {
+          // Ensure clients has some value before updating
+          if (clients && clients.length > 0) {
+            setClients(clients.map(client => {
+              if (client.plate === plate) {
+                return {
+                  ...client,
+                  status: type === "eventUpdate" ? "Rodando" : "Sem Sinal",
+                  lastLocation: location
+                };
               }
-
-              // Set a new timeout for this plate
-              timeoutMap[plate] = setTimeout(() => {
-                const updatedClients = clients.map(client => {
-                  if (client.plate === plate && client.status === "Rodando") {
-                    client.status = "Sem Sinal";
-                  }
-                  return client;
-                });
-                setClients(updatedClients);
-              }, 13000);
-            }
-            return client;
-          });
-
-          setClients(updatedClients);
-        } else {
-          console.log('Invalid JSON format or missing data.');
+              return client;
+            }));
+          }
         }
-      } catch (error) { }
+      } catch (error) {
+        console.error('Error parsing message:', error);
+      }
     };
 
-    // Cleanup function to close the WebSocket connection when the component unmounts
+    socket.onclose = () => {
+      console.log('WebSocket connection closed.');
+      // You may want to handle reconnection here
+    };
     return () => {
       socket.close();
     };
-  }, [clients]);
+  }, [clients, setClients]); // Include clients and setClients in dependency array
 
   return <></>;
-}
+};

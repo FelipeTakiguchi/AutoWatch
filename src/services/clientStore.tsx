@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-interface RowData {
+export interface RowData {
   email: string;
   lastLocation: string;
   lastUpdated: Date;
