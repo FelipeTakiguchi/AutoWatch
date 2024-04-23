@@ -110,7 +110,7 @@ export default function Table() {
                                     </div>
                                 </td>
                             </tr>
-                            {!row.lastLocation && expandedRow === index &&
+                            {!row.lastLocation && !event.impactSpeed && !event.fatalityLikelyhood && expandedRow === index &&
                                 <tr className="centralize_message" onClick={(e) => handleRowClick(e, index, row.plate)}>
                                     <td colSpan={4}>
                                         <p className="message_error">
@@ -168,7 +168,7 @@ export default function Table() {
             </table>
             {modalOpen == "contact" && (
                 <div className="modal_overlay" onClick={(event) => closeModal(event)}>
-                    <ContactModal />
+                    <ContactModal email={clients[expandedRow!].email} mobileNumber={clients[expandedRow!].number}/>
                 </div>
             )}
             {modalOpen == "analyze" && (

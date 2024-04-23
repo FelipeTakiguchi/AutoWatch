@@ -1,8 +1,18 @@
 import "../styles.sass";
 
-export default function ContactModal() {
-    const mobileNumber = "+41 99221-3693";
+export default function ContactModal({ mobileNumber, email }: { mobileNumber: string, email: string }) {
+    function formatPhoneNumber(number: string) {
+        const phoneNumber = number.toString();
+        const countryCode = "+" + phoneNumber.slice(0, 2);
+        const firstPart = phoneNumber.slice(2, 7);
+        const secondPart = phoneNumber.slice(7);
+        
+        return `${countryCode} ${firstPart}-${secondPart}`;
+    }
+    
     const message = "message test";
+    console.log(mobileNumber)
+    mobileNumber = formatPhoneNumber(mobileNumber);
 
     const onSubmit = () => {
         // Regex expression to remove all characters which are NOT alphanumeric 
@@ -22,8 +32,8 @@ export default function ContactModal() {
                     <h1 className="modal_title">Contatos</h1>
                 </header>
                 <section className="modal_content">
-                    <p className="modal_text"><b>Email:</b> felipe_ntakiguchi@hotmail.com</p>
-                    <p className="modal_text"><b>Telefone:</b> (41) 99221-3693</p>
+                    <p className="modal_text"><b>Email:</b> {email}</p>
+                    <p className="modal_text"><b>Telefone:</b> {mobileNumber}</p>
                     <div className="centralize">
                         <button className="modal_contact_button" onClick={() => onSubmit()}>
                             <p className="text_button">

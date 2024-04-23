@@ -4,8 +4,7 @@
     border-radius: 100%
 
 @mixin button
-    padding-top: 5px
-    padding-bottom: 5px
+    margin-top: .3rem
     padding-left: 12px
     padding-right: 12px
     border-radius: 12px
@@ -13,22 +12,7 @@
     display: flex
     align-items: center
     gap: .4rem
-    /* Small devices such as large phones (640px and up) */
-    @media only screen and (min-width: 40em)
-        padding-top: 0px
-        padding-bottom: 0px
-    /* Medium devices such as tablets (768px and up) */
-    @media only screen and (min-width: 48em)
-        padding-top: 2px
-        padding-bottom: 2px
-    /* Large devices such as laptops (1024px and up) */
-    @media only screen and (min-width: 64em)
-        padding-top: 3px
-        padding-bottom: 3px
-    /* Largest devices such as desktops (1280px and up) */
-    @media only screen and (min-width: 80em)
-        padding-top: 5px
-        padding-bottom: 5px
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 38px, rgba(0, 0, 0, 0.22) 0px 4px 12px
 
 @mixin dynamic_button
     /* Smaller devides (624px and down) */
@@ -163,6 +147,8 @@
                     justify-content: space-between
                     padding-right: 1rem
                     .status_text
+                        margin: 0
+                        padding: 0
                         /* Smaller devides (624px and down) */
                         @media only screen and (max-width: 40em)
                             display: none
@@ -207,7 +193,7 @@
                         color: var(--danger-color)
                     
             .button_box
-                gap: 1rem
+                gap: .5rem
                 position: absolute
                 display: inline-grid
                 /* Smaller devides (624px and down) */
