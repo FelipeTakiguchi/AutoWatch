@@ -15,9 +15,10 @@ export default function Select() {
                 <Image src={arrownDownIcon} className={`arrow_down_icon ${expanded ? 'expanded_anim' : 'back_anim'}`} alt="arrow down icon" width={30} />
             </div>
             <div className={`opt_group ${expanded ? "expand_opt" : "hide_opt"}`}>
+                <option onClick={() => { setStatusFilter("Todos"); setExpanded(!expanded) }} value="Todos">Todos</option>
                 <option onClick={() => { setStatusFilter("Rodando"); setExpanded(!expanded) }} value="Rodando">Rodando</option>
-                <option onClick={() => { setStatusFilter("Sem sinal"); setExpanded(!expanded) }} value="Sem sinal">Sem sinal</option>
-                <option onClick={() => { setStatusFilter("Em crise"); setExpanded(!expanded) }} value="Em crise">Em crise</option>
+                <option onClick={() => { setStatusFilter("Sem Sinal"); setExpanded(!expanded) }} value="Sem Sinal">Sem Sinal</option>
+                <option onClick={() => { setStatusFilter("Em Crise"); setExpanded(!expanded) }} value="Em Crise">Em Crise</option>
             </div>
         </div>
     );

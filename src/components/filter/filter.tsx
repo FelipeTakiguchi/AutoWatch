@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./styles.sass";
 import Image from "../../../node_modules/next/image";
 import searchIcon from "@/assets/images/search.svg";
@@ -7,12 +7,23 @@ import axios from "axios";
 import useClientStore from "../../services/clientStore";
 
 
-export default function Filter({ setFilter }: { setFilter: any }) {
-    const { setClients, page, nElements, setTotalPages } = useClientStore();
+export default function Filter() {
+    const { setClients, page, nElements, setTotalPages, statusFilter } = useClientStore();
     const [isFocused, setIsFocused] = useState(false);
     const [inputValue, setInputValue] = useState("");
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
     const [timeoutId, setTimeoutId] = useState<number | null>(null);
+
+    function makeRequest() {
+        axios.get(`${apiUrl}/api/client/${page}/${nElements}${inputValue ? "/" + inputValue : "/ALL"}${statusFilter ? "/" + statusFilter : "/Todos"}`).then((response) => {
+            setClients(response.data.clients);
+            console.log(response.data);
+            setTotalPages(response.data.totalPages);
+        }).catch((error) => {
+            console.error("Error:", error);
+        });
+    }
+
 
     function handleFocus() {
         setIsFocused(true);
@@ -22,25 +33,17 @@ export default function Filter({ setFilter }: { setFilter: any }) {
         setIsFocused(false);
     }
 
-    function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-        setInputValue(e.target.value);
-
+    useEffect(() => {
         if (timeoutId) {
             clearTimeout(timeoutId);
         }
 
         const newTimeoutId = setTimeout(() => {
-            axios.get(`${apiUrl}/api/client/${page}/${nElements}/${e.target.value}`).then((response) => {
-                setClients(response.data.clients);
-                console.log(response.data);
-                setTotalPages(response.data.totalPages);
-            }).catch((error) => {
-                console.error("Error:", error);
-            });
-        }, 500) as unknown as number;
+            makeRequest();
+        }, 100) as unknown as number;
 
         setTimeoutId(newTimeoutId);
-    }
+    }, [inputValue, statusFilter]);
 
     return (
         <div className={`input_box ${isFocused ? 'focused' : ''}`}>
@@ -50,7 +53,7 @@ export default function Filter({ setFilter }: { setFilter: any }) {
             <input
                 placeholder="Pesquisar..."
                 value={inputValue}
-                onChange={handleChange}
+                onChange={(e) => setInputValue(e.target.value)}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
                 className={`input ${isFocused ? 'focused_input' : 'unfocused_input'}`}

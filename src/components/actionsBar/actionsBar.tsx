@@ -5,7 +5,7 @@ import "./styles.sass";
 export default function ActionBar({ setFilter, selectedStatus, handleStatusChange }: { setFilter: any, selectedStatus: any, handleStatusChange: any}) {
     return (
         <section className="actions_bar">
-            <Filter setFilter={setFilter} />
+            <Filter />
             <Select />
         </section>
     );
