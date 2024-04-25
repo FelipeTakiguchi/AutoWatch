@@ -22,6 +22,11 @@ export default function WebSocketComponent() {
     setClientsPromise(new Promise(resolve => resolve(initialClients)));
   }, [initialClients]);
 
+  socket.onopen = () => {
+    console.log('WebSocket connection established.');
+    // You may want to handle reconnection here
+  };
+
   socket.onmessage = async (event) => {
     if (clientsPromise) {
       const clients = await clientsPromise;
@@ -61,9 +66,4 @@ export default function WebSocketComponent() {
     // You may want to handle reconnection here
   };
 
-  return () => {
-    socket.close();
-  };
-
-  return <></>;
 };

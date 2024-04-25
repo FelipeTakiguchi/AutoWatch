@@ -24,29 +24,48 @@ export default function Home() {
   }, [page, nElements]);
 
   const fetchData = async () => {
-    try {
-      const response = await axios.get(apiUrl + "/api/client/" + page + "/" + nElements);
-      response.data.clients.map((c: any) => {
+    const data = await requestClients();
+    if(!data) return;
+    if (data) {
+      data.clients.map((c: any) => {
         c.lastUpdated = new Date(c.lastUpdated).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
-        return c; // Don't forget to return the mapped object
+        return c;
       });
-      setClients(response.data.clients);
-      setTotalPages(response.data.totalPages);
-      setTotalElements(response.data.totalElements);
-      setElementsReturned(response.data.clients.length);
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
+      setClients(data.clients);
+      setTotalPages(data.totalPages);
+      setTotalElements(data.totalElements);
+      setElementsReturned(data.clients.length);
+      console.log(data);
     }
+
   };
 
   const loadNotifications = async () => {
-    try {
-      const response = await axios.get("https://esp32-mpu9250-autobox-backend.onrender.com/api/client/notifications");
-      setNotifications(response.data.notifications.map((notification: NodeList) => ({
+    const data = await requestNotifications();
+
+    if (data) {
+      setNotifications(data.map((notification: NodeList) => ({
         plate: notification[0],
         status: notification[1],
       })));
+    }
+  };
+
+  const requestClients = async () => {
+    try {
+      const url = `${apiUrl}/api/client/${page}/${nElements}`;
+      const response = await axios.get(url);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      throw error;
+    }
+  }
+  
+  const requestNotifications = async () => {
+    try {
+      const response = await axios.get("https://esp32-mpu9250-autobox-backend.onrender.com/api/client/notifications");
+      return response.data.notifications;
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -56,11 +75,6 @@ export default function Home() {
     setSelectedStatus(event.target.value);
   };
 
-  useEffect(() => {
-    console.log(filter);
-  }, [filter]);
-
-  // Call WebSocketComponent to manage WebSocket connection
   WebSocketComponent();
 
   return (
@@ -68,7 +82,7 @@ export default function Home() {
       <HeaderComponent />
       <ActionBar setFilter={setFilter} selectedStatus={selectedStatus} handleStatusChange={handleStatusChange} />
       <main className="main">
-        <Table/>
+        <Table />
         <Delimiter />
       </main>
       <nav className="centralize_bottom">
