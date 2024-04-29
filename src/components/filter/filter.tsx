@@ -8,7 +8,7 @@ import useClientStore from "../../services/clientStore";
 
 
 export default function Filter() {
-    const { setClients, page, nElements, setTotalPages, statusFilter } = useClientStore();
+    const { setClients, page, nElements, setTotalPages, statusFilter, setElementsReturned } = useClientStore();
     const [isFocused, setIsFocused] = useState(false);
     const [inputValue, setInputValue] = useState("");
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -16,14 +16,13 @@ export default function Filter() {
 
     function makeRequest() {
         axios.get(`${apiUrl}/api/client/${page}/${nElements}${inputValue ? "/" + inputValue : "/ALL"}${statusFilter ? "/" + statusFilter : "/Todos"}`).then((response) => {
-            setClients(response.data.clients);
-            console.log(response.data);
+            setClients(response.data.clients);            
+            setElementsReturned(response.data.clients.length);
             setTotalPages(response.data.totalPages);
         }).catch((error) => {
             console.error("Error:", error);
         });
     }
-
 
     function handleFocus() {
         setIsFocused(true);

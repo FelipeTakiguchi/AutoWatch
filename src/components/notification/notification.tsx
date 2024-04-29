@@ -22,14 +22,11 @@ export default function Notification() {
 
     return (
         <div className="container">
-            <div className="green_bar"></div>
-            <div>
-                <div className="timer"></div>
-                <div className="text_box">
-                    <h3 className="plate_text">[ABC1234]</h3>
-                    <p className="status_text">Rodando</p>
-                </div>
+            <div className="text_box">
+                <h3 className="plate_text">[ABC1234]</h3>
+                <p className="status_text">Rodando</p>
             </div>
+            <div className="timer"></div>
         </div>
     );
 }

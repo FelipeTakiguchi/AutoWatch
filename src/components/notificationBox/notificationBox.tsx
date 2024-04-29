@@ -8,7 +8,7 @@ export default function NotificationBox() {
     const { notifications } = useNotificationStore();
     const [showNotifications, setShowNotifications] = useState(0);
     const [isBlinking, setIsBlinking] = useState(false);
-    
+
     const expandNotifications = () => {
         setIsBlinking(true);
         setTimeout(() => setIsBlinking(false), 500)
@@ -28,6 +28,7 @@ export default function NotificationBox() {
                 onClick={expandNotifications}
             >
                 <Image className="notify_icon" src={notifyIcon} alt="Notify Icon" />
+                <div className={`${notifications.length > 0 ? "notify_count" : ""}`}>{notifications.length > 0 ? notifications.length : ""}</div>
             </div>
             <div className={`notification_list ${showNotifications == 1 ? "expanded" : showNotifications == 2 ? "minimized" : ""}`}>
                 <div className="notification_header"><p className="notification_title">Notificações</p></div>
@@ -35,6 +36,7 @@ export default function NotificationBox() {
                     notifications.map((notification, index) => (
                         <div className="notification_item" key={index}>
                             {notification.plate}: {notification.status}
+                            <div className={`${notification.status == "Em Crise" ? "danger_status" : ""}`}></div>
                         </div>
                     ))
                 }
