@@ -3,6 +3,7 @@ import { create } from "zustand";
 export interface RowData {
   email: string;
   lastLocation: string;
+  address: string;
   lastUpdated: Date;
   name: string;
   number: string;

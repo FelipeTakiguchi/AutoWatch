@@ -4,6 +4,7 @@ import useClientStore from './clientStore';
 interface RowData {
   email: string;
   lastLocation: string;
+  address: string;
   lastUpdated: Date;
   name: string;
   number: string;
@@ -19,7 +20,7 @@ interface MessageData {
 
 export default function WebSocketComponent() {
   const [event, setEvent] = useState<{ type: string, data: MessageData }>({ type: "", data: { plate: "", location: "" } });
-  const { type, data } = event as { type: string, data: MessageData };  
+  const { type, data } = event as { type: string, data: MessageData };
   const { clients: initialClients, setClients } = useClientStore();
   const [clientsPromise, setClientsPromise] = useState<Promise<RowData[]> | null>(null);
   const apiUrl = process.env.NEXT_PUBLIC_API_URL!.replace("https", "wss") + "/ws";
@@ -39,14 +40,14 @@ export default function WebSocketComponent() {
         const { plate, location } = data;
 
         // Update clients based on the type of message
-        if (type === "eventUpdate" || type === "lostSignal") {
+        if (type === "eventUpdate" || type === "lostSignal" || type === "crashEvent") {
           // Ensure clients has some value before updating
           if (clients && clients.length > 0) {
             setClients(clients.map(client => {
               if (client.plate === plate) {
                 return {
                   ...client,
-                  status: type === "eventUpdate" ? "Rodando" : "Sem Sinal",
+                  status: type === "eventUpdate" ? "Rodando" : type === "lostSignal" ? "Sem Sinal" : "Em Crise",
                   lastLocation: location
                 };
               }
@@ -70,6 +71,7 @@ export default function WebSocketComponent() {
 
     socket.onmessage = async (event) => {
       if (!event.data.startsWith('Welcome')) {
+        console.log(event.data);
         const message = JSON.parse(event.data);
         setEvent(message);
       }

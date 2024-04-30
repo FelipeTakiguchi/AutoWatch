@@ -110,7 +110,7 @@ export default function Table() {
                                     </div>
                                 </td>
                             </tr>
-                            {!row.lastLocation && !event.impactSpeed && !event.fatalityLikelyhood && expandedRow === index &&
+                            {!row.address && !event.impactSpeed && !event.fatalityLikelyhood && expandedRow === index &&
                                 <tr className="centralize_message" onClick={(e) => handleRowClick(e, index, row.plate)}>
                                     <td colSpan={4}>
                                         <p className="message_error">
@@ -122,8 +122,8 @@ export default function Table() {
                             {expandedRow === index && (
                                 <tr className="table_row additional_info_row selected_table_row" onClick={(e) => handleRowClick(e, index, row.plate)}>
                                     <td colSpan={4} className="text_box">
-                                        {row.lastLocation && row.lastLocation &&
-                                            <p className="info_text">Localização: {row.lastLocation}</p>
+                                        {row.address &&
+                                            <p className="info_text">Localização: {row.address}</p>
                                         }
                                         {row.plate == event.plate && event.impactSpeed &&
                                             <p className="info_text">Impacto Calculado: {(event.impactSpeed / 9.8).toFixed(2)} g(s)</p>

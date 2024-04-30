@@ -3,6 +3,7 @@ import "../styles.sass";
 import { useMemo, useState } from "react";
 import dynamic from 'next/dynamic';
 import ChartPage from "@/components/lineChart/lineChart";
+import VideoPlayer from "@/components/VideoPlayer/videoPlayer";
 
 export default function SimulationModal() {
     const [option, setOption] = useState("Map");
@@ -48,6 +49,9 @@ export default function SimulationModal() {
                     }
                     {option == "Graphic" &&
                         <ChartPage />
+                    }
+                    {option == "Video" &&
+                        <VideoPlayer />
                     }
                 </section>
             </div>

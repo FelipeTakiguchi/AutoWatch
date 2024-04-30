@@ -25,20 +25,65 @@ export default function Home() {
 
   const fetchData = async () => {
     const data = await requestClients();
-    if(!data) return;
     if (data) {
       data.clients.map((c: any) => {
         c.lastUpdated = new Date(c.lastUpdated).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
         return c;
       });
-      setClients(data.clients);
-      setTotalPages(data.totalPages);
-      setTotalElements(data.totalElements);
-      setElementsReturned(data.clients.length);
-      console.log(data);
-    }
 
+      const promises = data.clients.map((client: any) => {
+        if (client.lastLocation) {
+          const latitude = client.lastLocation.split(", ")[0];
+          const longitude = client.lastLocation.split(", ")[1];
+          if (latitude && longitude) {
+            return getFormattedAddress(latitude, longitude)
+              .then(address => {
+                const addressParts = address.split(", ");
+                const firstFour = addressParts.slice(0, 4).join(", ");
+                const lastFour = addressParts.slice(-4).join(", ");
+                client.address = `${firstFour}, ${lastFour}`;
+                return client.lastLocation;
+              });
+          }
+        }
+      });
+
+      Promise.all(promises)
+        .then(locations => {
+          setClients(data.clients);
+          setTotalPages(data.totalPages);
+          setTotalElements(data.totalElements);
+          setElementsReturned(data.clients.length);
+          console.log(data);
+        })
+        .catch(error => {
+          console.error('Error fetching addresses:', error);
+        });
+    }
   };
+
+  function getFormattedAddress(latitude: string, longitude: string) {
+    const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`;
+
+    return fetch(url)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (data.display_name) {
+          return data.display_name;
+        } else {
+          throw new Error('No results found');
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        return null;
+      });
+  }
 
   const loadNotifications = async () => {
     const data = await requestNotifications();
@@ -61,7 +106,7 @@ export default function Home() {
       throw error;
     }
   }
-  
+
   const requestNotifications = async () => {
     try {
       const response = await axios.get("https://esp32-mpu9250-autobox-backend.onrender.com/api/client/notifications");
