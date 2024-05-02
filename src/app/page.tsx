@@ -91,7 +91,8 @@ export default function Home() {
     if (data) {
       setNotifications(data.map((notification: NodeList) => ({
         plate: notification[0],
-        status: notification[1],
+        status: "Em Crise",
+        accidentDate: notification[1],
       })));
     }
   };
@@ -110,6 +111,8 @@ export default function Home() {
   const requestNotifications = async () => {
     try {
       const response = await axios.get("https://esp32-mpu9250-autobox-backend.onrender.com/api/client/notifications");
+      console.log(response.data);
+      
       return response.data.notifications;
     } catch (error) {
       console.error('Error fetching data:', error);

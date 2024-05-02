@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import useClientStore from './clientStore';
+import useNotificationStore from './notificationStore';
 
 interface RowData {
   email: string;
@@ -22,6 +23,7 @@ export default function WebSocketComponent() {
   const [event, setEvent] = useState<{ type: string, data: MessageData }>({ type: "", data: { plate: "", location: "" } });
   const { type, data } = event as { type: string, data: MessageData };
   const { clients: initialClients, setClients } = useClientStore();
+  const { setNewNotification } = useNotificationStore();
   const [clientsPromise, setClientsPromise] = useState<Promise<RowData[]> | null>(null);
   const apiUrl = process.env.NEXT_PUBLIC_API_URL!.replace("https", "wss") + "/ws";
   const socket = new WebSocket(apiUrl);
@@ -38,6 +40,10 @@ export default function WebSocketComponent() {
       try {
         // Extract type and data properties
         const { plate, location } = data;
+
+        if (type === "crashEvent") {
+          setNewNotification({ plate: plate, status: "Em Crise", accidentDate: new Date() })
+        }
 
         // Update clients based on the type of message
         if (type === "eventUpdate" || type === "lostSignal" || type === "crashEvent") {
