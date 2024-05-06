@@ -8,6 +8,7 @@ import ContactModal from '../modal/contactModal/contactModal';
 import SimulationModal from '../modal/simulationModal/simulationModal';
 import axios from 'axios';
 import useClientStore from '@/services/clientStore';
+import { Radio } from 'react-loader-spinner';
 
 interface EventAttributes {
     plate?: string;
@@ -20,7 +21,7 @@ export default function Table() {
     const [modalOpen, setModalOpen] = useState<string>("");
     const [event, setEvent] = useState<EventAttributes>({});
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-    
+
     const fetchEventData = async (plate: string) => {
         try {
             const response = await axios.get(apiUrl + "/api/event/" + plate);
@@ -104,9 +105,43 @@ export default function Table() {
                                 <td className="table_element status">
                                     <div className="wrap_container">
                                         <p className="status_text">{row.status}</p>
-                                        {row.status === "Rodando" && (<div className="green_circle" />)}
-                                        {row.status === "Sem Sinal" && (<div className="yellow_circle" />)}
-                                        {row.status === "Em Crise" && (<div className="red_circle" />)}
+                                        {row.status === "Rodando" &&
+                                            <Radio
+                                                visible={true}
+                                                height="30"
+                                                width="30"
+                                                colors={["#00662d", "#28A745", "#4C956C"]}
+                                                ariaLabel="radio-loading"
+                                                wrapperStyle={{}}
+                                                wrapperClass=""
+                                            />
+                                        }
+                                        {row.status === "Sem Sinal" &&
+                                            <Radio
+                                                visible={true}
+                                                height="30"
+                                                width="30"
+                                                colors={["#d9a202", "#dea602", "#ffbe00"]}
+                                                ariaLabel="radio-loading"
+                                                wrapperStyle={{}}
+                                                wrapperClass=""
+                                            />}
+                                        {row.status === "Em Crise" && (
+                                        <div className="align">
+                                            <Radio
+                                                visible={true}
+                                                height="30"
+                                                width="30"
+                                                colors={["#db0202", "#fc0808", "#ff3030"]}
+                                                ariaLabel="radio-loading"
+                                                wrapperStyle={{}}
+                                                wrapperClass=""
+                                            />
+                                            <div className="error_signal_container">
+                                                <p className="error_signal">x</p>
+                                            </div>
+                                        </div>
+                                        )}
                                     </div>
                                 </td>
                             </tr>
@@ -168,7 +203,7 @@ export default function Table() {
             </table>
             {modalOpen == "contact" && (
                 <div className="modal_overlay" onClick={(event) => closeModal(event)}>
-                    <ContactModal email={clients[expandedRow!].email} mobileNumber={clients[expandedRow!].number}/>
+                    <ContactModal email={clients[expandedRow!].email} mobileNumber={clients[expandedRow!].number} />
                 </div>
             )}
             {modalOpen == "analyze" && (

@@ -161,6 +161,7 @@
                     align-items: center
                     justify-content: space-between
                     padding-right: 1rem
+                    position: relative
                     
                     .status_text
                         margin: 0
@@ -180,6 +181,28 @@
                         background-color: var(--danger-color)
                         animation: pulse 2.5s infinite ease-out
                         animation-delay: .6s
+
+                    .align
+                        position: relative
+                        .error_signal_container
+                            width: .8rem
+                            height: .8rem
+                            position: absolute
+                            display: flex
+                            align-items: center
+                            justify-content: center
+                            right: 0rem
+                            bottom: 0rem
+                            background-color: transparenty
+                            border-radius: 50%
+
+                            .error_signal
+                                padding: 0px
+                                margin: 0px
+                                position: relative
+                                color: var(--danger-color)
+                                font-weight: 900
+                                font-size: 11px
 
                     @keyframes pulse 
                         0% 
