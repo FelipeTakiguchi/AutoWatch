@@ -1,7 +1,13 @@
 .header_container
     background-color: var(--primary-color-700)
     width: 100%
+    display: flex
+    justify-content: space-between
+    padding-left: 2rem
+    padding-right: 2rem
+    align-items: center
     height: 7rem
+    position: relative
     box-shadow: 0px 25px 20px -20px rgba(0, 0, 0, 0.45)
     .centralize_title
         display: flex
@@ -13,34 +19,15 @@
             width: 65px
             height: 65px
             
-            /* Smaller devides (624px and down) */
-            @media only screen and (max-width: 40em)
-                margin-left: 0
-            /* Small devices such as large phones (640px and up) */
-            @media only screen and (min-width: 40em)
-                margin-left: 7rem
-                /* Medium devices such as tablets (768px and up) */
-            @media only screen and (min-width: 48em)
-                margin-left: 3rem
-            /* Large devices such as laptops (1024px and up) */
-            @media only screen and (min-width: 64em)
-                margin-left: 0rem
-
-        /* Smaller devides (624px and down) */
-        @media only screen and (max-width: 40em)
-            margin-left: 1rem
         /* Small devices such as large phones (640px and up) */
         @media only screen and (min-width: 40em)
             width: 11rem
-            margin-left: 1.5rem
             /* Medium devices such as tablets (768px and up) */
         @media only screen and (min-width: 48em)
             width: 16rem
-            margin-left: 2rem
         /* Large devices such as laptops (1024px and up) */
         @media only screen and (min-width: 64em)
             width: 20rem
-            margin-left: 3rem
                     
         .logo_title
             color: var(--white)
@@ -61,3 +48,4 @@
             @media only screen and (min-width: 64em)
                 font-size: 48px
                 
+   

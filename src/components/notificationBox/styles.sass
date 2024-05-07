@@ -4,9 +4,7 @@
     border-style: solid
     border-color: var(--primary-color-500)
     border-radius: 12px
-    position: absolute
-    top: 2rem
-    right: 1rem
+    position: relative
     cursor: pointer
     box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)
     transition: .3s
@@ -64,15 +62,15 @@
 
     @keyframes expandNotificationList 
         from 
-            transform: translateY(0rem) translateX(7rem) scale(0)
+            transform: translateY(-6rem) translateX(6.5rem) scale(0)
         to 
-            transform: translateY(5rem) translateX(0rem) scale(1)
+            transform: translateY(5.2rem) translateX(-1rem) scale(1)
 
     @keyframes minimizeNotificationList 
         from 
-            transform: translateY(5rem) translateX(0rem) scale(1)
+            transform: translateY(5.2rem) translateX(-1rem) scale(1)
         to 
-            transform: translateY(0rem) translateX(7rem) scale(0)
+            transform: translateY(-6rem) translateX(6.5rem) scale(0)
             
     .notification_header
         background-color: var(--primary-color)
@@ -81,7 +79,6 @@
         padding: 1rem
         box-sizing: border-box
         border-width: 1px
-        border-top-style: solid
         border-color: var(--white)
 
         .notification_title

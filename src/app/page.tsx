@@ -10,14 +10,21 @@ import useClientStore from "../services/clientStore";
 import useNotificationStore from "../services/notificationStore";
 import WebSocketComponent from "@/services/webSocket";
 import Delimiter from "@/components/delimiter/delimiter";
+import { signIn, signOut, useSession } from "next-auth/react";
+
 
 export default function Home() {
+  const { data: session, status } = useSession();
   const { page, nElements, setElementsReturned, setTotalElements, setTotalPages, setClients } = useClientStore();
   const { setNotifications } = useNotificationStore();
   const [filter, setFilter] = useState("");
   const [selectedStatus, setSelectedStatus] = useState('');
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
+  useEffect(() => {
+    if (status === "unauthenticated")
+      signIn();
+  }, [status]);
   useEffect(() => {
     fetchData();
     loadNotifications();
@@ -112,7 +119,7 @@ export default function Home() {
     try {
       const response = await axios.get("https://esp32-mpu9250-autobox-backend.onrender.com/api/client/notifications");
       console.log(response.data);
-      
+
       return response.data.notifications;
     } catch (error) {
       console.error('Error fetching data:', error);
