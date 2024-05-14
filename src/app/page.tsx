@@ -15,8 +15,8 @@ import { signIn, signOut, useSession } from "next-auth/react";
 
 export default function Home() {
   const { data: session, status } = useSession();
-  const { page, nElements, setElementsReturned, setTotalElements, setTotalPages, setClients } = useClientStore();
-  const { setNotifications } = useNotificationStore();
+  const { page, nElements, setElementsReturned, setTotalElements, setTotalPages, setClients, statusFilter, inputValue } = useClientStore();
+  const { setNotifications, newNotification } = useNotificationStore();
   const [filter, setFilter] = useState("");
   const [selectedStatus, setSelectedStatus] = useState('');
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -25,10 +25,14 @@ export default function Home() {
     if (status === "unauthenticated")
       signIn();
   }, [status]);
+
   useEffect(() => {
     fetchData();
-    loadNotifications();
   }, [page, nElements]);
+
+  useEffect(() => {
+    loadNotifications();
+  }, [newNotification])
 
   const fetchData = async () => {
     const data = await requestClients();
@@ -94,19 +98,19 @@ export default function Home() {
 
   const loadNotifications = async () => {
     const data = await requestNotifications();
-
     if (data) {
+      console.log(data)
       setNotifications(data.map((notification: NodeList) => ({
         plate: notification[0],
-        status: "Em Crise",
-        accidentDate: notification[1],
+        status: notification[1],
+        accidentDate: notification[2],
       })));
     }
   };
 
   const requestClients = async () => {
     try {
-      const url = `${apiUrl}/api/client/${page}/${nElements}`;
+      const url = `${apiUrl}/api/client/${page}/${nElements}${inputValue ? "/" + inputValue : "/ALL"}${statusFilter ? "/" + statusFilter : "/Todos"}`;
       const response = await axios.get(url);
       return response.data;
     } catch (error) {

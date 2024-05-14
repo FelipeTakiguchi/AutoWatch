@@ -36,6 +36,7 @@ export default function NotificationBox() {
                     notifications.map((notification, index) => (
                         <div className="notification_item" key={index}>
                             {notification.plate}: {notification.status}
+                            <p className="status_date">{new Date(notification.accidentDate).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false, timeZone: 'America/Sao_Paulo' })}</p>
                             <div className={`${notification.status == "Em Crise" ? "danger_status" : ""}`}></div>
                         </div>
                     ))

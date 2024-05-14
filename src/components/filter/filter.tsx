@@ -8,15 +8,15 @@ import useClientStore from "../../services/clientStore";
 
 
 export default function Filter() {
-    const { setClients, page, nElements, setTotalPages, statusFilter, setElementsReturned, setTotalElements } = useClientStore();
+    const { setClients, setPage, nElements, inputValue, setInputValue, setTotalPages, statusFilter, setElementsReturned, setTotalElements } = useClientStore();
     const [isFocused, setIsFocused] = useState(false);
-    const [inputValue, setInputValue] = useState("");
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
     const [timeoutId, setTimeoutId] = useState<number | null>(null);
 
     const makeRequest = async () => {
         try {
-            const url = `${apiUrl}/api/client/${page}/${nElements}${inputValue ? "/" + inputValue : "/ALL"}${statusFilter ? "/" + statusFilter : "/Todos"}`;
+            setPage(1);
+            const url = `${apiUrl}/api/client/${1}/${nElements}${inputValue ? "/" + inputValue : "/ALL"}${statusFilter ? "/" + statusFilter : "/Todos"}`;
             const response = await axios.get(url);
             return response.data;
         } catch (error) {

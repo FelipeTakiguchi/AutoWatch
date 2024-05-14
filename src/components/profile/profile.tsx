@@ -16,7 +16,7 @@ export default function Profile() {
         if (!event.target.closest('.profile_list'))
             setShowOptions(2);
     }
-
+    
     return (
         <div className="profile_box">
             <button className="profile_button_image" onClick={expandOptions}>

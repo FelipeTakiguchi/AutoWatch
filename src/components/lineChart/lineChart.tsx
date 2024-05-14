@@ -13,8 +13,8 @@ const ChartPage = () => {
     data: impactData.data.map(item => item.acceleration),
   }];
 
-  const [chartHeight, setChartHeight] = useState(window.innerHeight * 0.5); // Initial height
-  const [chartWidth, setChartWidth] = useState(window.innerWidth * 0.6); // Initial width
+  const [chartHeight, setChartHeight] = useState(window.innerHeight * 0.6); // Initial height
+  const [chartWidth, setChartWidth] = useState(window.innerWidth * 0.8); // Initial width
 
   // Update chart dimensions on window resize
   useEffect(() => {

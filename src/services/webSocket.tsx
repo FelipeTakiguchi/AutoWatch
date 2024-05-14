@@ -17,10 +17,11 @@ interface RowData {
 interface MessageData {
   plate: string;
   location: string;
+  lastUpdated: Date;
 }
 
 export default function WebSocketComponent() {
-  const [event, setEvent] = useState<{ type: string, data: MessageData }>({ type: "", data: { plate: "", location: "" } });
+  const [event, setEvent] = useState<{ type: string, data: MessageData }>({ type: "", data: { plate: "", location: "", lastUpdated: new Date() } });
   const { type, data } = event as { type: string, data: MessageData };
   const { clients: initialClients, setClients } = useClientStore();
   const { setNewNotification } = useNotificationStore();
@@ -39,10 +40,11 @@ export default function WebSocketComponent() {
       // Handle received message
       try {
         // Extract type and data properties
-        const { plate, location } = data;
-
+        const { plate, location, lastUpdated } = data;
+        console.log(data);
+        
         if (type === "crashEvent") {
-          setNewNotification({ plate: plate, status: "Em Crise", accidentDate: new Date() })
+          setNewNotification({ plate: plate, status: "Em Crise", accidentDate: lastUpdated })
         }
 
         // Update clients based on the type of message

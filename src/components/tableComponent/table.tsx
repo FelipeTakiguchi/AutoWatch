@@ -41,9 +41,9 @@ export default function Table() {
     };
 
     const classifyChangeOfSupport = (risk: number): string => {
-        if (risk > 80)
+        if (risk > 40)
             return "Alto"
-        else if (risk > 50)
+        else if (risk > 20)
             return "Médio"
         else
             return "Baixo"
@@ -168,9 +168,8 @@ export default function Table() {
                                         }
                                         {row.plate == event.plate && event.fatalityLikelyhood &&
                                             <p className="info_text">Risco de vida: <b className={
-                                                event.fatalityLikelyhood <= 50 ? "low_risk" :
-                                                    event.fatalityLikelyhood > 50 ? "medium_risk" :
-                                                        event.fatalityLikelyhood > 80 ? "high_risk" : ""}>{classifyChangeOfSupport(event.fatalityLikelyhood)}</b></p>
+                                                event.fatalityLikelyhood <= 20 ? "low_risk" :
+                                                    event.fatalityLikelyhood <= 40 ? "medium_risk" : "high_risk"}>{classifyChangeOfSupport(event.fatalityLikelyhood)}</b></p>
                                         }
                                     </td>
                                     <td className="button_box">
