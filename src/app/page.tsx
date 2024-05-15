@@ -110,7 +110,7 @@ export default function Home() {
 
   const requestClients = async () => {
     try {
-      const url = `${apiUrl}/api/client/${page}/${nElements}${inputValue ? "/" + inputValue : "/ALL"}${statusFilter ? "/" + statusFilter : "/Todos"}`;
+      const url = `${apiUrl}/api/client/${page}/${nElements}${inputValue ? "/" + inputValue : "/ALL"}${statusFilter ? "/" + statusFilter : "/Todos/asc"}`;
       const response = await axios.get(url);
       return response.data;
     } catch (error) {

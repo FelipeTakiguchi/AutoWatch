@@ -16,7 +16,7 @@ export default function Filter() {
     const makeRequest = async () => {
         try {
             setPage(1);
-            const url = `${apiUrl}/api/client/${1}/${nElements}${inputValue ? "/" + inputValue : "/ALL"}${statusFilter ? "/" + statusFilter : "/Todos"}`;
+            const url = `${apiUrl}/api/client/${1}/${nElements}${inputValue ? "/" + inputValue : "/ALL"}${statusFilter ? "/" + statusFilter : "/Todos"}status/asc`; // change status to filter by order
             const response = await axios.get(url);
             return response.data;
         } catch (error) {
