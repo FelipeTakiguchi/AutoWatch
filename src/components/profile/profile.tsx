@@ -16,8 +16,6 @@ export default function Profile() {
         if (!event.target.closest('.profile_list'))
             setShowOptions(2);
     }
-
-    console.log(session?.user?.image)
     
     return (
         <div className="profile_box">

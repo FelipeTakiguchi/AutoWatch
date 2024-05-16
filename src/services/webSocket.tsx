@@ -53,6 +53,9 @@ export default function WebSocketComponent() {
           if (clients && clients.length > 0) {
             setClients(clients.map(client => {
               if (client.plate === plate) {
+                if((client.status === "Rodando" && type !== "eventUpdate") || (client.status === "Sem Sinal" && type !== "lostSignal") || (client.status === "Em Crise" && (type === "lostSignal" || type === "eventUpdate"))){
+
+                }
                 return {
                   ...client,
                   status: type === "eventUpdate" ? "Rodando" : type === "lostSignal" ? "Sem Sinal" : "Em Crise",

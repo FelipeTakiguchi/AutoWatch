@@ -8,15 +8,30 @@ import useClientStore from "../../services/clientStore";
 
 
 export default function Filter() {
-    const { setClients, setPage, nElements, inputValue, setInputValue, setTotalPages, statusFilter, setElementsReturned, setTotalElements } = useClientStore();
+    const { setClients, setPage, nElements, inputValue, setInputValue, setTotalPages, statusFilter, setElementsReturned, setTotalElements, sortByPlate, sortByModel, sortByOwner, sortByStatus, orderBy, setOrderBy, isAscending, setIsAscending } = useClientStore();
     const [isFocused, setIsFocused] = useState(false);
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
     const [timeoutId, setTimeoutId] = useState<number | null>(null);
 
+    useEffect(() => {
+        if (orderBy !== "") {
+            if (!sortByPlate && !sortByModel && !sortByOwner && !sortByStatus) {
+                setIsAscending(true);
+            }
+            else {
+                setIsAscending(false);
+                setOrderBy(sortByPlate ? "plate" : sortByModel ? "vehicle" : sortByOwner ? "name" : sortByStatus ? "status" : "status");
+            }
+        }else {
+            setOrderBy(sortByPlate ? "plate" : sortByModel ? "vehicle" : sortByOwner ? "name" : sortByStatus ? "status" : "status");
+        }
+
+    }, [sortByPlate, sortByModel, sortByOwner, sortByStatus])
+
     const makeRequest = async () => {
         try {
             setPage(1);
-            const url = `${apiUrl}/api/client/${1}/${nElements}${inputValue ? "/" + inputValue : "/ALL"}${statusFilter ? "/" + statusFilter : "/Todos"}status/asc`; // change status to filter by order
+            const url = `${apiUrl}/api/client/${1}/${nElements}${inputValue ? "/" + inputValue : "/ALL"}${statusFilter ? "/" + statusFilter : "/Todos"}${orderBy ? "/" + orderBy : "/status"}${isAscending ? "/desc" : "/asc"}`; // change status to filter by order
             const response = await axios.get(url);
             return response.data;
         } catch (error) {
@@ -106,7 +121,7 @@ export default function Filter() {
         }, 100) as unknown as number;
 
         setTimeoutId(newTimeoutId);
-    }, [inputValue, statusFilter]);
+    }, [inputValue, statusFilter, orderBy, isAscending]);
 
     return (
         <div className={`input_box ${isFocused ? 'focused' : ''}`}>

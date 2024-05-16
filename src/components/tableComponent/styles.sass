@@ -124,17 +124,36 @@
                 transition: .5s
                 border-radius: 0 .5rem 0 0
             .table_header_cell
-                padding-top: .4rem
                 transition: .5s
-                padding-bottom: .4rem
-                .table_header_text
-                    text-align: start
-                    transition: .5s
-                    font-weight: bold
-                    margin: 0px
-                    color: var(--white)
-                    @include dynamic_text
+                .table_header_horizontal_align
+                    display: flex
+                    align-items: center
+
+                    .table_header_text
+                        text-align: start
+                        transition: .5s
+                        font-weight: bold
+                        margin: 0px
+                        color: var(--white)
+                        @include dynamic_text
+
+                    .button_order_by
+                        background-color: rgba(0, 0, 0, 0)
+                        border: none
+                        cursor: pointer
+
+                        .arrow_down_icon
+                            width: 1.5rem
+                            height: 1.5rem
+                            filter: invert(91%) sepia(84%) saturate(0%) hue-rotate(283deg) brightness(108%) contrast(100%)
+                            transition: transform 0.3s ease
                         
+                        .arrow_up 
+                            transform: rotate(0deg)
+
+                        .arrow_down
+                            transform: rotate(180deg)
+
     .table_body
         transition: .5s
         .selected_table_row

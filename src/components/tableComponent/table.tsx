@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState } from 'react';
 import './styles.sass';
 import contactIcon from "@/assets/images/contact.svg"
@@ -9,6 +9,7 @@ import SimulationModal from '../modal/simulationModal/simulationModal';
 import axios from 'axios';
 import useClientStore from '@/services/clientStore';
 import { Radio } from 'react-loader-spinner';
+import arrownDownIcon from "@/assets/images/arrow_down.svg";
 
 interface EventAttributes {
     plate?: string;
@@ -17,7 +18,7 @@ interface EventAttributes {
 }
 
 export default function Table() {
-    const { clients, setImpactData, expandedRow, setExpandedRow, elementsReturned } = useClientStore();
+    const { clients, setImpactData, expandedRow, setExpandedRow, elementsReturned, sortByPlate, setSortByPlate, sortByModel, setSortByModel, sortByOwner, setSortByOwner, sortByStatus, setSortByStatus } = useClientStore();
     const [modalOpen, setModalOpen] = useState<string>("");
     const [event, setEvent] = useState<EventAttributes>({});
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -57,22 +58,32 @@ export default function Table() {
         }
     };
 
-    const handleRowClick = (event: any, index: number, plate: string) => {
-        if (!event.target.closest('.button')) {
-            toggleRow(index);
-            setEvent({});
-            fetchEventData(plate);
-        }
+    const handleRowClick = (index: number, plate: string) => {
+        toggleRow(index);
+        setEvent({});
+        fetchEventData(plate);
     };
 
     const openModal = (modal: string) => {
         setModalOpen(modal);
     };
 
-    const closeModal = (event: any) => {
-        if (!event.target.closest('.modal')) {
-            setModalOpen("");
-        }
+    const closeModal = () => {
+        setModalOpen("");
+    };
+
+    const sortData = (sortBy: string) => {
+        // Reset all other sort states
+        setSortByPlate(false);
+        setSortByModel(false);
+        setSortByOwner(false);
+        setSortByStatus(false);
+
+        // Set the selected sort state
+        if (sortBy === "plate") setSortByPlate(!sortByPlate);
+        else if (sortBy === "model") setSortByModel(!sortByModel);
+        else if (sortBy === "owner") setSortByOwner(!sortByOwner);
+        else if (sortBy === "status") setSortByStatus(!sortByStatus);
     };
 
     return (
@@ -80,10 +91,38 @@ export default function Table() {
             <table className="table">
                 <thead className="table_header">
                     <tr className="table_row">
-                        <th className="table_header_cell first_header_cell"><p className="table_header_text">Placa</p></th>
-                        <th className="table_header_cell"><p className="table_header_text">Modelo</p></th>
-                        <th className="table_header_cell"><p className="table_header_text">Dono</p></th>
-                        <th className="table_header_cell status last_header_cell"><p className="table_header_text">Status</p></th>
+                        <th className="table_header_cell first_header_cell">
+                            <div className="table_header_horizontal_align">
+                                <p className="table_header_text" onClick={() => sortData("plate")}>Placa</p>
+                                <button className="button_order_by" onClick={() => sortData("plate")}>
+                                    <Image src={arrownDownIcon} alt="order by icon" className={`${sortByPlate ? "arrow_up" : "arrow_down"} arrow_down_icon`} />
+                                </button>
+                            </div>
+                        </th>
+                        <th className="table_header_cell">
+                            <div className="table_header_horizontal_align">
+                                <p className="table_header_text" onClick={() => sortData("model")}>Modelo</p>
+                                <button className="button_order_by" onClick={() => sortData("model")}>
+                                    <Image src={arrownDownIcon} alt="order by icon" className={`${sortByModel ? "arrow_up" : "arrow_down"} arrow_down_icon`} />
+                                </button>
+                            </div>
+                        </th>
+                        <th className="table_header_cell">
+                            <div className="table_header_horizontal_align">
+                                <p className="table_header_text" onClick={() => sortData("owner")}>Dono</p>
+                                <button className="button_order_by" onClick={() => sortData("owner")}>
+                                    <Image src={arrownDownIcon} alt="order by icon" className={`${sortByOwner ? "arrow_up" : "arrow_down"} arrow_down_icon`} />
+                                </button>
+                            </div>
+                        </th>
+                        <th className="table_header_cell status last_header_cell">
+                            <div className="table_header_horizontal_align">
+                                <p className="table_header_text" onClick={() => sortData("status")}>Status</p>
+                                <button className="button_order_by" onClick={() => sortData("status")}>
+                                    <Image src={arrownDownIcon} alt="order by icon" className={`${sortByStatus ? "arrow_up" : "arrow_down"} arrow_down_icon`} />
+                                </button>
+                            </div>
+                        </th>
                     </tr>
                 </thead>
                 <tbody className="table_body">
@@ -98,7 +137,7 @@ export default function Table() {
                     }
                     {clients.map((row, index) => (
                         <React.Fragment key={index}>
-                            <tr className={`table_row ${expandedRow === index ? "selected_table_row" : index + 1 != elementsReturned ? "section_group" : ""}`} onClick={(e) => handleRowClick(e, index, row.plate)}>
+                            <tr className={`table_row ${expandedRow === index ? "selected_table_row" : index + 1 != elementsReturned ? "section_group" : ""}`} onClick={() => handleRowClick(index, row.plate)}>
                                 <td className="table_element first_element">{row.plate.toUpperCase()}</td>
                                 <td className="table_element">{row.vehicle}</td>
                                 <td className="table_element">{row.name}</td>
@@ -127,26 +166,26 @@ export default function Table() {
                                                 wrapperClass=""
                                             />}
                                         {row.status === "Em Crise" && (
-                                        <div className="align">
-                                            <Radio
-                                                visible={true}
-                                                height="30"
-                                                width="30"
-                                                colors={["#db0202", "#fc0808", "#ff3030"]}
-                                                ariaLabel="radio-loading"
-                                                wrapperStyle={{}}
-                                                wrapperClass=""
-                                            />
-                                            <div className="error_signal_container">
-                                                <p className="error_signal">x</p>
+                                            <div className="align">
+                                                <Radio
+                                                    visible={true}
+                                                    height="30"
+                                                    width="30"
+                                                    colors={["#db0202", "#fc0808", "#ff3030"]}
+                                                    ariaLabel="radio-loading"
+                                                    wrapperStyle={{}}
+                                                    wrapperClass=""
+                                                />
+                                                <div className="error_signal_container">
+                                                    <p className="error_signal">x</p>
+                                                </div>
                                             </div>
-                                        </div>
                                         )}
                                     </div>
                                 </td>
                             </tr>
                             {!row.address && !event.impactSpeed && !event.fatalityLikelyhood && expandedRow === index &&
-                                <tr className="centralize_message" onClick={(e) => handleRowClick(e, index, row.plate)}>
+                                <tr className="centralize_message" onClick={() => handleRowClick(index, row.plate)}>
                                     <td colSpan={4}>
                                         <p className="message_error">
                                             Dados Indisponíveis
@@ -155,7 +194,7 @@ export default function Table() {
                                 </tr>
                             }
                             {expandedRow === index && (
-                                <tr className="table_row additional_info_row selected_table_row" onClick={(e) => handleRowClick(e, index, row.plate)}>
+                                <tr className="table_row additional_info_row selected_table_row" onClick={() => handleRowClick(index, row.plate)}>
                                     <td colSpan={4} className="text_box">
                                         {row.address &&
                                             <p className="info_text">Localização: {row.address}</p>
@@ -201,12 +240,12 @@ export default function Table() {
                 </tbody>
             </table>
             {modalOpen == "contact" && (
-                <div className="modal_overlay" onClick={(event) => closeModal(event)}>
+                <div className="modal_overlay" onClick={closeModal}>
                     <ContactModal email={clients[expandedRow!].email} mobileNumber={clients[expandedRow!].number} />
                 </div>
             )}
             {modalOpen == "analyze" && (
-                <div className="modal_overlay" onClick={(event) => closeModal(event)}>
+                <div className="modal_overlay" onClick={closeModal}>
                     <SimulationModal />
                 </div>
             )}

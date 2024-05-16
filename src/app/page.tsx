@@ -15,11 +15,27 @@ import { signIn, signOut, useSession } from "next-auth/react";
 
 export default function Home() {
   const { data: session, status } = useSession();
-  const { page, nElements, setElementsReturned, setTotalElements, setTotalPages, setClients, statusFilter, inputValue } = useClientStore();
+  const { page, nElements, setElementsReturned, setTotalElements, setTotalPages, setClients, statusFilter, inputValue, sortByPlate, sortByModel, sortByOwner, sortByStatus, orderBy, setOrderBy, isAscending, setIsAscending } = useClientStore();
   const { setNotifications, newNotification } = useNotificationStore();
   const [filter, setFilter] = useState("");
   const [selectedStatus, setSelectedStatus] = useState('');
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+
+  useEffect(() => {
+    if (orderBy !== "") {
+      if (!sortByPlate && !sortByModel && !sortByOwner && !sortByStatus) {
+        setIsAscending(true);
+      }
+      else {
+        setIsAscending(false);
+        setOrderBy(sortByPlate ? "plate" : sortByModel ? "vehicle" : sortByOwner ? "name" : sortByStatus ? "status" : "status");
+      }
+    } else {
+      setOrderBy(sortByPlate ? "plate" : sortByModel ? "vehicle" : sortByOwner ? "name" : sortByStatus ? "status" : "status");
+    }
+
+  }, [sortByPlate, sortByModel, sortByOwner, sortByStatus])
 
   useEffect(() => {
     if (status === "unauthenticated")
@@ -110,7 +126,7 @@ export default function Home() {
 
   const requestClients = async () => {
     try {
-      const url = `${apiUrl}/api/client/${page}/${nElements}${inputValue ? "/" + inputValue : "/ALL"}${statusFilter ? "/" + statusFilter : "/Todos/asc"}`;
+      const url = `${apiUrl}/api/client/${page}/${nElements}${inputValue ? "/" + inputValue : "/ALL"}${statusFilter ? "/" + statusFilter : "/Todos"}${orderBy ? "/" + orderBy : "/status"}${isAscending ? "/desc" : "/asc"}`;
       const response = await axios.get(url);
       return response.data;
     } catch (error) {
