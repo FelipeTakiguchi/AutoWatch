@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './styles.sass';
 import contactIcon from "@/assets/images/contact.svg"
 import analysisIcon from "@/assets/images/analysis.svg"
@@ -22,6 +22,11 @@ export default function Table() {
     const [modalOpen, setModalOpen] = useState<string>("");
     const [event, setEvent] = useState<EventAttributes>({});
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+    useEffect(() => {
+        console.log(expandedRow);
+
+    }, [expandedRow])
 
     const fetchEventData = async (plate: string) => {
         try {
@@ -51,6 +56,7 @@ export default function Table() {
     }
 
     const toggleRow = (index: number) => {
+        console.log("Oi")
         if (expandedRow === index) {
             setExpandedRow(null);
         } else {
@@ -58,7 +64,14 @@ export default function Table() {
         }
     };
 
-    const handleRowClick = (index: number, plate: string) => {
+    const handleRowClick = (index: number, event: React.MouseEvent<HTMLTableRowElement>, plate: string) => {
+        // Check if the click occurred inside the ContactModal or SimulationModal
+        if (
+            (event.target as HTMLElement).closest(".button")
+        ) {
+            return; // If clicked inside either modal, do nothing
+        }
+
         toggleRow(index);
         setEvent({});
         fetchEventData(plate);
@@ -68,10 +81,16 @@ export default function Table() {
         setModalOpen(modal);
     };
 
-    const closeModal = () => {
+    const closeModal = (e: React.MouseEvent<HTMLDivElement>) => {
+        // Check if the click occurred inside the ContactModal or SimulationModal
+        if (
+            (e.target as HTMLElement).closest(".modal")
+        ) {
+            return; // If clicked inside either modal, do nothing
+        }
         setModalOpen("");
     };
-
+    
     const sortData = (sortBy: string) => {
         // Reset all other sort states
         setSortByPlate(false);
@@ -137,7 +156,7 @@ export default function Table() {
                     }
                     {clients.map((row, index) => (
                         <React.Fragment key={index}>
-                            <tr className={`table_row ${expandedRow === index ? "selected_table_row" : index + 1 != elementsReturned ? "section_group" : ""}`} onClick={() => handleRowClick(index, row.plate)}>
+                            <tr className={`table_row ${expandedRow === index ? "selected_table_row" : index + 1 != elementsReturned ? "section_group" : ""}`} onClick={(e) => handleRowClick(index, e, row.plate)}>
                                 <td className="table_element first_element">{row.plate.toUpperCase()}</td>
                                 <td className="table_element">{row.vehicle}</td>
                                 <td className="table_element">{row.name}</td>
@@ -185,7 +204,7 @@ export default function Table() {
                                 </td>
                             </tr>
                             {!row.address && !event.impactSpeed && !event.fatalityLikelyhood && expandedRow === index &&
-                                <tr className="centralize_message" onClick={() => handleRowClick(index, row.plate)}>
+                                <tr className="centralize_message" onClick={(e) => handleRowClick(index, e, row.plate)}>
                                     <td colSpan={4}>
                                         <p className="message_error">
                                             Dados Indisponíveis
@@ -194,7 +213,7 @@ export default function Table() {
                                 </tr>
                             }
                             {expandedRow === index && (
-                                <tr className="table_row additional_info_row selected_table_row" onClick={() => handleRowClick(index, row.plate)}>
+                                <tr className="table_row additional_info_row selected_table_row" onClick={(e) => handleRowClick(index, e, row.plate)}>
                                     <td colSpan={4} className="text_box">
                                         {row.address &&
                                             <p className="info_text">Localização: {row.address}</p>
@@ -240,12 +259,12 @@ export default function Table() {
                 </tbody>
             </table>
             {modalOpen == "contact" && (
-                <div className="modal_overlay" onClick={closeModal}>
-                    <ContactModal email={clients[expandedRow!].email} mobileNumber={clients[expandedRow!].number} />
+                <div className="modal_overlay" onClick={(e) => closeModal(e)}>
+                    <ContactModal />
                 </div>
             )}
             {modalOpen == "analyze" && (
-                <div className="modal_overlay" onClick={closeModal}>
+                <div className="modal_overlay" onClick={(e) => closeModal(e)}>
                     <SimulationModal />
                 </div>
             )}

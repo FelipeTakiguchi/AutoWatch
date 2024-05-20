@@ -1,113 +1,103 @@
-.modal_overlay
-    position: fixed
-    top: 0
-    left: 0
-    width: 100%
-    height: 100%
-    background-color: rgba(0, 0, 0, 0.5)
-    display: flex
-    justify-content: center
-    align-items: center
-    z-index: 2
-    .modal
-        border-radius: 8px
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3)
-        .modal_header
-            display: flex
-            background-color: var(--primary-color)
-            justify-content: space-evenly
+.modal
+    border-radius: 8px
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3)
+    z-index: 99
+    .modal_header
+        display: flex
+        background-color: var(--primary-color)
+        justify-content: space-evenly
+        border-radius: 8px 8px 0 0
+        .modal_button
+            flex: 1
             border-radius: 8px 8px 0 0
-            .modal_button
-                flex: 1
-                border-radius: 8px 8px 0 0
+            background-color: var(--primary-color)
+            border: none
+            &:not(.modal_button_selected):hover
+                opacity: 0.9
+                background-color: var(--primary-color-500)
+                transition: 0.3s
+        .modal_title
+            padding: 0px
+            color: var(--white)
+            margin: 0px
+            line-height: 3rem
+            text-align: center
+            /* Smaller devides (624px and down) */
+            @media only screen and (max-width: 40em)
+                font-size: 20px
+            /* Small devices such as large phones (640px and up) */
+            @media only screen and (min-width: 40em)
+                font-size: 22px
+            /* Medium devices such as tablets (768px and up) */
+            @media only screen and (min-width: 48em)
+                font-size: 24px
+            /* Large devices such as laptops (1024px and up) */
+            @media only screen and (min-width: 64em)
+                font-size: 26px
+            /* Largest devices such as desktops (1280px and up) */
+            @media only screen and (min-width: 80em)
+                font-size: 28px
+        .modal_button_selected
+            background-color: var(--white)
+            .modal_title
+                color: var(--black)
+    .modal_content 
+        display: flex
+        flex-direction: column
+        gap: 1rem
+        border-radius: 0 0 8px 8px
+        padding: 1rem
+        background-color: var(--white)
+        .modal_text
+            margin: 0px
+            /* Smaller devides (624px and down) */
+            @media only screen and (max-width: 40em)
+                font-size: 14px
+            /* Small devices such as large phones (640px and up) */
+            @media only screen and (min-width: 40em)
+                font-size: 17px
+            /* Medium devices such as tablets (768px and up) */
+            @media only screen and (min-width: 48em)
+                font-size: 20px
+            /* Large devices such as laptops (1024px and up) */
+            @media only screen and (min-width: 64em)
+                font-size: 23px
+            /* Largest devices such as desktops (1280px and up) */
+            @media only screen and (min-width: 80em)
+                font-size: 26px
+        .centralize
+            width: 100%
+            display: flex
+            justify-content: center
+            .modal_contact_button
                 background-color: var(--primary-color)
                 border: none
-                &:not(.modal_button_selected):hover
+                border-radius: 12px
+                &:hover
                     opacity: 0.9
-                    background-color: var(--primary-color-500)
-                    transition: 0.3s
-            .modal_title
-                padding: 0px
-                color: var(--white)
-                margin: 0px
-                line-height: 3rem
-                text-align: center
+                    transform: scale(1.02)
+                    transition: .3s
+                .text_button
+                    margin: .2rem
+                    color: var(--white)
                 /* Smaller devides (624px and down) */
                 @media only screen and (max-width: 40em)
-                    font-size: 20px
+                    width: 7rem
+                    font-size: 12px
                 /* Small devices such as large phones (640px and up) */
                 @media only screen and (min-width: 40em)
-                    font-size: 22px
-                /* Medium devices such as tablets (768px and up) */
-                @media only screen and (min-width: 48em)
-                    font-size: 24px
-                /* Large devices such as laptops (1024px and up) */
-                @media only screen and (min-width: 64em)
-                    font-size: 26px
-                /* Largest devices such as desktops (1280px and up) */
-                @media only screen and (min-width: 80em)
-                    font-size: 28px
-            .modal_button_selected
-                background-color: var(--white)
-                .modal_title
-                    color: var(--black)
-        .modal_content 
-            display: flex
-            flex-direction: column
-            gap: 1rem
-            border-radius: 0 0 8px 8px
-            padding: 1rem
-            background-color: var(--white)
-            .modal_text
-                margin: 0px
-                /* Smaller devides (624px and down) */
-                @media only screen and (max-width: 40em)
+                    width: 8rem
                     font-size: 14px
-                /* Small devices such as large phones (640px and up) */
-                @media only screen and (min-width: 40em)
-                    font-size: 17px
                 /* Medium devices such as tablets (768px and up) */
                 @media only screen and (min-width: 48em)
-                    font-size: 20px
+                    width: 9rem
+                    font-size: 16px
                 /* Large devices such as laptops (1024px and up) */
                 @media only screen and (min-width: 64em)
-                    font-size: 23px
+                    width: 10rem
+                    font-size: 18px
                 /* Largest devices such as desktops (1280px and up) */
                 @media only screen and (min-width: 80em)
-                    font-size: 26px
-            .centralize
-                width: 100%
-                display: flex
-                justify-content: center
-                .modal_contact_button
-                    background-color: var(--primary-color)
-                    border: none
-                    border-radius: 12px
-                    &:hover
-                        opacity: 0.9
-                        transform: scale(1.02)
-                        transition: .3s
-                    .text_button
-                        margin: .2rem
-                        color: var(--white)
-                    /* Smaller devides (624px and down) */
-                    @media only screen and (max-width: 40em)
-                        width: 7rem
-                        font-size: 12px
-                    /* Small devices such as large phones (640px and up) */
-                    @media only screen and (min-width: 40em)
-                        width: 8rem
-                        font-size: 14px
-                    /* Medium devices such as tablets (768px and up) */
-                    @media only screen and (min-width: 48em)
-                        width: 9rem
-                        font-size: 16px
-                    /* Large devices such as laptops (1024px and up) */
-                    @media only screen and (min-width: 64em)
-                        width: 10rem
-                        font-size: 18px
-                    /* Largest devices such as desktops (1280px and up) */
-                    @media only screen and (min-width: 80em)
-                        width: 11rem
-                        font-size: 20px
-        
+                    width: 11rem
+                    font-size: 20px
+    

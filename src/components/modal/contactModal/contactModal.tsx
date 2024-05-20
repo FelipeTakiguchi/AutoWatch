@@ -1,6 +1,11 @@
+import useClientStore from "@/services/clientStore";
 import "../styles.sass";
 
-export default function ContactModal({ mobileNumber, email }: { mobileNumber: string, email: string }) {
+export default function ContactModal() {
+    const { clients, expandedRow} = useClientStore();
+    let mobileNumber = clients[expandedRow!] ? clients[expandedRow!].number : "";
+    let email = clients[expandedRow!] ? clients[expandedRow!].email : "";
+
     function formatPhoneNumber(number: string) {
         const phoneNumber = number.toString();
         const countryCode = "+" + phoneNumber.slice(0, 2);
@@ -10,7 +15,7 @@ export default function ContactModal({ mobileNumber, email }: { mobileNumber: st
         return `${countryCode} ${firstPart}-${secondPart}`;
     }
     
-    const message = "message test";
+    const message = "";
     console.log(mobileNumber)
     mobileNumber = formatPhoneNumber(mobileNumber);
 
