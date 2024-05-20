@@ -8,7 +8,7 @@ import ContactModal from '../modal/contactModal/contactModal';
 import SimulationModal from '../modal/simulationModal/simulationModal';
 import axios from 'axios';
 import useClientStore from '@/services/clientStore';
-import { Radio } from 'react-loader-spinner';
+import { Oval, Radio } from 'react-loader-spinner';
 import arrownDownIcon from "@/assets/images/arrow_down.svg";
 
 interface EventAttributes {
@@ -90,7 +90,7 @@ export default function Table() {
         }
         setModalOpen("");
     };
-    
+
     const sortData = (sortBy: string) => {
         // Reset all other sort states
         setSortByPlate(false);
@@ -147,11 +147,29 @@ export default function Table() {
                 <tbody className="table_body">
                     {clients.length <= 0 &&
                         <tr className="centralize_message">
-                            <td colSpan={4}>
-                                <p className="message_error">
-                                    Dados Indisponíveis
-                                </p>
-                            </td>
+                            {
+                                elementsReturned < 0 &&
+                                <td colSpan={4} className="centralize_loading_table">
+                                    <Oval
+                                        visible={true}
+                                        height="80"
+                                        width="80"
+                                        color="#0E1D35"
+                                        secondaryColor="#0E1D35"
+                                        ariaLabel="oval-loading"
+                                        wrapperStyle={{}}
+                                        wrapperClass=""
+                                    />
+                                </td>
+                            }
+                            {
+                                elementsReturned >= 0 &&
+                                <td colSpan={4}>
+                                    <p className="message_error">
+                                        Dados Indisponíveis
+                                    </p>
+                                </td>
+                            }
                         </tr>
                     }
                     {clients.map((row, index) => (

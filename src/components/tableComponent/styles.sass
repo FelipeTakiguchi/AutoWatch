@@ -67,9 +67,17 @@
     @media only screen and (min-width: 80em)
         font-size: 18px
 
+.centralize_loading_table
+    width: 100%
+    height: 50vh
+    * 
+        display: flex
+        justify-content: center
+        align-items: center
+
 .centralize_message
     width: 100%
-    background-color: var(--gray-500)
+    background-color: var(--primary-color-100)
     text-align: center
     transition: .5s
     margin: 0px
@@ -78,7 +86,6 @@
         padding: 0px
     .message_error
         transition: .5s
-        background-color: var(--primary-color-100)
         color: var(--primary-color-700)
         font-weight: bold
         font-style: italic

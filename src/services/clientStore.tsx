@@ -66,7 +66,7 @@ const useClientStore = create<ClientStore>(set => ({
   totalPages: 10,
   nElements: 10,
   totalElements: 10,
-  elementsReturned: 10,
+  elementsReturned: -1,
   expandedRow: null,
   statusFilter: "",
   inputValue: "",
