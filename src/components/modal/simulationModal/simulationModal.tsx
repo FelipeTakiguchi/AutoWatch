@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import dynamic from 'next/dynamic';
 import ChartPage from "@/components/lineChart/lineChart";
 import VideoPlayer from "@/components/VideoPlayer/videoPlayer";
+import { Oval } from "react-loader-spinner";
 
 export default function SimulationModal() {
     const [option, setOption] = useState("Map");
@@ -11,7 +12,20 @@ export default function SimulationModal() {
     const Map = useMemo(() => dynamic(
         () => import('@/components/map/map'),
         {
-            loading: () => <p>A map is loading</p>,
+            loading: () => (
+                <div className="centralize_loading">
+                    <Oval
+                        visible={true}
+                        height="80"
+                        width="80"
+                        color="#0E1D35"
+                        secondaryColor="#0E1D35"
+                        ariaLabel="oval-loading"
+                        wrapperStyle={{}}
+                        wrapperClass=""
+                    />
+                </div>
+            ),
             ssr: false
         }
     ), [])
@@ -33,13 +47,13 @@ export default function SimulationModal() {
         <div className="modal">
             <div>
                 <header className="modal_header">
-                    <button onClick={() => setOption("Map")} className={`modal_button ${option=="Map" ? "modal_button_selected": ""}`}>
+                    <button onClick={() => setOption("Map")} className={`modal_button ${option == "Map" ? "modal_button_selected" : ""}`}>
                         <h1 className="modal_title first_button">Mapa</h1>
                     </button>
-                    <button onClick={() => setOption("Graphic")} className={`modal_button ${option=="Graphic" ? "modal_button_selected": ""}`}>
+                    <button onClick={() => setOption("Graphic")} className={`modal_button ${option == "Graphic" ? "modal_button_selected" : ""}`}>
                         <h1 className="modal_title">Graphic</h1>
                     </button>
-                    <button onClick={() => setOption("Video")} className={`modal_button ${option=="Video" ? "modal_button_selected": ""}`}>
+                    <button onClick={() => setOption("Video")} className={`modal_button ${option == "Video" ? "modal_button_selected" : ""}`}>
                         <h1 className="modal_title last_button">Video</h1>
                     </button>
                 </header>

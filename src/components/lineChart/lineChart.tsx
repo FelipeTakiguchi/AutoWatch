@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import dynamic from "next/dynamic";
 import useClientStore from '../../services/clientStore';
 import "./styles.sass";
+import { Oval } from 'react-loader-spinner';
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 const ChartPage = () => {

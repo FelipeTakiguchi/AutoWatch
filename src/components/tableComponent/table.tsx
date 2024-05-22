@@ -19,6 +19,7 @@ interface EventAttributes {
 
 export default function Table() {
     const { clients, setImpactData, expandedRow, setExpandedRow, elementsReturned, sortByPlate, setSortByPlate, sortByModel, setSortByModel, sortByOwner, setSortByOwner, sortByStatus, setSortByStatus } = useClientStore();
+    const [receivedEvent, setReceivedEvent] = useState<boolean>(false)
     const [modalOpen, setModalOpen] = useState<string>("");
     const [event, setEvent] = useState<EventAttributes>({});
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -31,20 +32,25 @@ export default function Table() {
     const fetchEventData = async (plate: string) => {
         try {
             const response = await axios.get(apiUrl + "/api/event/" + plate);
-            setEvent(response.data);
 
-            setImpactData({
-                arising: response.data.arised,
-                data: response.data.readings.map((reading: { maxAcceleration: number; timestamp: number; }) => ({
-                    acceleration: reading.maxAcceleration,
-                    time: reading.timestamp
-                }))
-            });
+            if (response) {
+                setEvent(response.data);
+                setReceivedEvent(true);
 
+                setImpactData({
+                    arising: response.data.arised,
+                    data: response.data.readings.map((reading: { maxAcceleration: number; timestamp: number; }) => ({
+                        acceleration: reading.maxAcceleration,
+                        time: reading.timestamp
+                    }))
+                });
+            }
         } catch (error) {
+            setReceivedEvent(true);
             console.error('Error fetching data:', error);
         }
     };
+
 
     const classifyChangeOfSupport = (risk: number): string => {
         if (risk > 40)
@@ -63,16 +69,14 @@ export default function Table() {
             setExpandedRow(index);
         }
     };
-
     const handleRowClick = (index: number, event: React.MouseEvent<HTMLTableRowElement>, plate: string) => {
-        // Check if the click occurred inside the ContactModal or SimulationModal
-        if (
-            (event.target as HTMLElement).closest(".button")
-        ) {
-            return; // If clicked inside either modal, do nothing
+
+        if ((event.target as HTMLElement).closest(".button")) {
+            return;
         }
 
         toggleRow(index);
+        setReceivedEvent(false);
         setEvent({});
         fetchEventData(plate);
     };
@@ -82,11 +86,11 @@ export default function Table() {
     };
 
     const closeModal = (e: React.MouseEvent<HTMLDivElement>) => {
-        // Check if the click occurred inside the ContactModal or SimulationModal
+
         if (
             (e.target as HTMLElement).closest(".modal")
         ) {
-            return; // If clicked inside either modal, do nothing
+            return;
         }
         setModalOpen("");
     };
@@ -224,9 +228,27 @@ export default function Table() {
                             {!row.address && !event.impactSpeed && !event.fatalityLikelyhood && expandedRow === index &&
                                 <tr className="centralize_message" onClick={(e) => handleRowClick(index, e, row.plate)}>
                                     <td colSpan={4}>
-                                        <p className="message_error">
-                                            Dados Indisponíveis
-                                        </p>
+                                        {
+                                            !receivedEvent &&
+                                            <td colSpan={4} className="centralize_loading_row">
+                                                <Oval
+                                                    visible={true}
+                                                    height="80"
+                                                    width="80"
+                                                    color="#0E1D35"
+                                                    secondaryColor="#0E1D35"
+                                                    ariaLabel="oval-loading"
+                                                    wrapperStyle={{}}
+                                                    wrapperClass=""
+                                                />
+                                            </td>
+                                        }
+                                        {
+                                            receivedEvent &&
+                                            <p className="message_error">
+                                                Dados Indisponíveis
+                                            </p>
+                                        }
                                     </td>
                                 </tr>
                             }
