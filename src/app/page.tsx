@@ -63,14 +63,19 @@ export default function Home() {
           const latitude = client.lastLocation.split(", ")[0];
           const longitude = client.lastLocation.split(", ")[1];
           if (latitude && longitude) {
-            return getFormattedAddress(latitude, longitude)
-              .then(address => {
-                const addressParts = address.split(", ");
-                const firstFour = addressParts.slice(0, 4).join(", ");
-                const lastFour = addressParts.slice(-4).join(", ");
-                client.address = `${firstFour}, ${lastFour}`;
-                return client.lastLocation;
-              });
+            var address = "270, Rua Paula Gomes, São Francisco, Curitiba, Paraná, South Region, 80510-190, Brazil";
+              const addressParts = address.split(", ");
+              const firstFour = addressParts.slice(0, 4).join(", ");
+              const lastFour = addressParts.slice(-4).join(", ");
+              client.address = `${firstFour}, ${lastFour}`;
+            // return getFormattedAddress(latitude, longitude)
+            //   .then(address => {
+            //     const addressParts = address.split(", ");
+            //     const firstFour = addressParts.slice(0, 4).join(", ");
+            //     const lastFour = addressParts.slice(-4).join(", ");
+            //     client.address = `${firstFour}, ${lastFour}`;
+            //     return client.lastLocation;
+            //   });
           }
         }
       });
@@ -89,28 +94,28 @@ export default function Home() {
     }
   };
 
-  function getFormattedAddress(latitude: string, longitude: string) {
-    const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`;
+  // function getFormattedAddress(latitude: string, longitude: string) {
+  //   const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`;
 
-    return fetch(url)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        if (data.display_name) {
-          return data.display_name;
-        } else {
-          throw new Error('No results found');
-        }
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-        return null;
-      });
-  }
+  //   return fetch(url)
+  //     .then(response => {
+  //       if (!response.ok) {
+  //         throw new Error('Network response was not ok');
+  //       }
+  //       return response.json();
+  //     })
+  //     .then(data => {
+  //       if (data.display_name) {
+  //         return data.display_name;
+  //       } else {
+  //         throw new Error('No results found');
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.error('Error fetching data:', error);
+  //       return null;
+  //     });
+  // }
 
   const loadNotifications = async () => {
     const data = await requestNotifications();
