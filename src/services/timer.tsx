@@ -46,7 +46,7 @@ export default function TimerComponent() {
   const handleTimerExpired = async () => {
     try {
       const response = await axios.get('https://example.com/api');
-      console.log(response.data);
+      // console.log(response.data);
     } catch (error) {
       console.error('Error making Axios request:', error);
     } finally {

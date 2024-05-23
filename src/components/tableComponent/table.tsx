@@ -25,7 +25,7 @@ export default function Table() {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
     useEffect(() => {
-        console.log(expandedRow);
+        // console.log(expandedRow);
 
     }, [expandedRow])
 
@@ -62,7 +62,6 @@ export default function Table() {
     }
 
     const toggleRow = (index: number) => {
-        console.log("Oi")
         if (expandedRow === index) {
             setExpandedRow(null);
         } else {
@@ -261,9 +260,9 @@ export default function Table() {
                                         {row.plate == event.plate && event.impactSpeed &&
                                             <p className="info_text">Impacto Calculado: {(event.impactSpeed / 9.8).toFixed(2)} g(s)</p>
                                         }
-                                        {row.plate == event.plate && event.fatalityLikelyhood &&
+                                        {/* {row.plate == event.plate && event.fatalityLikelyhood &&
                                             <p className="info_text">Chance de Morte: {(event.fatalityLikelyhood).toFixed(0)}%</p>
-                                        }
+                                        } */}
                                         {row.plate == event.plate && event.fatalityLikelyhood &&
                                             <p className="info_text">Risco de vida: <b className={
                                                 event.fatalityLikelyhood <= 20 ? "low_risk" :

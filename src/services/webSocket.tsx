@@ -41,7 +41,7 @@ export default function WebSocketComponent() {
       try {
         // Extract type and data properties
         const { plate, location, lastUpdated } = data;
-        console.log(data);
+        // console.log(data);
         
         if (type === "crashEvent") {
           setNewNotification({ plate: plate, status: "Em Crise", accidentDate: lastUpdated })
@@ -76,20 +76,20 @@ export default function WebSocketComponent() {
 
   useEffect(() => {
     socket.onopen = () => {
-      console.log('WebSocket connection established.');
+      // console.log('WebSocket connection established.');
       // You may want to handle reconnection here
     };
 
     socket.onmessage = async (event) => {
       if (!event.data.startsWith('Welcome')) {
-        console.log(event.data);
+        // console.log(event.data);
         const message = JSON.parse(event.data);
         setEvent(message);
       }
     };
 
     socket.onclose = () => {
-      console.log('WebSocket connection closed.');
+      // console.log('WebSocket connection closed.');
       // You may want to handle reconnection here
     };
 

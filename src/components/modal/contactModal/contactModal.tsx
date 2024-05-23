@@ -16,7 +16,7 @@ export default function ContactModal() {
     }
     
     const message = "Olá Hemerson! Recebemos uma notificação de um possível acidente envolvendo você/seu veículo. Gostariamos de saber se está tudo bem com você e se há necessidade de assistência médica ou dos bombeiros.";
-    console.log(mobileNumber)
+    // console.log(mobileNumber)
     mobileNumber = formatPhoneNumber(mobileNumber);
 
     const onSubmit = () => {

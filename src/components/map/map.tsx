@@ -11,9 +11,6 @@ export default function Map(props: any) {
     const { position, zoom } = props
 
     const renderMap = () => {
-        console.log("map");
-
-
         return (
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

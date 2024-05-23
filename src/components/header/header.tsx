@@ -14,7 +14,7 @@ export default function HeaderComponent() {
     const [key, setKey] = useState(0); // Key to force remount
 
     useEffect(() => {
-        console.log(newNotification)
+        // console.log(newNotification)
         if(newNotification.plate && newNotification.status)
             setShowNotify(true);
 

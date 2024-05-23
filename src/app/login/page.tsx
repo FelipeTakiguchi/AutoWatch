@@ -13,7 +13,7 @@ export default function Login() {
     useEffect(() => {
         // When the session status changes to "authenticated", log the user data
         if (status === "authenticated") {
-            console.log(session.user);
+            // console.log(session.user);
             window.location.href = "http://localhost:3000";
         }
 

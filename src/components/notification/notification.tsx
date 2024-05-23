@@ -23,7 +23,7 @@ export default function Notification() {
         }
     }, []);
 
-    console.log(newNotification.plate)
+    (newNotification.plate)
 
     return (
         <div className="container">

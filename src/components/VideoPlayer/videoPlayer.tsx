@@ -37,7 +37,7 @@ export default function VideoPlayer() {
                     setVideoData(`data:video/mp4;base64,${response.data.data}`)
                 }
             } catch (error) {
-                console.log("Cannot get video: " + error);
+                // console.log("Cannot get video: " + error);
             }
         }
         fetchVideoData();
@@ -60,7 +60,7 @@ export default function VideoPlayer() {
             }
             {
                 videoData &&
-                <iframe src={videoData} width={chartWidth} height={chartHeight}></iframe>
+                <iframe src={videoData} width={chartWidth} height={chartHeight} allow="fullscreen"></iframe>
             }
         </div>
     );

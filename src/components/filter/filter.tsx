@@ -78,7 +78,7 @@ export default function Filter() {
                 setTotalPages(data.totalPages);
                 setTotalElements(data.totalElements);
                 setElementsReturned(data.clients.length);
-                console.log(data);
+                // console.log(data);
             })
             .catch(error => {
                 console.error('Error fetching addresses:', error);
